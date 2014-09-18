@@ -103,7 +103,7 @@ void main_loop() {
 				cpu_exec(step);
 		 	}
 		}
-		else if (strcmp(p, "info r") == 0)
+		else if (strcmp(p, "info") == 0)
 		{
 			printf("%d %d %d %d %d %d %d %d\n",cpu.eax,cpu.ecx,cpu.edx,cpu.ebx,cpu.esp,cpu.ebp,cpu.esi,cpu.edi);
 		}
