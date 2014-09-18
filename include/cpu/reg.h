@@ -11,7 +11,7 @@
  * For more details about the GPR encoding scheme, see i386 manual.
  */
 
-typedef struct {
+typedef union {
 	struct {
 		uint32_t _32;
 		uint16_t _16;
@@ -22,12 +22,10 @@ typedef struct {
 	 * They match the register encoding scheme used in i386 instruction format.
 	 * See i386 manual for more details.
 	 */
-
-	uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
-
-
-
-	swaddr_t eip;
+    struct{
+    	uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
+	    swaddr_t eip;
+	};
 } CPU_state;
 
 extern CPU_state cpu;
