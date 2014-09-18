@@ -37,8 +37,8 @@ char* rl_gets() {
 static void control_C(int signum) {
 	if(nemu_state == RUNNING) {
 		nemu_state = INT;
-	}
-}
+ 	}
+} 
 
 void init_signal() {
 	/* Register a signal handler. */
@@ -53,7 +53,7 @@ static void cmd_c() {
 	if(nemu_state == END) {
 		puts("The Program does not start. Use 'r' command to start the program.");
 		return;
-	}
+ 	}
 
 	nemu_state = RUNNING;
 	cpu_exec(-1);
@@ -70,9 +70,9 @@ static void cmd_r() {
 				case 'y': goto restart_;
 				case 'n': return;
 				default: puts("Please answer y or n.");
-			}
-		}
-	}
+ 			}
+ 		}
+ 	}
 
 restart_:
 	restart();
@@ -102,6 +102,10 @@ void main_loop() {
 					      step=step*10+p[j]-'0';
 				cpu_exec(step);
 		 	}
+		}
+		else if (strcmp(p, "info r") == 0)
+		{
+			printf("%d %d %d %d %d %d %d %d\n",cpu.eax,cpu.ecx,cpu.edx,cpu.ebx,cpu.esp,cpu.ebp,cpu.esi,cpu.edi);
 		}
 
 		/* TODO: Add more commands */
