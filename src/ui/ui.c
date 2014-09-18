@@ -82,7 +82,7 @@ restart_:
 
 void main_loop() {
 	char *cmd;
-	int pieces=0,step,j;
+	int step,j;
 	while(1) {
 		cmd = rl_gets();
 		char *p = strtok(cmd, " ");
@@ -94,14 +94,10 @@ void main_loop() {
 		else if(strcmp(p, "q") == 0) { return; }
 		else if(strcmp(p, "si") == 0)
 		{
-			if (pieces==0){ cmd_c(); }
-			else 
-			{
-				if (strlen(p)==2)step=1;
-				else for (j=3,step=0;j<strlen(p);j++)
+			if (strlen(p)==2)step=1;
+			else for (j=3,step=0;j<strlen(p);j++)
 					      step=step*10+p[j]-'0';
-				cpu_exec(step);
-		 	}
+			cpu_exec(step);
 		}
 		else if (strcmp(p, "info") == 0)
 		{
@@ -111,6 +107,5 @@ void main_loop() {
 		/* TODO: Add more commands */
 
 		else { printf("Unknown command '%s'\n", p); }
-		pieces++;
 	}
 }
