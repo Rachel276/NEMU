@@ -105,7 +105,7 @@ void main_loop() {
 		}
 		else if (strcmp(p, "info") == 0)
 		{
-			printf("%d %d %d %d %d %d %d %d\n",cpu.eax,cpu.ecx,cpu.edx,cpu.ebx,cpu.esp,cpu.ebp,cpu.esi,cpu.edi);
+		    if(p[5]=='r')printf("%d %d %d %d %d %d %d %d\n",cpu.eax,cpu.ecx,cpu.edx,cpu.ebx,cpu.esp,cpu.ebp,cpu.esi,cpu.edi);
 		}
 
 		/* TODO: Add more commands */
