@@ -103,6 +103,7 @@ void main_loop() {
 			}
 			printf("%d\n",step);
 			if (pieces==0)restart();
+			nemu_state = RUNNING;
 			cpu_exec(step);
 		}
 		else if (strcmp(p, "info") == 0)
