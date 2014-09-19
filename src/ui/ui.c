@@ -92,7 +92,7 @@ void main_loop() {
 		if(p == NULL) { continue; }
 
 		if(strcmp(p, "c") == 0) { cmd_c(); }
-		else if(strcmp(p, "r") == 0) { cmd_r(); }
+		else if(strcmp(p, "r") == 0) { cmd_r(); pieces=0;}	
 		else if(strcmp(p, "q") == 0) { return; }
 		else if(strcmp(p, "si") == 0)
 		{ 
