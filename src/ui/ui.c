@@ -101,6 +101,7 @@ void main_loop() {
 				for (j=0,step=0;j<strlen(p);j++)
 					      step=step*10+p[j]-'0';
 			}
+			printf("%d\n",step);
 			if (pieces==0)restart();
 			cpu_exec(step);
 		}
