@@ -87,7 +87,7 @@ void main_loop() {
 	while(1) {
 		cmd = rl_gets();
 		char *p = strtok(cmd, " ");
-
+        printf("%s %s\n",cmd,p);
 		if(p == NULL) { continue; }
 
 		if(strcmp(p, "c") == 0) { cmd_c(); }
