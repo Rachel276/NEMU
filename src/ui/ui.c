@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
+#define LOADER_START 0x100000
 int nemu_state = END;
 
 void cpu_exec(uint32_t);
@@ -82,7 +82,7 @@ restart_:
 
 void main_loop() {
 	char *cmd;
-	int j;
+	int j,pieces=0;
 	uint32_t step;
 	while(1) {
 		cmd = rl_gets();
@@ -98,6 +98,7 @@ void main_loop() {
 			if (strlen(p)==2)step=1;
 			else for (j=3,step=0;j<strlen(p);j++)
 					      step=step*10+p[j]-'0';
+			if (pieces==0)cpu.eip = LOADER_START;
 			cpu_exec(step);
 		}
 		else if (strcmp(p, "info") == 0)
@@ -108,5 +109,6 @@ void main_loop() {
 		/* TODO: Add more commands */
 
 		else { printf("Unknown command '%s'\n", p); }
+		pieces++;
 	}
 }
