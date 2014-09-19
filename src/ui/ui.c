@@ -120,7 +120,7 @@ void main_loop() {
 			    printf("ebp            0x%08x        0x%08x\n",cpu.ebp,cpu.ebp);
 			    printf("esi            0x%08x        %08d\n",cpu.esi,cpu.esi);
 			    printf("edi            0x%08x        %08d\n",cpu.edi,cpu.edi);	
-			    printf("eip            0x%08x        %08d\n",cpu.eip,cpu.eip);
+     		    printf("eip            0x%08x        0x%08x\n",cpu.eip,cpu.eip);
 			}
 		}
 		else if (strcmp(p, "x") == 0)
