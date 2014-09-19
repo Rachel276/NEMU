@@ -82,7 +82,8 @@ restart_:
 
 void main_loop() {
 	char *cmd;
-	int step,j;
+	int j;
+	uint32_t step;
 	while(1) {
 		cmd = rl_gets();
 		char *p = strtok(cmd, " ");
