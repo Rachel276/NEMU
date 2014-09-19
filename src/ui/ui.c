@@ -11,6 +11,7 @@ int nemu_state = END;
 
 void cpu_exec(uint32_t);
 void restart();
+uint32_t swaddr_read(swaddr_t addr, size_t len);
 
 /* We use the readline library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -25,7 +26,7 @@ char* rl_gets() {
 
 	if (line_read && *line_read) {
 		add_history(line_read);
-	}
+	} 
 
 	return line_read;
 }
@@ -37,7 +38,7 @@ char* rl_gets() {
 static void control_C(int signum) {
 	if(nemu_state == RUNNING) {
 		nemu_state = INT;
- 	}
+ 	} 
 } 
 
 void init_signal() {
@@ -50,7 +51,7 @@ void init_signal() {
 }
 
 static void cmd_c() {
-	if(nemu_state == END) {
+	if (nemu_state == END) {
 		puts("The Program does not start. Use 'r' command to start the program.");
 		return;
  	}
@@ -71,8 +72,8 @@ static void cmd_r() {
 				case 'n': return;
 				default: puts("Please answer y or n.");
  			}
- 		}
- 	}
+ 	 	}
+ 	} 
 
 restart_:
 	restart();
@@ -82,7 +83,8 @@ restart_:
 
 void main_loop() {
 	char *cmd;
-	int j,pieces=0;
+	int j,pieces=0,N;
+	swaddr_t addr;
 	uint32_t step;
 	while(1) {
 		cmd = rl_gets();
@@ -93,7 +95,7 @@ void main_loop() {
 		else if(strcmp(p, "r") == 0) { cmd_r(); }
 		else if(strcmp(p, "q") == 0) { return; }
 		else if(strcmp(p, "si") == 0)
-		{
+		{ 
 			p=strtok(NULL," ");
 			if (p==NULL)step=1;
 			else
@@ -110,7 +112,20 @@ void main_loop() {
 		    p=strtok(NULL," ");
 		   	if(p[0]=='r')printf("%d %d %d %d %d %d %d %d\n",cpu.eax,cpu.ecx,cpu.edx,cpu.ebx,cpu.esp,cpu.ebp,cpu.esi,cpu.edi);
 		}
-
+		else if (strcmp(p, "x") == 0)
+		{
+			p=strtok(NULL," ");
+			for (j=0,N=0;j<strlen(p);j++)N=N*10+p[j]-'0';
+			p=strtok(NULL," ");
+			sscanf(p,"%x",&addr); 
+            while (N>0)
+			{
+	     		printf("0x%x ",swaddr_read(addr,4));
+				addr+=4;
+				N--;
+			} 
+			printf("\n");
+		}
 		/* TODO: Add more commands */
 
 		else { printf("Unknown command '%s'\n", p); }
