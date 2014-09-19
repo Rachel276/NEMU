@@ -120,6 +120,7 @@ void main_loop() {
 			    printf("ebp            0x%08x        0x%08x\n",cpu.ebp,cpu.ebp);
 			    printf("esi            0x%08x        %08d\n",cpu.esi,cpu.esi);
 			    printf("edi            0x%08x        %08d\n",cpu.edi,cpu.edi);	
+			    printf("eip            0x%08x        %08d\n",cpu.eip,cpu.eip);
 			}
 		}
 		else if (strcmp(p, "x") == 0)
@@ -130,11 +131,10 @@ void main_loop() {
 			sscanf(p,"%x",&addr); 
             while (N>0)
 			{
-	     		printf("0x%08x ",swaddr_read(addr,4));
+	     		printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
 				addr+=4;
 				N--;
 			} 
-			printf("\n");
 		}
 		/* TODO: Add more commands */
 
