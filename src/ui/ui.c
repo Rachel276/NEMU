@@ -99,13 +99,11 @@ void main_loop() {
 			if (p==NULL)step=1;
 			else
 			{
-				printf("%s\n",p);
 				for (j=0,step=0;j<strlen(p);j++)
 					      step=step*10+p[j]-'0';
 			}
 			if (pieces==0)restart();
-			printf("%d\n",step);
-			cpu_exec(step);
+			else cpu_exec(step);
 		}
 		else if (strcmp(p, "info") == 0)
 		{
