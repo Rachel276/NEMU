@@ -112,14 +112,14 @@ void main_loop() {
 		    p=strtok(NULL," ");
 		   	if(p[0]=='r')
 			{
-				printf("eax            0x%08x        %d\n",cpu.eax,cpu.eax);
-			    printf("ecx            0x%08x        %d\n",cpu.ecx,cpu.ecx);
-			    printf("edx            0x%08x        %d\n",cpu.edx,cpu.edx);
-			    printf("ebx            0x%08x        %d\n",cpu.ebx,cpu.ebx);
-			    printf("esp            0x%08x        0x%08x",cpu.esp,cpu.esp);
-			    printf("ebp            0x%08x        0x%08x",cpu.ebp,cpu.ebp);
-			    printf("esi            0x%08x        %d\n",cpu.esi,cpu.esi);
-			    printf("edi            0x%08x        %d\n",cpu.edi,cpu.edi);	
+				printf("eax            0x%08x        %08d\n",cpu.eax,cpu.eax);
+			    printf("ecx            0x%08x        %08d\n",cpu.ecx,cpu.ecx);
+			    printf("edx            0x%08x        %08d\n",cpu.edx,cpu.edx);
+			    printf("ebx            0x%08x        %08d\n",cpu.ebx,cpu.ebx);
+			    printf("esp            0x%08x        0x%08x\n",cpu.esp,cpu.esp);
+			    printf("ebp            0x%08x        0x%08x\n",cpu.ebp,cpu.ebp);
+			    printf("esi            0x%08x        %08d\n",cpu.esi,cpu.esi);
+			    printf("edi            0x%08x        %08d\n",cpu.edi,cpu.edi);	
 			}
 		}
 		else if (strcmp(p, "x") == 0)
