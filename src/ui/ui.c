@@ -120,7 +120,7 @@ void main_loop() {
 			sscanf(p,"%x",&addr); 
             while (N>0)
 			{
-	     		printf("0x%10x ",swaddr_read(addr,4));
+	     		printf("0x%08x ",swaddr_read(addr,4));
 				addr+=4;
 				N--;
 			} 
