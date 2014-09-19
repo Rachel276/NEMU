@@ -103,7 +103,7 @@ void main_loop() {
 					      step=step*10+p[j]-'0';
 			}
 			if (pieces==0)restart();
-			else cpu_exec(step);
+			cpu_exec(step);
 		}
 		else if (strcmp(p, "info") == 0)
 		{
