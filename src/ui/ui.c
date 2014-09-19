@@ -101,14 +101,14 @@ void main_loop() {
 				for (j=0,step=0;j<strlen(p);j++)
 					      step=step*10+p[j]-'0';
 			}
-			printf("%d\n",step);
 			if (pieces==0)restart();
 			nemu_state = RUNNING;
 			cpu_exec(step);
-		}
+		}  
 		else if (strcmp(p, "info") == 0)
 		{
-		    if(p[5]=='r')printf("%d %d %d %d %d %d %d %d\n",cpu.eax,cpu.ecx,cpu.edx,cpu.ebx,cpu.esp,cpu.ebp,cpu.esi,cpu.edi);
+		    p=strtok(NULL," ");
+		   	if(p[0]=='r')printf("%d %d %d %d %d %d %d %d\n",cpu.eax,cpu.ecx,cpu.edx,cpu.ebx,cpu.esp,cpu.ebp,cpu.esi,cpu.edi);
 		}
 
 		/* TODO: Add more commands */
