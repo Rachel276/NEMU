@@ -95,10 +95,10 @@ void main_loop() {
 		else if(strcmp(p, "q") == 0) { return; }
 		else if(strcmp(p, "si") == 0)
 		{
-			if (strlen(cmd)==2)step=1;
+			p=strtok(NULL," ");
+			if (p==NULL)step=1;
 			else
 			{
-				p=strtok(NULL," ");
 				printf("%s\n",p);
 				for (j=0,step=0;j<strlen(p);j++)
 					      step=step*10+p[j]-'0';
