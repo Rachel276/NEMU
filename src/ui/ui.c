@@ -96,8 +96,13 @@ void main_loop() {
 		else if(strcmp(p, "si") == 0)
 		{
 			if (strlen(cmd)==2)step=1;
-			else for (j=3,step=0;j<strlen(cmd);j++)
-					      step=step*10+cmd[j]-'0';
+			else
+			{
+				p=strtok(NULL," ");
+				printf("%s\n",p);
+				for (j=0,step=0;j<strlen(p);j++)
+					      step=step*10+p[j]-'0';
+			}
 			if (pieces==0)restart();
 			printf("%d\n",step);
 			cpu_exec(step);
