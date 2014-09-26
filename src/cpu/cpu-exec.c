@@ -50,11 +50,11 @@ void cpu_exec(volatile uint32_t n) {
 		int instr_len = exec(cpu.eip);
 
 		cpu.eip += instr_len;
-        if(n_temp != -1 || (enable_debug && !quiet))
-	   	{
-	        print_bin_instr(eip_temp, instr_len);
-	        puts(assembly);
-	    }
+     //   if(n_temp != -1 || (enable_debug && !quiet))
+	   //	{
+	     //   print_bin_instr(eip_temp, instr_len);
+	       // puts(assembly);
+	   // }
 
 		if(nemu_state == BREAK0)
 		{
@@ -64,15 +64,15 @@ void cpu_exec(volatile uint32_t n) {
 			t=find_addr();
 			printf("%d %x 0x%08x\n",t->NO,t->prekey,t->addr);
 			swaddr_write(eip_temp,1,t->prekey);
-			printf("Breakpoint %d at 0x%08x\n",t -> NO,t -> addr);
+			printf("You encounter a breakpoint.");
 			nemu_state = BREAK1;
 			return;
 		}	 
 
-//		if(n_temp != -1 || (enable_debug && !quiet)) {
-//			print_bin_instr(eip_temp, instr_len);
-//			puts(assembly);
-//		}
+		if(n_temp != -1 || (enable_debug && !quiet)) {
+			print_bin_instr(eip_temp, instr_len);
+			puts(assembly);
+		}
 
 		if(nemu_state == BREAK1)
 		{
