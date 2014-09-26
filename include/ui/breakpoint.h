@@ -8,7 +8,8 @@
 typedef struct breakpoint {
 	int NO;
 	struct breakpoint *next;
-
+    swaddr_t prekey;
+	int addr;
 	/* TODO: Add more members if necessary */
 
 

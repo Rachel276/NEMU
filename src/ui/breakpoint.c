@@ -19,4 +19,42 @@ void init_bp_pool() {
 	free_ = bp_pool;
 }
 
+BP* new_bp();
+void free_bp(BP *bp);
+
+BP* new_bp()
+{
+	if (free_ == NULL)assert(0);
+	BP *t;
+	t = free_;free_ = free_-> next;
+	t -> next = head; head = t;
+	return t;
+}
+
+void free_bp(BP *bp)
+{
+	BP *t = head;
+	while (t != NULL)
+	{
+		if (t -> next == bp)break;
+		t = t -> next;
+	}
+	t -> next = bp -> next;
+	bp -> next = free_;
+	free_ = bp;
+}
+BP* find_addr()
+{
+	BP *t;
+	for (t=head;t!=NULL;t=t->next)
+		if (t->addr==cpu.eip)break;
+	return t;
+}
+BP* find_NO(int NO)
+{
+	BP *t;
+	for (t=head;t!=NULL;t=t->next)
+		if (t->NO==NO)break;
+	return t;
+}
 /* TODO: Implement the function of breakpoint */

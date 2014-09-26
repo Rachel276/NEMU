@@ -1,5 +1,5 @@
 #include "ui/ui.h"
-
+#include "ui/breakpoint.h"
 #include "nemu.h"
 
 #include <setjmp.h>
@@ -9,6 +9,7 @@
 int exec(swaddr_t);
 void load_prog();
 void init_dram();
+BP* find_addr();
 
 char assembly[40];
 jmp_buf jbuf;	/* Make it easy to perform exception handling */
@@ -39,18 +40,36 @@ static void print_bin_instr(swaddr_t eip, int len) {
 
 void cpu_exec(volatile uint32_t n) {
 	volatile uint32_t n_temp = n;
+	BP *t;
 
 	setjmp(jbuf);
-	for(; n > 0; n --) {
+	for(; n > 0; n --) { 
 		swaddr_t eip_temp = cpu.eip;
 		int instr_len = exec(cpu.eip);
 
 		cpu.eip += instr_len;
+        
+		if(nemu_state == BREAK0)
+		{
+			cpu.eip -= instr_len;
+			t=find_addr();
+			swaddr_write(eip_temp,1,t->prekey);
+			printf("Breakpoint %d at 0x%08x\n",t -> NO,t -> addr);
+			nemu_state = BREAK1;
+			return;
+		}	 
 
 		if(n_temp != -1 || (enable_debug && !quiet)) {
 			print_bin_instr(eip_temp, instr_len);
 			puts(assembly);
 		}
+
+		if(nemu_state == BREAK1)
+		{
+			swaddr_write(eip_temp,1,0xcc);
+			nemu_state = RUNNING;
+		}
+
 
 		if(nemu_state == INT) {
 			printf("\n\nUser interrupt\n");

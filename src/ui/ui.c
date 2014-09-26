@@ -1,5 +1,5 @@
 #include "ui/ui.h"
-
+#include "ui/breakpoint.h"
 #include "nemu.h"
 
 #include <signal.h>
@@ -11,7 +11,11 @@ int nemu_state = END;
 
 void cpu_exec(uint32_t);
 void restart();
-uint32_t swaddr_read(swaddr_t addr, size_t len);
+uint32_t swaddr_read(swaddr_t, size_t);
+BP* new_bp();
+void free_bp(BP*);
+BP* find_addr();
+BP* find_NO(int);
 
 /* We use the readline library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -66,14 +70,16 @@ static void cmd_r() {
 		char c;
 		while(1) {
 			printf("The program is already running. Restart the program? (y or n)");
+			fflush(stdout);
 			scanf("%c", &c);
+			scanf(" %c", &c);
 			switch(c) {
 				case 'y': goto restart_;
 				case 'n': return;
 				default: puts("Please answer y or n.");
- 			}
- 	 	}
- 	} 
+ 	 		}
+ 	   	}
+ 	}  
 
 restart_:
 	restart();
@@ -83,8 +89,9 @@ restart_:
 
 void main_loop() {
 	char *cmd;
-	int j,pieces=0,N;
+	int j,pieces=0,N,bpis=0;
 	swaddr_t addr;
+	BP *t;
 	uint32_t step;
 	while(1) {
 		cmd = rl_gets();
@@ -102,11 +109,11 @@ void main_loop() {
 			{
 				for (j=0,step=0;j<strlen(p);j++)
 					      step=step*10+p[j]-'0';
-			}
+			 }
 			if (pieces==0)restart();
 			nemu_state = RUNNING;
 			cpu_exec(step);
-		}  
+		}   
 		else if (strcmp(p, "info") == 0)
 		{
 		    p=strtok(NULL," ");
@@ -122,6 +129,12 @@ void main_loop() {
 			    printf("edi            0x%08x        %08d\n",cpu.edi,cpu.edi);	
      		    printf("eip            0x%08x        0x%08x\n",cpu.eip,cpu.eip);
 			}
+			else if(p[0]=='b')
+			{
+				t=find_addr();
+				printf("Breakpoint %d at 0x%08x\n",t -> NO,t -> addr);
+			}
+
 		}
 		else if (strcmp(p, "x") == 0)
 		{
@@ -136,9 +149,26 @@ void main_loop() {
 				N--;
 			} 
 		}
+		else if (strcmp(p, "b") == 0)
+		{
+			p = strtok(NULL,"*");
+			sscanf(p,"%x",&addr);
+			swaddr_write(addr,1,0xcc);
+			t = new_bp();
+			t -> prekey = swaddr_read(addr,1);
+			bpis++;
+			t -> NO = bpis;
+	 	}
+		else if (strcmp(p, "d") == 0)
+		{
+			p = strtok(NULL," ");
+			for (j=0,N=0;j<strlen(p);j++)N=N*10+p[j]-'0';
+			t=find_NO(N);
+			free_bp(t);
+	 	 } 
 		/* TODO: Add more commands */
 
 		else { printf("Unknown command '%s'\n", p); }
 		pieces++;
-	}
+	}   
 }
