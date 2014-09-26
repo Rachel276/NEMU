@@ -20,7 +20,7 @@ make_helper(int3) {
 	/* A breakpoint is hit! Do something here! */
     nemu_state = BREAK0;
     printf("int3\n");	
-	assert(0);
+//	assert(0);
 
 	return 1;
 }
