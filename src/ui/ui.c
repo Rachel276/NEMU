@@ -156,8 +156,10 @@ void main_loop() {
 			swaddr_write(addr,1,0xcc);
 			t = new_bp();
 			t -> prekey = swaddr_read(addr,1);
+			t -> addr = addr;
 			bpis++;
 			t -> NO = bpis;
+			printf("%d %x 0x%08x\n",t->NO,t->prekey,t->addr);
 	 	}
 		else if (strcmp(p, "d") == 0)
 		{
