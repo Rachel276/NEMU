@@ -156,9 +156,10 @@ void main_loop() {
 		{
 			p = strtok(NULL,"*");
 			sscanf(p,"%x",&addr);
-		//	printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
+			printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
 		    t = new_bp();
 			t -> prekey = swaddr_read(addr,1);
+			printf("0x%x\n",t->prekey);
 			swaddr_write(addr,1,0xcc);
           //  printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
 			t -> addr = addr;
