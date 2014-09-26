@@ -10,6 +10,7 @@ int exec(swaddr_t);
 void load_prog();
 void init_dram();
 BP* find_addr();
+void load_breakpoint();
 
 char assembly[40];
 jmp_buf jbuf;	/* Make it easy to perform exception handling */
@@ -25,6 +26,7 @@ void restart() {
 	memcpy(hwa_to_va(LOADER_START), loader, loader_len);
 
 	cpu.eip = LOADER_START;
+	load_breakpoint();
 
 	init_dram();
 }

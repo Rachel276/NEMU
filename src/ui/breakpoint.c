@@ -57,4 +57,10 @@ BP* find_NO(int NO)
 		if (t->NO==NO)break;
 	return t;
 }
+void load_breakpoint()
+{
+	BP *t;
+	for (t=head;t!=NULL;t=t->next)
+		swaddr_write(t->addr,1,0xcc);
+}
 /* TODO: Implement the function of breakpoint */
