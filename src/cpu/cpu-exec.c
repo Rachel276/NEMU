@@ -60,7 +60,7 @@ void cpu_exec(volatile uint32_t n) {
 		if(nemu_state == BREAK0)
 		{
 			//printf("0x%08x\n",cpu.eip);
-			cpu.eip -= instr_len;
+			cpu.eip = eip_temp;
 			t=find_addr();
 			swaddr_write(eip_temp,1,t->prekey);
 			printf("You encounter a breakpoint.\n");
