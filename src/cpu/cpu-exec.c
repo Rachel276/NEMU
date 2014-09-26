@@ -48,7 +48,12 @@ void cpu_exec(volatile uint32_t n) {
 		int instr_len = exec(cpu.eip);
 
 		cpu.eip += instr_len;
-        
+        if(n_temp != -1 || (enable_debug && !quiet))
+	   	{
+	        print_bin_instr(eip_temp, instr_len);
+	        puts(assembly);
+	    }
+
 		if(nemu_state == BREAK0)
 		{
 			//printf("0x%08x\n",cpu.eip);
@@ -62,10 +67,10 @@ void cpu_exec(volatile uint32_t n) {
 			return;
 		}	 
 
-		if(n_temp != -1 || (enable_debug && !quiet)) {
-			print_bin_instr(eip_temp, instr_len);
-			puts(assembly);
-		}
+//		if(n_temp != -1 || (enable_debug && !quiet)) {
+//			print_bin_instr(eip_temp, instr_len);
+//			puts(assembly);
+//		}
 
 		if(nemu_state == BREAK1)
 		{
