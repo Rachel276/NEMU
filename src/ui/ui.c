@@ -112,11 +112,11 @@ void main_loop() {
 					      step=step*10+p[j]-'0';
 			 }
 			if (pieces==0)restart();
-			printf("a\n");
+	//		printf("a\n");
 			nemu_state = RUNNING;
 			cpu_exec(step);
 			pieces++;
-		}   
+	 	}   
 		else if (strcmp(p, "info") == 0)
 		{
 		    p=strtok(NULL," ");
@@ -177,6 +177,6 @@ void main_loop() {
 
 		else { printf("Unknown command '%s'\n", p); }
 	//	pieces++;
-	    printf("%d\n",pieces);
+	//    printf("%d\n",pieces);
 	}   
 }
