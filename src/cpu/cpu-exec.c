@@ -26,9 +26,9 @@ void restart() {
 	memcpy(hwa_to_va(LOADER_START), loader, loader_len);
 
 	cpu.eip = LOADER_START;
-	load_breakpoint();
-
 	init_dram();
+	
+	load_breakpoint();
 }
 
 static void print_bin_instr(swaddr_t eip, int len) {
