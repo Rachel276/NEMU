@@ -61,6 +61,9 @@ void load_breakpoint()
 {
 	BP *t;
 	for (t=head;t!=NULL;t=t->next)
+	{
+		t->prekey=swaddr_read(t->addr,1);
 		swaddr_write(t->addr,1,0xcc);
+	}
 }
 /* TODO: Implement the function of breakpoint */
