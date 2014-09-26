@@ -62,6 +62,7 @@ static void cmd_c() {
 
 	nemu_state = RUNNING;
 	cpu_exec(-1);
+	printf("%d\n",nemu_state);
 	if(nemu_state != END) { nemu_state = STOP; }
 }
 
