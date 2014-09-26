@@ -86,4 +86,5 @@ void cpu_exec(volatile uint32_t n) {
 		} 
 		else if(nemu_state == END) { return; }
 	}
+	printf("%d\n",n);
 }
