@@ -112,6 +112,7 @@ void main_loop() {
 					      step=step*10+p[j]-'0';
 			 }
 			if (pieces==0)restart();
+			printf("a\n");
 			nemu_state = RUNNING;
 			cpu_exec(step);
 			pieces++;
