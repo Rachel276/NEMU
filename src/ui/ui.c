@@ -155,15 +155,15 @@ void main_loop() {
 		{
 			p = strtok(NULL,"*");
 			sscanf(p,"%x",&addr);
-			printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
+		//	printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
 		    t = new_bp();
 			t -> prekey = swaddr_read(addr,1);
 			swaddr_write(addr,1,0xcc);
-            printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
+          //  printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
 			t -> addr = addr;
 			bpis++;
 			t -> NO = bpis;
-			printf("%d %x 0x%08x\n",t->NO,t->prekey,t->addr);
+			//printf("%d %x 0x%08x\n",t->NO,t->prekey,t->addr);
 	 	}
 		else if (strcmp(p, "d") == 0)
 		{
