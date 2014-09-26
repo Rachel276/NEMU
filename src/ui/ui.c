@@ -97,7 +97,7 @@ void main_loop() {
 		cmd = rl_gets();
 		char *p = strtok(cmd, " ");
 		if(p == NULL) { continue; }
-		nemu_state = RUNNING;
+	//	nemu_state = RUNNING;
 
 		if(strcmp(p, "c") == 0) { cmd_c(); }
 		else if(strcmp(p, "r") == 0) { cmd_r(); pieces=0;continue;}	
