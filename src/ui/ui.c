@@ -149,13 +149,14 @@ void main_loop() {
 	     		printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
 				addr+=4;
 				N--;
-			} 
-		}
+		 	} 
+		} 
 		else if (strcmp(p, "b") == 0)
 		{
 			p = strtok(NULL,"*");
 			sscanf(p,"%x",&addr);
 			swaddr_write(addr,1,0xcc);
+            printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
 			t = new_bp();
 			t -> prekey = swaddr_read(addr,1);
 			t -> addr = addr;
