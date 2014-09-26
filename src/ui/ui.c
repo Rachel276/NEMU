@@ -114,6 +114,7 @@ void main_loop() {
 			if (pieces==0)restart();
 			nemu_state = RUNNING;
 			cpu_exec(step);
+			pieces++;
 		}   
 		else if (strcmp(p, "info") == 0)
 		{
@@ -172,6 +173,6 @@ void main_loop() {
 		/* TODO: Add more commands */
 
 		else { printf("Unknown command '%s'\n", p); }
-		pieces++;
+	//	pieces++;
 	}   
 }
