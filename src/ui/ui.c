@@ -176,5 +176,6 @@ void main_loop() {
 
 		else { printf("Unknown command '%s'\n", p); }
 	//	pieces++;
+	    printf("%d\n",pieces);
 	}   
 }
