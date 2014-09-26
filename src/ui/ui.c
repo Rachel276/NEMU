@@ -155,6 +155,7 @@ void main_loop() {
 		{
 			p = strtok(NULL,"*");
 			sscanf(p,"%x",&addr);
+			printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
 			swaddr_write(addr,1,0xcc);
             printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
 			t = new_bp();
