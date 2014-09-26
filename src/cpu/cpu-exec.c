@@ -51,8 +51,11 @@ void cpu_exec(volatile uint32_t n) {
         
 		if(nemu_state == BREAK0)
 		{
+			//printf("0x%08x\n",cpu.eip);
 			cpu.eip -= instr_len;
+		    printf("0x%08x\n",cpu.eip);
 			t=find_addr();
+			printf("%d %x 0x%08x\n",t->NO,t->prekey,t->addr);
 			swaddr_write(eip_temp,1,t->prekey);
 			printf("Breakpoint %d at 0x%08x\n",t -> NO,t -> addr);
 			nemu_state = BREAK1;
