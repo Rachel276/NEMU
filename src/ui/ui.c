@@ -172,6 +172,7 @@ void main_loop() {
 			p = strtok(NULL," ");
 			for (j=0,N=0;j<strlen(p);j++)N=N*10+p[j]-'0';
 			t=find_NO(N);
+			swaddr_write(t->addr,1,t->prekey);
 			free_bp(t);
 	 	 } 
 		/* TODO: Add more commands */
