@@ -16,6 +16,7 @@ BP* new_bp();
 void free_bp(BP*);
 BP* find_addr();
 BP* find_NO(int);
+void print_b();
 
 /* We use the readline library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -134,8 +135,7 @@ void main_loop() {
 			}
 			else if(p[0]=='b')
 			{
-				t=find_addr();
-				printf("Breakpoint %d at 0x%08x\n",t -> NO,t -> addr);
+				print_b();
 			}
 
 		}

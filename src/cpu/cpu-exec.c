@@ -64,6 +64,7 @@ void cpu_exec(volatile uint32_t n) {
 			t=find_addr();
 			swaddr_write(eip_temp,1,t->prekey);
 			printf("You encounter a breakpoint.\n");
+			printf("Breakpoint %d at 0x%08x\n",t -> NO,t -> addr);
 			nemu_state = BREAK1;
 			return;
 		}	 

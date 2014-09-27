@@ -66,4 +66,10 @@ void load_breakpoint()
 		swaddr_write(t->addr,1,0xcc);
 	}
 }
+void print_b()
+{
+	BP *t;
+	for (t=head;t!=NULL;t=t->next)
+		printf("Breakpoint %d 's address is 0x%08x\n",t->NO,t->addr);
+}
 /* TODO: Implement the function of breakpoint */
