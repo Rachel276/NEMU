@@ -87,7 +87,7 @@ void delete_all()
 	for (t=head;t!=NULL;)
 	{
 		p=t;t=t->next;
-		swaddr_write(t->addr,1,t->prekey);
+		swaddr_write(p->addr,1,p->prekey);
 		free_bp(p);
 	}
 }
