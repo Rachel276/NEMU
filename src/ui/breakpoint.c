@@ -36,20 +36,21 @@ void free_bp(BP *bp)
 	BP *t = head;
 	while (t != NULL)
 	{
-	     if (t == bp)break;
+	     if (t -> next == bp)break;
 	     t = t -> next;
 	}
-	t = bp -> next;
-	bp -> next = free_;
-	free_ = bp;
-/*	while (t != NULL)
+	if (t -> next == bp)
 	{
-		if (t -> next == bp)break;
-		t = t -> next;
+		t -> next = bp -> next;
+	    bp -> next = free_;
+	    free_ = bp;
 	}
-	t -> next = bp -> next;
-	bp -> next = free_;
-	free_ = bp;*/
+	else
+	{
+		head = bp -> next;
+		bp ->next = free_;
+		free_ = bp;
+	}
 }
 BP* find_addr()
 {
