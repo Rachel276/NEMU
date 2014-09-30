@@ -17,6 +17,7 @@ void free_bp(BP*);
 BP* find_addr();
 BP* find_NO(int);
 void print_b();
+void delete_all();
 
 /* We use the readline library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -170,10 +171,14 @@ void main_loop() {
 		else if (strcmp(p, "d") == 0)
 		{
 			p = strtok(NULL," ");
-			for (j=0,N=0;j<strlen(p);j++)N=N*10+p[j]-'0';
-			t=find_NO(N);
-			swaddr_write(t->addr,1,t->prekey);
-			free_bp(t);
+			if (p==NULL)delete_all();
+			else 
+			{
+				for (j=0,N=0;j<strlen(p);j++)N=N*10+p[j]-'0';
+				t=find_NO(N);
+				swaddr_write(t->addr,1,t->prekey);
+				free_bp(t);
+			}
 	 	 } 
 		/* TODO: Add more commands */
 

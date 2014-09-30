@@ -81,4 +81,14 @@ void print_b()
 	for (t=head;t!=NULL;t=t->next)
 		printf("Breakpoint %d 's address is 0x%08x\n",t->NO,t->addr);
 }
+void delete_all()
+{
+	BP *t,*p;
+	for (t=head;t!=NULL;)
+	{
+		p=t;t=t->next;
+		swaddr_write(t->addr,1,t->prekey);
+		free_bp(p);
+	}
+}
 /* TODO: Implement the function of breakpoint */
