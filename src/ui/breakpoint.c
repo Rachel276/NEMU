@@ -39,17 +39,17 @@ void free_bp(BP *bp)
 	     if (t -> next == bp)break;
 	     t = t -> next;
 	}
-	if (t -> next == bp)
+	if (t == NULL)
+	{
+		 head = bp -> next;
+	     bp ->next = free_;
+	     free_ = bp;
+	}
+	else 
 	{
 		t -> next = bp -> next;
 	    bp -> next = free_;
 	    free_ = bp;
-	}
-	else
-	{
-		head = bp -> next;
-		bp ->next = free_;
-		free_ = bp;
 	}
 }
 BP* find_addr()
