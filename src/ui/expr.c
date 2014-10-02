@@ -199,7 +199,7 @@ uint32_t eval(int p,int q)
 			else if (strcmp(tokens[p].str,"$eip")==0) num = cpu.eip;
 			else assert(0);
 		}
-	//	printf("%d\n",num);
+		printf("<%d\n",num);
 		return num;
 	}
 	else if (check_parentheses(p,q) == true){
