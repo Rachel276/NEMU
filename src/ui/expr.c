@@ -212,7 +212,7 @@ uint32_t eval(int p,int q)
 		printf("%d\n",op);
 		if (tokens[op].level == 1)
 		{
-			val1=eval(p-1,q);
+			val1=eval(p+1,q);
 			switch(tokens[op].type){
 				case DEREF:num = swaddr_read(val1,1);break;
 				case '!':num = !val1;break;
