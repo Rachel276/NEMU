@@ -97,7 +97,7 @@ void main_loop() {
 	uint32_t step;
 	while(1) {
 		cmd = rl_gets();
-		printf("%d\n",expr (cmd,1));
+		//printf("%d\n",expr (cmd,1));
 		char *p = strtok(cmd, " ");
 		if(p == NULL) { continue; }
 	//	nemu_state = RUNNING;
@@ -182,7 +182,7 @@ void main_loop() {
 			}
 	 	 } 
 		/* TODO: Add more commands */
-
+		else if (strcmp(p, "p") == 0){printf("%d\n",expr(p,1));}
 		else { printf("Unknown command '%s'\n", p); }
 	//	pieces++;
 	//    printf("%d\n",pieces);
