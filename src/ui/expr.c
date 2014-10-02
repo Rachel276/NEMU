@@ -175,7 +175,7 @@ bool check_parentheses(int p,int q)
 uint32_t eval(int p,int q)
 {
 	uint32_t num=0;
-	printf("%d %d\n",p,q);
+//	printf("%d %d\n",p,q);
 	if (p > q)
 	{
 		printf("This expression is illegal.\n");
@@ -199,7 +199,7 @@ uint32_t eval(int p,int q)
 			else if (strcmp(tokens[p].str,"$eip")==0) num = cpu.eip;
 			else assert(0);
 		}
-		printf("<%d\n",num);
+//		printf("<%d\n",num);
 		return num;
 	}
 	else if (check_parentheses(p,q) == true){
@@ -209,7 +209,7 @@ uint32_t eval(int p,int q)
 	{
 		int op = find_operator(p,q);		
 		uint32_t val1,val2;
-		printf("%d\n",op);
+//		printf("%d\n",op);
 		if (tokens[op].level == 1)
 		{
 			val1=eval(p+1,q);
@@ -312,7 +312,7 @@ uint32_t expr(char *e, bool *success) {
 			 case OR:
 				tokens[i].level=11;
 				break;
-		}
+ 		}
 	}
 	return eval(1,nr_token);
 //	assert(0);
