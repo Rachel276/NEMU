@@ -184,7 +184,7 @@ void main_loop() {
 		/* TODO: Add more commands */
 		else if (strcmp(p, "p") == 0)
 		{
-			p = strtok(NULL," ");
+			p = strtok(NULL,"");
 			printf("%s\n",cmd);
 			printf("%d\n",expr(p,1));
 		}
