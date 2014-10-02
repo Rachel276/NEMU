@@ -123,7 +123,6 @@ static bool make_token(char *e) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
 		}
-		position++;
 	}
 	for (i=1;i<=nr_token;i++)
 		printf("%d %s\n",tokens[i].type,tokens[i].str);
