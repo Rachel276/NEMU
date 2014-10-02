@@ -175,6 +175,7 @@ bool check_parentheses(int p,int q)
 uint32_t eval(int p,int q)
 {
 	uint32_t num=0;
+	printf("%d %d",p,q);
 	if (p > q)
 	{
 		printf("This expression is illegal.\n");
