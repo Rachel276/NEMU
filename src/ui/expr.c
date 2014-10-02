@@ -307,7 +307,7 @@ uint32_t expr(char *e, bool *success) {
 				break;
 		}
 	}
-	return eval(0,strlen(e)-1);
+	return eval(1,nr_token);
 //	assert(0);
 //	return 0;
 }
