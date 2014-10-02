@@ -199,7 +199,7 @@ uint32_t eval(int p,int q)
 			else if (strcmp(tokens[p].str,"$eip")==0) num = cpu.eip;
 			else assert(0);
 		}
-		printf("%d\n",num);
+	//	printf("%d\n",num);
 		return num;
 	}
 	else if (check_parentheses(p,q) == true){
@@ -209,6 +209,7 @@ uint32_t eval(int p,int q)
 	{
 		int op = find_operator(p,q);		
 		uint32_t val1,val2;
+		printf("%d\n",op);
 		if (tokens[op].level == 1)
 		{
 			val1=eval(p-1,q);
@@ -218,12 +219,12 @@ uint32_t eval(int p,int q)
 				case '~':num = ~val1;break;
 				case NEG:num = -val1;break;
 		 	}
-			printf("%d\n",num);
+	//		printf("%d\n",num);
 			return num;
 		}
 		val1=eval(p,op-1);
 		val2=eval(op+1,q);
-		printf("-%d %d\n",val1,val2);
+	//	printf("-%d %d\n",val1,val2);
  		switch(tokens[op].type){
 		 	case '+':return val1+val2;
 			case '-':return val1-val2;
