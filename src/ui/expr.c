@@ -198,6 +198,7 @@ uint32_t eval(int p,int q)
 			else if (strcmp(tokens[p].str,"$eip")==0) num = cpu.eip;
 			else assert(0);
 		}
+		printf("%d\n",num);
 		return num;
 	}
 	else if (check_parentheses(p,q) == true){
@@ -215,11 +216,13 @@ uint32_t eval(int p,int q)
 				case '!':num = !val1;break;
 				case '~':num = ~val1;break;
 				case NEG:num = -val1;break;
-			}
+		 	}
+			printf("%d\n",num);
 			return num;
 		}
 		val1=eval(p,op-1);
 		val2=eval(op+1,q);
+		printf("%d %d\n",val1,val2);
  		switch(tokens[op].type){
 		 	case '+':return val1+val2;
 			case '-':return val1-val2;
@@ -237,10 +240,10 @@ uint32_t eval(int p,int q)
 			case LS :return val1<<val2;
 			case RS :return val1>>val2;
 			case '&':return val1&val2;
-			case '|':return val1|val2;
+		 	case '|':return val1|val2;
 			case '^':return val1^val2;
 			default:assert(0);
-		}
+		} 
 	}
 }
 
