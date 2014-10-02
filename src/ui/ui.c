@@ -182,7 +182,11 @@ void main_loop() {
 			}
 	 	 } 
 		/* TODO: Add more commands */
-		else if (strcmp(p, "p") == 0){printf("%d\n",expr(p,1));}
+		else if (strcmp(p, "p") == 0)
+		{
+			p = strtok(NULL," ");
+			printf("%d\n",expr(p,1));
+		}
 		else { printf("Unknown command '%s'\n", p); }
 	//	pieces++;
 	//    printf("%d\n",pieces);
