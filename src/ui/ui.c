@@ -187,7 +187,6 @@ void main_loop() {
 		else if (strcmp(p, "p") == 0)
 		{
 			p = strtok(NULL,"");
-			printf("%s\n",cmd);
 			printf("%d\n",expr(p,1));
 		}
 		else { printf("Unknown command '%s'\n", p); }
