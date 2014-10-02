@@ -112,7 +112,7 @@ static bool make_token(char *e) {
 				tokens[nr_token].type = rules[i].token_type;
 				tokens[nr_token].str[0] = '\0';
 				if (rules[i].token_type == NUM || rules[i].token_type == HEX || rules[i].token_type == REG){
-					for (j = 0; j < substr_len ;j ++)tokens[nr_token].str[j] = e [j + position];	
+					for (j = 0; j < substr_len ;j ++)tokens[nr_token].str[j] = e [j + position - substr_len];	
 					tokens[nr_token].str[j] = '\0';}
 
 				break;
@@ -123,6 +123,7 @@ static bool make_token(char *e) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
 		}
+		position++;
 	}
 	for (i=1;i<=nr_token;i++)
 		printf("%d %s\n",tokens[i].type,tokens[i].str);
