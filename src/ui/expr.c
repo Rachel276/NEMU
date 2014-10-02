@@ -33,7 +33,7 @@ static struct rule {
 	{"==", EQ},                     // equal
 	{"!=", NQ},                     // unequal
 	{"&&", AND},                    // and
-	{"||", OR},                     // or
+	{"\\|\\|", OR},                     // or
 	{"!", '!'},                     // is zero
     {"<<", LS},                     // left shift
     {">>", RS},                     // right shift
