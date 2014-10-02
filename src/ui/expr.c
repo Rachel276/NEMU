@@ -108,11 +108,12 @@ static bool make_token(char *e) {
 					default: assert(0);
 				}
 */
-			    nr_token++;
-				tokens[nr_token].type = rules[i].token_type;
-				for (j=0;j<substr_len;j++) 
-					tokens[nr_token].str[j] = substr_start[j];
-
+			    if (rules[i].token_type!=NOTYPE){
+					nr_token++;
+					tokens[nr_token].type = rules[i].token_type;
+					for (j=0;j<substr_len;j++) 
+						tokens[nr_token].str[j] = substr_start[j];
+				}
 				break;
 			}
 		}
