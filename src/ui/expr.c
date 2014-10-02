@@ -260,10 +260,10 @@ uint32_t expr(char *e, bool *success) {
 	/* TODO: Implement code to evaluate the expression. */
 	int i;
 	for (i = 1; i <= nr_token; i ++)
-	   if (tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != REG && tokens[i-1].type != HEX)))
+	   if (tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != REG && tokens[i-1].type != HEX &&  tokens[i-1].type !=')')))
 		   tokens[i].type = DEREF;
 	for (i = 1; i <= nr_token; i ++)
-       if (tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != REG && tokens[i-1].type != HEX)))
+       if (tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != REG && tokens[i-1].type != HEX &&  tokens[i-1].type !=')')))
      	   tokens[i].type = NEG;
 	for (i = 1; i <= nr_token; i ++){
 	    switch(tokens[i].type){
