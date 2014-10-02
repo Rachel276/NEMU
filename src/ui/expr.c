@@ -82,7 +82,8 @@ int nr_token;
 
 static bool make_token(char *e) {
 	int position = 0;
-	int i,j;
+	int i;
+	//int j;
 	regmatch_t pmatch;
 	
 	nr_token = 0;
@@ -107,13 +108,13 @@ static bool make_token(char *e) {
 					default: assert(0);
 				}
 
-			    nr_token++;
+			    /*nr_token++;
 				tokens[nr_token].type = rules[i].token_type;
 				tokens[nr_token].str[0] = '\0';
 				if (rules[i].token_type == NUM || rules[i].token_type == HEX || rules[i].token_type == REG){
 					for (j = 0; j < substr_len ;j ++)tokens[nr_token].str[j] = e [j + position];	
 					tokens[nr_token].str[j] = '\0';}
-
+*/
 				break;
 			}
 		}
