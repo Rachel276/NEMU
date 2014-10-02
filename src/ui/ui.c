@@ -145,8 +145,9 @@ void main_loop() {
 		{
 			p=strtok(NULL," ");
 			for (j=0,N=0;j<strlen(p);j++)N=N*10+p[j]-'0';
-			p=strtok(NULL," ");
-			sscanf(p,"%x",&addr); 
+			p=strtok(NULL,"");
+			addr=expr(p,1);
+			//sscanf(p,"%x",&addr); 
             while (N>0)
 			{
 	     		printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
@@ -157,7 +158,8 @@ void main_loop() {
 		else if (strcmp(p, "b") == 0)
 		{
 			p = strtok(NULL,"*");
-			sscanf(p,"%x",&addr);
+			addr=expr(p,1);
+		//	sscanf(p,"%x",&addr);
 		//	printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
 		    t = new_bp();
 			t -> prekey = swaddr_read(addr,1);
