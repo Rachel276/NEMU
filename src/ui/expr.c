@@ -47,7 +47,7 @@ static struct rule {
 	{">", '>'},                     // more than
 	{"0x([0-9]|[a-f]|[A-F])+", HEX},                    // heaxadecimal number
 	{"\\$([a-z]|[A-Z])+", REG},                   // reg name
-	{"[0-9]", NUM}                    // decimal number
+	{"[0-9]+", NUM}                    // decimal number
 
 };
 
@@ -94,7 +94,6 @@ static bool make_token(char *e) {
 			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
-               printf("flag\n");
 				Log("match regex[%d] at position %d with len %d: %.*s", i, position, substr_len, substr_len, substr_start);
 
 				position += substr_len;
