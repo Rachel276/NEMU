@@ -97,7 +97,7 @@ void main_loop() {
 	uint32_t step;
 	while(1) {
 		cmd = rl_gets();
-		expr (cmd,0);
+		expr (cmd,1);
 		char *p = strtok(cmd, " ");
 		if(p == NULL) { continue; }
 	//	nemu_state = RUNNING;
