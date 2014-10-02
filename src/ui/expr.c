@@ -104,10 +104,10 @@ static bool make_token(char *e) {
 				 * Add codes to perform some actions with this token.
 				 */
                 printf("%d\n",position);
-				switch(rules[i].token_type) {
+	/*			switch(rules[i].token_type) {
 					default: assert(0);
 				}
-
+*/
 			    nr_token++;
 				tokens[nr_token].type = rules[i].token_type;
 				tokens[nr_token].str[0] = '\0';
