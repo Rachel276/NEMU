@@ -18,7 +18,7 @@ BP* find_addr();
 BP* find_NO(int);
 void print_b();
 void delete_all();
-
+uint32_t expr(char*, bool ); 
 /* We use the readline library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -97,6 +97,7 @@ void main_loop() {
 	uint32_t step;
 	while(1) {
 		cmd = rl_gets();
+		expr (cmd,0);
 		char *p = strtok(cmd, " ");
 		if(p == NULL) { continue; }
 	//	nemu_state = RUNNING;
