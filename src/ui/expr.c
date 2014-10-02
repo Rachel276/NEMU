@@ -45,8 +45,8 @@ static struct rule {
 	{"\\)", ')'},                     // )
 	{"<", '<'},                     // less than
 	{">", '>'},                     // more than
-	{"0x", HEX},                    // heaxadecimal number
-	{"\\$", REG},                   // reg name
+	{"0x([0-9]|[a-f]|[A-F])", HEX},                    // heaxadecimal number
+	{"\\$([a-z]|[A-Z])", REG},                   // reg name
 	{"[0-9]", NUM}                    // decimal number
 
 };
