@@ -123,8 +123,8 @@ static bool make_token(char *e) {
 			return false;
 		}
 	}
-//	for (i=1;i<=nr_token;i++)
-//		printf("%d %s\n",tokens[i].type,tokens[i].str);
+	for (i=1;i<=nr_token;i++)
+		printf("%d %s\n",tokens[i].type,tokens[i].str);
 
 	return true; 
 }
