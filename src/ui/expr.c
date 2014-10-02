@@ -110,10 +110,8 @@ static bool make_token(char *e) {
 */
 			    nr_token++;
 				tokens[nr_token].type = rules[i].token_type;
-				tokens[nr_token].str[0] = '\0';
-				if (rules[i].token_type == NUM || rules[i].token_type == HEX || rules[i].token_type == REG){
-					for (j = 0; j < substr_len ;j ++)tokens[nr_token].str[j] = e [j + position - substr_len];	
-					tokens[nr_token].str[j] = '\0';}
+				for (j=0;j<substr_len;j++) 
+					tokens[nr_token].str[j] = substr_start[j];
 
 				break;
 			}
