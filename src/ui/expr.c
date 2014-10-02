@@ -169,7 +169,7 @@ bool check_parentheses(int p,int q)
 		if (tokens[i].type == ')')t--;
 		if (t<0)assert(0);
 	}
-	if (il==1)return false;
+	if (il==1 || tokens[p].type!='(' || tokens[q].type!=')')return false;
 	else return true;
 }
 uint32_t eval(int p,int q)
