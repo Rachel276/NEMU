@@ -152,7 +152,7 @@ int  find_operator(int p,int q)
 			i++;
 			continue;
 		}
-		if (l<=tokens[i].level)t=i;
+		if (l<=tokens[i].level){t=i;l=tokens[i].level;}
 		i++;
 	}
 	return t;
