@@ -108,7 +108,7 @@ static bool make_token(char *e) {
 					default: assert(0);
 				}
 */
-			    if (rules[i].token_type!=NOTYPE){
+			    if (i!=0){
 					nr_token++;
 					tokens[nr_token].type = rules[i].token_type;
 					for (j=0;j<substr_len;j++) 
