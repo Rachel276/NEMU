@@ -5,13 +5,17 @@
  */
 #include <sys/types.h>
 #include <regex.h>
+#include <string.h>
+#include "cpu/reg.h"
 
 enum {
-	NOTYPE = 256, EQ, LQ, MQ, NQ, AND, OR, LS, RS, HEX, REG, NUM
+	NOTYPE = 256, EQ, LQ, MQ, NQ, AND, OR, LS, RS, HEX, REG, NUM, DEREF, NEG
 
 	/* TODO: Add more token types */
 
 };
+
+uint32_t swaddr_read(swaddr_t, size_t);
 
 static struct rule {
 	char *regex;
@@ -73,7 +77,7 @@ void init_regex() {
 }
 
 typedef struct token {
-	int type;
+	int type,level;
 	char str[32];
 } Token;
 
@@ -122,10 +126,122 @@ static bool make_token(char *e) {
 			return false;
 		}
 	}
-	for (i=1;i<=nr_token;i++)
-		printf("%d %s\n",tokens[i].type,tokens[i].str);
+	//for (i=1;i<=nr_token;i++)
+	//	printf("%d %s\n",tokens[i].type,tokens[i].str);
 
 	return true; 
+}
+
+int  find_operator(int p,int q)
+{
+	int t=1,i,l=0;
+	bool used;
+//	for (i=1;i<=nr_token;i++)
+	i=p;
+	while (i<=q)
+	{	
+		if (tokens[i].type == NUM || tokens[i].type == HEX || tokens[i].type==REG){i++;continue;}
+		if (tokens[i].type == '(')
+		{
+			used=0;
+			while (i<=nr_token){
+				 if (tokens[i].type == ')'){used=1;break;}
+		       	 i++;
+			}
+			if (used==0)assert(0);
+			i++;
+			continue;
+		}
+		if (l<=tokens[i].level)t=i;
+		i++;
+	}
+	return t;
+}
+
+bool check_parentheses(int p,int q)
+{
+	int i,t=0;
+	bool used=0,il=0;
+	for (i=p;i<=q;i++)
+	{
+		if (t==0 && used)il=1;
+		if (tokens[i].type == '('){used=1;t++;}
+		if (tokens[i].type == ')')t--;
+		if (t<0)assert(0);
+	}
+	if (il==1)return false;
+	else return true;
+}
+uint32_t eval(int p,int q)
+{
+	uint32_t num=0;
+	if (p > q)
+	{
+		printf("This expression is illegal.\n");
+		printf("Please try agian.\n");
+		assert(0);
+		return 0;
+	}
+	else if (p == q){
+		if (tokens[p].type == NUM) sscanf(tokens[p].str,"%d",&num);
+		else if (tokens[p].type == HEX) sscanf(tokens[p].str,"%x",&num);
+		else if (tokens[p].type == REG)
+		{
+			if (strcmp(tokens[p].str,"$eax")==0) num = cpu.eax;
+			else if (strcmp(tokens[p].str,"$ebx")==0) num = cpu.ebx;
+		    else if (strcmp(tokens[p].str,"$ecx")==0) num = cpu.ecx;
+			else if (strcmp(tokens[p].str,"$edx")==0) num = cpu.edx;
+			else if (strcmp(tokens[p].str,"$esp")==0) num = cpu.esp;
+			else if (strcmp(tokens[p].str,"$ebp")==0) num = cpu.ebp;
+			else if (strcmp(tokens[p].str,"$esi")==0) num = cpu.esp;
+			else if (strcmp(tokens[p].str,"$edi")==0) num = cpu.edi;
+			else if (strcmp(tokens[p].str,"$eip")==0) num = cpu.eip;
+			else assert(0);
+		}
+		return num;
+	}
+	else if (check_parentheses(p,q) == true){
+		return eval(p + 1,q - 1);
+	}
+	else 
+	{
+		int op = find_operator(p,q);		
+		uint32_t val1,val2;
+		if (tokens[op].level == 1)
+		{
+			val1=eval(p-1,q);
+			switch(tokens[op].type){
+				case DEREF:num = swaddr_read(val1,1);break;
+				case '!':num = !val1;break;
+				case '~':num = ~val1;break;
+				case NEG:num = -val1;break;
+			}
+			return num;
+		}
+		val1=eval(p,op-1);
+		val2=eval(op+1,q);
+ 		switch(tokens[op].type){
+		 	case '+':return val1+val2;
+			case '-':return val1-val2;
+			case '*':return val1*val2;
+			case '/':return val1/val2;
+			case '%':return val1%val2;
+			case '<':return val1<val2;
+			case '>':return val1>val2;
+			case LQ :return val1<=val2;
+			case MQ :return val1>=val2;
+			case EQ :return val1==val2;
+			case NQ :return val1!=val2;
+			case AND:return val1&&val2;
+			case OR :return val1||val2;
+			case LS :return val1<<val2;
+			case RS :return val1>>val2;
+			case '&':return val1&val2;
+			case '|':return val1|val2;
+			case '^':return val1^val2;
+			default:assert(0);
+		}
+	}
 }
 
 uint32_t expr(char *e, bool *success) {
@@ -135,7 +251,63 @@ uint32_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Implement code to evaluate the expression. */
-	assert(0);
-	return 0;
+	int i;
+	for (i = 1; i <= nr_token; i ++)
+	   if (tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != REG && tokens[i-1].type != HEX)))
+		   tokens[i].type = DEREF;
+	for (i = 1; i <= nr_token; i ++)
+       if (tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != REG && tokens[i-1].type != HEX)))
+     	   tokens[i].type = NEG;
+	for (i = 1; i <= nr_token; i ++){
+	    switch(tokens[i].type){
+		     case DEREF:
+			 case '!':
+			 case '~':
+			 case NEG:
+			    tokens[i].level=1;
+				break;
+			 case '/':
+			 case '*':
+			 case '%':
+			    tokens[i].level=2;
+				break;
+			 case '+':
+			 case '-':
+			    tokens[i].level=3;
+				break;
+			 case LS:
+			 case RS:
+				tokens[i].level=4;
+				break;
+			 case '>':
+			 case LQ:
+			 case '<':
+			 case MQ:
+				tokens[i].level=5;
+				break;
+			 case EQ:
+			 case NQ:
+				tokens[i].level=6;
+				break;
+			 case '&':
+				tokens[i].level=7;
+				break;
+			 case '^':
+				tokens[i].level=8;
+				break;
+			 case '|':
+				tokens[i].level=9;
+				break;
+			 case AND:
+				tokens[i].level=10;
+				break;
+			 case OR:
+				tokens[i].level=11;
+				break;
+		}
+	}
+	return eval(0,strlen(e)-1);
+//	assert(0);
+//	return 0;
 }
 
