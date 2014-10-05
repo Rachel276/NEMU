@@ -13,6 +13,9 @@ void cpu_exec(uint32_t);
 void restart();
 uint32_t swaddr_read(swaddr_t, size_t);
 BP* new_bp();
+BP* new_wbp();
+void print_w();
+int check_wbp();
 void free_bp(BP*);
 BP* find_addr();
 BP* find_NO(int);
@@ -91,7 +94,7 @@ restart_:
 
 void main_loop() {
 	char *cmd;
-	int j,pieces=0,N,bpis=0;
+	int j,pieces=0,N,bpis=0,wbpis=0;
 	swaddr_t addr;
 	BP *t;
 	uint32_t step;
@@ -138,9 +141,10 @@ void main_loop() {
 			else if(p[0]=='b')
 			{
 				print_b();
-			}
+				print_w();
+		 	}
 
-		}
+		} 
 		else if (strcmp(p, "x") == 0)
 		{
 			p=strtok(NULL," ");
@@ -156,7 +160,7 @@ void main_loop() {
 		 	} 
 		} 
 		else if (strcmp(p, "b") == 0)
-		{
+		{ 
 			p = strtok(NULL,"*");
 			addr=expr(p,1);
 		//	sscanf(p,"%x",&addr);
@@ -188,9 +192,18 @@ void main_loop() {
 		{
 			p = strtok(NULL,"");
 			printf("%d\n",expr(p,1));
+		} 
+		else if (strcmp(p, "w") == 0)
+		{
+			t = new_bp();
+			t ->expr = p = strtok(NULL,"");
+			t -> prekey = expr(p,1);
+			wbpis++;
+			t ->NO = wbpis;
 		}
 		else { printf("Unknown command '%s'\n", p); }
+		if (check_wbp() == 0)assert(0);
 	//	pieces++;
 	//    printf("%d\n",pieces);
-	}   
+	}    
 }
