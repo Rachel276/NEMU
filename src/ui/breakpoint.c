@@ -34,7 +34,7 @@ BP* new_bp()
 
 BP* new_wbp()
 {
-//	if (free_ == NULL)assert(0);
+	if (free_ == NULL)assert(0);
 	BP *t;
 	t = free_;free_ = free_-> next;
 	t -> next = whead; whead = t;
@@ -137,7 +137,8 @@ int check_wbp()
 	int r;
 	printf("- -\n");
 	for (t = whead;t != NULL;t = t -> next)
-	{
+	{ 
+		printf("%d\n",t->NO);
 		r = expr(t->expr,1);
 	    printf("%s %d %d\n",t->expr,r,t->prekey);
 		if (r != t -> prekey)return 0;
