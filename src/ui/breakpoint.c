@@ -138,9 +138,10 @@ int check_wbp()
 	for (t = whead;t != NULL;t = t -> next)
 	{
 		r = expr(t->expr,1);
-	    printf("%s %d\n",t->expr,expr(t->expr,1));
+	    printf("%s %d %d\n",t->expr,r,t->prekey);
 		if (r != t -> prekey)return 0;
 	}
+	printf("= =\n");
 	return 1;
 }
 /* TODO: Implement the function of breakpoint */
