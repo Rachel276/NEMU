@@ -34,7 +34,7 @@ BP* new_bp()
 
 BP* new_wbp()
 {
-	if (free_ == NULL)assert(0);
+//	if (free_ == NULL)assert(0);
 	BP *t;
 	t = free_;free_ = free_-> next;
 	t -> next = whead; whead = t;
