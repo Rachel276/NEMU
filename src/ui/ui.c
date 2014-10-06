@@ -199,6 +199,7 @@ void main_loop() {
 			t -> expr = p = strtok(NULL,"");
 			printf("%s\n",t ->expr);
 			t -> prekey = expr(p,1);
+		    printf("%d\n",t ->prekey);
 			wbpis++;
 			t -> NO = wbpis;
 		}
