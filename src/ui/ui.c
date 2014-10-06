@@ -100,6 +100,7 @@ void main_loop() {
 	uint32_t step;
 	while(1) {
 		cmd = rl_gets();
+		printf("%s\n",cmd);
 		//printf("%d\n",expr (cmd,1));
 		char *p = strtok(cmd, " ");
 		if(p == NULL) { continue; }
@@ -196,7 +197,8 @@ void main_loop() {
 		else if (strcmp(p, "w") == 0)
 		{
 			t = new_wbp();
-			t -> expr = p = strtok(NULL,"");
+			p = strtok(NULL,"");
+			t -> expr = p; 
 			printf("%s\n",t ->expr);
 			t -> prekey = expr(p,1);
 		    printf("%d\n",t ->prekey);
