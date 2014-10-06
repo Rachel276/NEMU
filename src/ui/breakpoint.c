@@ -138,7 +138,7 @@ int check_wbp()
 	printf("- -\n");
 	for (t = whead;t != NULL;t = t -> next)
 	{ 
-		printf("%d\n",t->NO);
+		printf("%d %s\n",t->NO,t->expr);
 		r = expr(t->expr,1);
 	    printf("%s %d %d\n",t->expr,r,t->prekey);
 		if (r != t -> prekey)return 0;
