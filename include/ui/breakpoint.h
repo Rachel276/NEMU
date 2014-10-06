@@ -10,7 +10,7 @@ typedef struct breakpoint {
 	struct breakpoint *next;
     swaddr_t prekey;
 	int addr;
-	char *expr;
+	char expr[51];
 	/* TODO: Add more members if necessary */
 
 

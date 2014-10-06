@@ -198,7 +198,8 @@ void main_loop() {
 		{
 			t = new_wbp();
 			p = strtok(NULL,"");
-			t -> expr = p; 
+			for (j=0;j<strlen(p);j++)t -> expr[j] = p[j];
+		    t -> expr[j]='\0';	
 			printf("%s\n",t ->expr);
 			t -> prekey = expr(p,1);
 		    printf("%d\n",t ->prekey);
