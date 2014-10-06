@@ -12,10 +12,10 @@ void init_bp_pool() {
 	for(i = 0; i < NR_BP - 1;  i ++) {
 		bp_pool[i].NO = i;
 		bp_pool[i].next = &bp_pool[i + 1];
-	}
+	} 
 	bp_pool[i].next = NULL;
 
-	head = NULL;whead=NULL;
+	head = NULL; whead = NULL;
 	free_ = bp_pool;
 }
 
@@ -134,12 +134,13 @@ void delete_all()
 int check_wbp()
 {
 	BP *t;
-	for (t=whead;t!=NULL;t=t->next)
-		if (expr(t->expr,1)!=t->prekey)
-		{
-			printf("%s %d\n",t->expr,expr(t->expr,1));
-			return 0;
-		}
+	int r;
+	for (t = whead;t != NULL;t = t -> next)
+	{
+		r = expr(t->expr,1);
+	    printf("%s %d\n",t->expr,expr(t->expr,1));
+		if (r != t -> prekey)return 0;
+	}
 	return 1;
 }
 /* TODO: Implement the function of breakpoint */

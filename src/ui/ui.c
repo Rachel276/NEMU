@@ -204,7 +204,8 @@ void main_loop() {
 			t -> NO = wbpis;
 		}
 		else { printf("Unknown command '%s'\n", p); }
-		//if (check_wbp() == 0);//assert(0);
+		check_wbp();
+	   // if (check_wbp() == 0);//assert(0);
 	//	pieces++;
 	//    printf("%d\n",pieces);
 	}    
