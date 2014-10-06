@@ -196,10 +196,11 @@ void main_loop() {
 		else if (strcmp(p, "w") == 0)
 		{
 			t = new_wbp();
-			t ->expr = p = strtok(NULL,"");
+			t -> expr = p = strtok(NULL,"");
+			printf("%s\n",t ->expr);
 			t -> prekey = expr(p,1);
 			wbpis++;
-			t ->NO = wbpis;
+			t -> NO = wbpis;
 		}
 		else { printf("Unknown command '%s'\n", p); }
 		if (check_wbp() == 0)assert(0);
