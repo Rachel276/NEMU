@@ -135,6 +135,7 @@ int check_wbp()
 {
 	BP *t;
 	int r;
+	printf("- -\n");
 	for (t = whead;t != NULL;t = t -> next)
 	{
 		r = expr(t->expr,1);
