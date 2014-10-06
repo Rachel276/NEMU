@@ -135,7 +135,11 @@ int check_wbp()
 {
 	BP *t;
 	for (t=whead;t!=NULL;t=t->next)
-		if (expr(t->expr,1)!=t->prekey)return 0;
+		if (expr(t->expr,1)!=t->prekey)
+		{
+			printf("%s %d\n",t->expr,expr(t->expr,1));
+			return 0;
+		}
 	return 1;
 }
 /* TODO: Implement the function of breakpoint */
