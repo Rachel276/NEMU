@@ -195,7 +195,7 @@ void main_loop() {
 		} 
 		else if (strcmp(p, "w") == 0)
 		{
-			t = new_bp();
+			t = new_wbp();
 			t ->expr = p = strtok(NULL,"");
 			t -> prekey = expr(p,1);
 			wbpis++;
