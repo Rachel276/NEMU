@@ -109,6 +109,12 @@ void load_breakpoint()
 		swaddr_write(t->addr,1,0xcc);
 	}
 }
+void load_watchpoint()
+{
+	BP *t;
+	for (t=whead;t!=NULL;t=t->next)
+		t->prekey=expr(t->expr,1);
+}
 void print_b()
 {
 	BP *t;
@@ -131,19 +137,20 @@ void delete_all()
 		free_bp(p);
 	}
 }
-int check_wbp()
+bool check_w()
 {
 	BP *t;
 	int r;
-	printf("- -\n");
+	bool flag=0;
+//	printf("- -\n");
 	for (t = whead;t != NULL;t = t -> next)
-	{ 
-		printf("%d %s\n",t->NO,t->expr);
+	{  
+//		printf("%d %s\n",t->NO,t->expr);
 		r = expr(t->expr,1);
-	    printf("%s %d %d\n",t->expr,r,t->prekey);
-		if (r != t -> prekey)return 0;
-	}
-	printf("= =\n");
-	return 1;
+//	    printf("%s %d %d\n",t->expr,r,t->prekey);
+		if (r != t -> prekey){t ->prekey = r;flag=1;}
+ 	}
+	return flag;
+//	printf("= =\n");
 }
 /* TODO: Implement the function of breakpoint */

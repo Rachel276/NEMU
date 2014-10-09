@@ -11,6 +11,8 @@ void load_prog();
 void init_dram();
 BP* find_addr();
 void load_breakpoint();
+void load_watchpoint();
+int check_w();
 
 char assembly[40];
 jmp_buf jbuf;	/* Make it easy to perform exception handling */
@@ -29,6 +31,7 @@ void restart() {
 	init_dram();
 	
 	load_breakpoint();
+	load_watchpoint();
 }
 
 static void print_bin_instr(swaddr_t eip, int len) {
@@ -67,24 +70,27 @@ void cpu_exec(volatile uint32_t n) {
 			printf("Breakpoint %d at 0x%08x\n",t -> NO,t -> addr);
 			nemu_state = BREAK1;
 			return;
-		}	 
+		}	  
 
 		if(n_temp != -1 || (enable_debug && !quiet)) {
 			print_bin_instr(eip_temp, instr_len);
 			puts(assembly);
-		}
+		} 
 
 		if(nemu_state == BREAK1)
 		{
 			swaddr_write(eip_temp,1,0xcc);
 			nemu_state = RUNNING;
-		}
+		} 
 
 
 		if(nemu_state == INT) {
 			printf("\n\nUser interrupt\n");
 			return;
-		} 
+		}  
 		else if(nemu_state == END) { return; }
-	}
+		if (check_w())return;
+
+ 	}
+
 }
