@@ -143,7 +143,7 @@ void delete_all()
 		swaddr_write(p->addr,1,p->prekey);
 		free_bp(p);
 	}
-	for (t=head;t!=NULL;)
+	for (t=whead;t!=NULL;)
 	{
 		p=t;t=t->next;
 		swaddr_write(p->addr,1,p->prekey);
