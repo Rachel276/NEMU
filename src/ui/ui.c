@@ -13,12 +13,13 @@ void cpu_exec(uint32_t);
 void restart();
 uint32_t swaddr_read(swaddr_t, size_t);
 BP* new_bp();
-BP* new_wbp();
+BP* new_wp();
 void print_w();
-int check_wbp();
 void free_bp(BP*);
+void free_wp(BP*);
 BP* find_addr();
-BP* find_NO(int);
+BP* findb_NO(int);
+BP* findw_NO(int);
 void print_b();
 void delete_all();
 uint32_t expr(char*, bool ); 
@@ -183,9 +184,14 @@ void main_loop() {
 			else 
 			{
 				for (j=0,N=0;j<strlen(p);j++)N=N*10+p[j]-'0';
-				t=find_NO(N);
-				swaddr_write(t->addr,1,t->prekey);
-				free_bp(t);
+				t=findb_NO(N);
+				if (t!=NULL)
+				{
+					swaddr_write(t->addr,1,t->prekey);
+					free_bp(t);
+				}
+				t=findw_NO(N);
+				if (t!=NULL)free_wp(t);
 			}
 	 	 } 
 		/* TODO: Add more commands */
@@ -196,7 +202,7 @@ void main_loop() {
 		} 
 		else if (strcmp(p, "w") == 0)
 		{
-			t = new_wbp();
+			t = new_wp();
 			p = strtok(NULL,"");
 			for (j=0;j<strlen(p);j++)t -> expr[j] = p[j];
 		    t -> expr[j]='\0';	

@@ -32,7 +32,7 @@ BP* new_bp()
 	return t;
 }
 
-BP* new_wbp()
+BP* new_wp()
 {
 	if (free_ == NULL)assert(0);
 	BP *t;
@@ -63,7 +63,7 @@ void free_bp(BP *bp)
 	}
 }
 
-void free_wbp(BP *bp)
+void free_wp(BP *bp)
 {
 	BP *t = whead;
 	while (t != NULL)
@@ -93,10 +93,17 @@ BP* find_addr()
 		if (t->addr==cpu.eip)break;
 	return t;
 }
-BP* find_NO(int NO)
+BP* findb_NO(int NO)
 {
 	BP *t;
 	for (t=head;t!=NULL;t=t->next)
+		if (t->NO==NO)break;
+	return t;
+}
+BP* findw_NO(int NO)
+{
+	BP *t;
+	for (t=whead;t!=NULL;t=t->next)
 		if (t->NO==NO)break;
 	return t;
 }
@@ -135,6 +142,12 @@ void delete_all()
 		p=t;t=t->next;
 		swaddr_write(p->addr,1,p->prekey);
 		free_bp(p);
+	}
+	for (t=head;t!=NULL;)
+	{
+		p=t;t=t->next;
+		swaddr_write(p->addr,1,p->prekey);
+		free_wp(p);
 	}
 }
 bool check_w()
