@@ -101,7 +101,6 @@ void main_loop() {
 	uint32_t step;
 	while(1) {
 		cmd = rl_gets();
-		printf("%s\n",cmd);
 		//printf("%d\n",expr (cmd,1));
 		char *p = strtok(cmd, " ");
 		if(p == NULL) { continue; }
