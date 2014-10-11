@@ -194,16 +194,19 @@ void main_loop() {
 			else 
 			{
 				for (j=0,N=0;j<strlen(p);j++)N=N*10+p[j]-'0';
-				t=findb_NO(N);
-				if (t!=NULL)
+				if (N<=32)
 				{
+					t=findb_NO(N);
 					swaddr_write(t->addr,1,t->prekey);
 					free_bp(t);
 				}
-				t=findw_NO(N);
-				if (t!=NULL)free_wp(t);
-			}
-	 	 } 
+				else
+				{
+					t=findw_NO(N);
+					free_wp(t);
+				}
+			 }
+	 	 }  
 		/* TODO: Add more commands */
 		else if (strcmp(p, "p") == 0)
 		{
@@ -229,7 +232,7 @@ void main_loop() {
 			for (j=0;j<strlen(p);j++)t -> expr[j] = p[j];
 		    t -> expr[j]='\0';	
 			wbpis++;
-			t -> NO = wbpis;
+			t -> NO = wbpis+32;
 		} 
 		else { printf("Unknown command '%s'\n", p); }
 		//check_wbp();
