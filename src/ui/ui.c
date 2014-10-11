@@ -22,7 +22,7 @@ BP* findb_NO(int);
 BP* findw_NO(int);
 void print_b();
 void delete_all();
-uint32_t expr(char*, bool ); 
+uint32_t expr(char*, bool* ); 
 /* We use the readline library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -99,6 +99,7 @@ void main_loop() {
 	swaddr_t addr;
 	BP *t;
 	uint32_t step;
+	bool success;
 	while(1) {
 		cmd = rl_gets();
 		//printf("%d\n",expr (cmd,1));
@@ -147,11 +148,16 @@ void main_loop() {
 
 		} 
 		else if (strcmp(p, "x") == 0)
-		{
-			p=strtok(NULL," ");
+		{ 
+			p=strtok(NULL," ");success=true;
 			for (j=0,N=0;j<strlen(p);j++)N=N*10+p[j]-'0';
 			p=strtok(NULL,"");
-			addr=expr(p,1);
+			addr=expr(p,&success);
+			if (success==false)
+			{
+				printf("The expression if illegal!\n");
+				continue;
+			}
 			//sscanf(p,"%x",&addr); 
             while (N>0)
 			{
@@ -162,8 +168,13 @@ void main_loop() {
 		} 
 		else if (strcmp(p, "b") == 0)
 		{ 
-			p = strtok(NULL,"*");
-			addr=expr(p,1);
+			p = strtok(NULL,"*");success=true;
+			addr=expr(p,&success);
+			if (success==false)
+			{
+				printf("The expression if illegal!\n");
+				continue;
+			}
 		//	sscanf(p,"%x",&addr);
 		//	printf("0x%08x: 0x%08x\n",addr,swaddr_read(addr,4));
 		    t = new_bp();
@@ -196,19 +207,30 @@ void main_loop() {
 		/* TODO: Add more commands */
 		else if (strcmp(p, "p") == 0)
 		{
-			p = strtok(NULL,"");
-			printf("%d\n",expr(p,1));
-		} 
+			p = strtok(NULL,"");success=true;
+			addr=expr(p,&success);
+			if (success==false)
+			{
+				printf("The expression if illegal!\n");
+				continue;
+			}
+			printf("%d\n",addr);
+		}  
 		else if (strcmp(p, "w") == 0)
 		{
+			p = strtok(NULL,"");success=true;
+			addr=expr(p,&success);
+			if (success==false)
+			{
+				printf("The expression if illegal!\n");
+				continue;
+			} 
 			t = new_wp();
-			p = strtok(NULL,"");
 			for (j=0;j<strlen(p);j++)t -> expr[j] = p[j];
 		    t -> expr[j]='\0';	
-			t -> prekey = expr(p,1);
 			wbpis++;
 			t -> NO = wbpis;
-		}
+		} 
 		else { printf("Unknown command '%s'\n", p); }
 		//check_wbp();
 	    //if (check_wbp() == 0)assert(0);
