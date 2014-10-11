@@ -197,13 +197,18 @@ void main_loop() {
 				if (N<=32)
 				{
 					t=findb_NO(N);
-					swaddr_write(t->addr,1,t->prekey);
-					free_bp(t);
+					if (t!=NULL)
+					{
+						swaddr_write(t->addr,1,t->prekey);
+						free_bp(t);
+					}
+					else printf("There doesn't exist %d breakpoint.",N);
 				}
 				else
 				{
 					t=findw_NO(N);
-					free_wp(t);
+					if (t!=NULL)free_wp(t);
+					else printf("There doesn;t exist %d watchpoint.",N);
 				}
 			 }
 	 	 }  
