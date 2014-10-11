@@ -158,29 +158,28 @@ int  find_operator(int p,int q)
 	return t;
 }
 
-bool check_parentheses(int p,int q)
+bool check_parentheses(int p,int q,bool* success)
 {
 	int i,t=0;
 	bool used=0,il=0;
 	for (i=p;i<=q;i++)
-	{
+	{ 
 		if (t==0 && used)il=1;
 		if (tokens[i].type == '('){used=1;t++;}
 		if (tokens[i].type == ')')t--;
-		if (t<0)assert(0);
+		if (t<0){*success=0;return false;}
 	}
+	if (t!=0){*success=0;return false;}
 	if (il==1 || tokens[p].type!='(' || tokens[q].type!=')')return false;
 	else return true;
 }
-uint32_t eval(int p,int q)
+uint32_t eval(int p,int q,bool* success)
 {
 	uint32_t num=0;
 //	printf("%d %d\n",p,q);
 	if (p > q)
 	{
-		printf("This expression is illegal.\n");
-		printf("Please try agian.\n");
-		assert(0);
+		*success=false;
 		return 0;
 	}
 	else if (p == q){
@@ -197,34 +196,36 @@ uint32_t eval(int p,int q)
 			else if (strcmp(tokens[p].str,"$esi")==0) num = cpu.esp;
 			else if (strcmp(tokens[p].str,"$edi")==0) num = cpu.edi;
 			else if (strcmp(tokens[p].str,"$eip")==0) num = cpu.eip;
-			//else assert(0);
+			else {*success=false;return 0;}
 		}
+		else {*success=false;return 0;}
 //		printf("<%d\n",num);
 		return num;
 	}
-	else if (check_parentheses(p,q) == true){
-		return eval(p + 1,q - 1);
+	else if (check_parentheses(p,q,success) == true){
+		return eval(p + 1,q - 1,success);
 	}
-	else 
+	else if (*success==true)
 	{
 		int op = find_operator(p,q);		
 		uint32_t val1,val2;
 //		printf("%d\n",op);
 		if (tokens[op].level == 1)
 		{
-			val1=eval(p+1,q);
+			val1=eval(p+1,q,success);
 			switch(tokens[op].type){
 				case DEREF:num = swaddr_read(val1,1);break;
 				case '!':num = !val1;break;
 				case '~':num = ~val1;break;
 				case NEG:num = -val1;break;
+				default :*success=0;return 0;
 		 	}
 	//		printf("%d\n",num);
 			return num;
 		}
 //		printf("%d\n",op);
-		val1=eval(p,op-1);
-		val2=eval(op+1,q);
+		val1=eval(p,op-1,success);
+		val2=eval(op+1,q,success);
 	//	printf("-%d %d\n",val1,val2);
  		switch(tokens[op].type){
 		 	case '+':return val1+val2;
@@ -248,6 +249,7 @@ uint32_t eval(int p,int q)
 			default:assert(0);
 		} 
 	}
+	else return 0;
 }
 
 uint32_t expr(char *e, bool *success) {
@@ -314,7 +316,7 @@ uint32_t expr(char *e, bool *success) {
 				break;
  		}
 	}
-	return eval(1,nr_token);
+	return eval(1,nr_token,success);
 //	assert(0);
 //	return 0;
 }
