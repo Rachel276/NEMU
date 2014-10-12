@@ -202,13 +202,13 @@ void main_loop() {
 						swaddr_write(t->addr,1,t->prekey);
 						free_bp(t);
 					}
-					else printf("There doesn't exist %d breakpoint.",N);
+					else printf("There doesn't exist %d breakpoint.\n",N);
 				}
 				else
 				{
 					t=findw_NO(N);
 					if (t!=NULL)free_wp(t);
-					else printf("There doesn;t exist %d watchpoint.",N);
+					else printf("There doesn;t exist %d watchpoint.\n",N);
 				}
 			 }
 	 	 }  
