@@ -1,7 +1,7 @@
 CC      = gcc
 LD		= ld
 CFLAGS  = -m32 -Wall -Werror -static -I..
-LDFLAGS = -melf_i386 -e -T ../link.lds
+LDFLAGS = -melf_i386 -e main -T ../link.lds
 
 SRCS = $(shell ls *.c)
 OBJS = $(SRCS:.c=)
