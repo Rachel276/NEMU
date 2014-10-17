@@ -29,7 +29,7 @@ void restart() {
 
 	cpu.eip = LOADER_START;
 	cpu.ebp = 0;
-	cpu.esp = 0x80000000;
+	cpu.esp = 0x8000000;
 	init_dram();
 	
 	load_breakpoint();
