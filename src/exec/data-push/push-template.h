@@ -5,6 +5,7 @@
 
 make_helper(concat(push_r_,SUFFIX)){
 	int reg_code = instr_fetch(eip, 1) & 0x7;
+	printf("%d\n",reg_code);
 	int reg_m = 0x4;
 	REG(reg_m) = REG(reg_m) - DATA_BYTE;
 	MEM_W(REG(reg_m),REG(reg_code));
