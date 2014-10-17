@@ -3,10 +3,9 @@
 #include "cpu/modrm.h"
 #include "cpu/reg.h"
 
-make_helper(concat(test_i2r_, SUFFIX)){
-    DATA_TYPE imm = instr_fetch(eip ,DATA_BYTE);
-	int reg_code = instr_fetch(eip + DATA_BYTE, 1) & 0x7;
-	DATA_TYPE res = REG(reg_code) & imm;
+make_helper(concat(test_i2a_, SUFFIX)){
+	DATA_TYPE imm = instr_fetch(eip, DATA_BYTE);
+	DATA_TYPE res = REG(R_EAX) & imm;
 	DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
 	if (sf && res == 1)cpu.SF = 1;
 	else cpu.SF = 0;
@@ -22,16 +21,17 @@ make_helper(concat(test_i2r_, SUFFIX)){
 	else cpu.PF = 0;
 	cpu.CF = cpu.OF = 0;
 
-	print_asm("test" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(reg_code));
+	print_asm("test" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(R_EAX));
 	return DATA_BYTE + 1;
 }
 
 make_helper(concat(test_i2rm_, SUFFIX)){
 	ModR_M m;
-	DATA_TYPE imm = instr_fetch(eip ,DATA_BYTE);
-	m.val = instr_fetch(eip + DATA_BYTE + 1, 1);
+	DATA_TYPE imm;
+	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
 //		REG(m.R_M) = REG(m.R_M) & imm;
+		imm = instr_fetch(eip + 1 + 1, DATA_BYTE);
 		DATA_TYPE res = REG(m.R_M) & imm;
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
 		if (sf && res == 1)cpu.SF = 1;
@@ -53,7 +53,8 @@ make_helper(concat(test_i2rm_, SUFFIX)){
  	}
 	else {
 		swaddr_t addr;
-		int len = read_ModR_M(eip + DATA_BYTE + 1, &addr);
+		int len = read_ModR_M(eip + 1, &addr);
+		imm = instr_fetch(eip + 1 + len, DATA_BYTE);
 //		MEM_W(addr, MEM_R(addr) & imm);
 		DATA_TYPE res = MEM_R(addr) & imm;
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);

@@ -15,8 +15,8 @@
 
 extern char suffix;
 
-make_helper(test_i2r_v){
-	return (suffix == 'l' ? test_i2r_l(eip) : test_i2r_w(eip));
+make_helper(test_i2a_v){
+	return (suffix == 'l' ? test_i2a_l(eip) : test_i2a_w(eip));
 }
 
 make_helper(test_i2rm_v){
