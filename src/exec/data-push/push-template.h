@@ -10,6 +10,7 @@ make_helper(concat(push_r_,SUFFIX)){
 	REG(reg_m) = REG(reg_m) - DATA_BYTE;
 	printf("%d %d %d\n",DATA_BYTE,REG(reg_m),REG(reg_code));
 	MEM_W(REG(reg_m),REG(reg_code));
+	printf("0 0\n");
 	
 	print_asm("push" str(SUFFIX) " %%%s", REG_NAME(reg_code));
 	return 1;
