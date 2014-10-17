@@ -5,12 +5,9 @@
 
 make_helper(concat(push_r_,SUFFIX)){
 	int reg_code = instr_fetch(eip, 1) & 0x7;
-	printf("%d\n",reg_code);
 	int reg_m = 0x4;
 	REG(reg_m) = REG(reg_m) - DATA_BYTE;
-	printf("%d 0x%8x 0x%8x\n",DATA_BYTE,REG(reg_m),REG(reg_code));
 	MEM_W(REG(reg_m),REG(reg_code));
-	printf("0 0\n");
 	
 	print_asm("push" str(SUFFIX) " %%%s", REG_NAME(reg_code));
 	return 1;
