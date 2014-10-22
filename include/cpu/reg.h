@@ -29,11 +29,11 @@ typedef union {
 
 	struct{
 		uint8_t CF	:1;
-		uint8_t		:1;
+		uint8_t a1	:1;
 		uint8_t PF	:1;
-		uint8_t		:1;
+		uint8_t	a2	:1;
 		uint8_t AF	:1;
-		uint8_t		:1;
+		uint8_t	a3	:1;
 		uint8_t ZF	:1;
 		uint8_t SF	:1;
 		uint8_t TF	:1;
