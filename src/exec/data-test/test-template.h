@@ -4,7 +4,7 @@
 #include "cpu/reg.h"
 
 make_helper(concat(test_i2a_, SUFFIX)){
-	DATA_TYPE imm = instr_fetch(eip, DATA_BYTE);
+	DATA_TYPE imm = instr_fetch(eip + 1, DATA_BYTE);
 	DATA_TYPE res = REG(R_EAX) & imm;
 	DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
 	if (sf && res == 1)cpu.SF = 1;
