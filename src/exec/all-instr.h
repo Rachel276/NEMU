@@ -8,3 +8,4 @@
 #include "data-xchg/xchg.h"
 
 #include "misc/misc.h"
+#include "opcode/opcode.h"
