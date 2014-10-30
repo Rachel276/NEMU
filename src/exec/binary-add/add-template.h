@@ -48,7 +48,7 @@ make_helper(concat(add_i2rm_, SUFFIX)) {
 		int i,num=0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
-			if (sf && res == sf)num++;
+			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		}
 		if (num % 2 == 1)cpu.PF = 1;
@@ -75,15 +75,15 @@ make_helper(concat(add_i2rm_, SUFFIX)) {
 		int i,num=0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
-			if (sf && res == sf)num++;
+			if ((sf & res) == sf)num++;
 			sf <<= 1;
-		}
+	 	}
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
 
 		print_asm("add" str(SUFFIX) " $0x%x,%s", imm, ModR_M_asm);
 		return len + DATA_BYTE + 1;
-	} 
+	}  
 }
 
 make_helper(concat(add_ib2rm_, SUFFIX)){
@@ -94,7 +94,7 @@ make_helper(concat(add_ib2rm_, SUFFIX)){
 		int i,num=0;
 		imm = instr_fetch(eip + 1 + 1, 1) & 0xff;
 		DATA_TYPE sf = imm >> 7;
-		for (i = 8, sf = sf << 8 ; i <= DATA_BYTE * 8; i ++, sf <<= 1) 
+		for (i = 8, sf = sf << 8 ; i < DATA_BYTE * 8; i ++, sf <<= 1) 
 		   imm = imm | sf;	
 
 		DATA_TYPE res = REG(m.R_M) + imm;
@@ -108,8 +108,8 @@ make_helper(concat(add_ib2rm_, SUFFIX)){
 		if (res < REG(m.R_M) && res < imm)cpu.CF = 1;
 		else cpu.CF = 0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
-		{ 
-			if (sf && res == sf)num++;
+		{
+			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		}
 		if (num % 2 == 1)cpu.PF = 1;
@@ -117,14 +117,14 @@ make_helper(concat(add_ib2rm_, SUFFIX)){
 		
 		print_asm("add" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(m.R_M));
 		return 3;
-	}
+	} 
 	else { 
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
 		int i,num=0;
 		imm = instr_fetch(eip + 1 + len, 1) & 0xff;
 		DATA_TYPE sf = imm >> 7;
-		for (i = 8, sf = sf << 8 ; i <= DATA_BYTE * 8; i ++, sf <<= 1)
+		for (i = 8, sf = sf << 8 ; i < DATA_BYTE * 8; i ++, sf <<= 1)
 			imm = imm | sf;
 
 		DATA_TYPE res = MEM_R(addr) + imm;
@@ -138,8 +138,8 @@ make_helper(concat(add_ib2rm_, SUFFIX)){
 		if (res < MEM_R(addr) && res < imm)cpu.CF = 1;
 		else cpu.CF = 0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
-		{ 
-			if (sf && res == sf)num++;
+		{  
+			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		}
 		if (num % 2 == 1)cpu.PF = 1;
@@ -147,7 +147,7 @@ make_helper(concat(add_ib2rm_, SUFFIX)){
 
 		print_asm("add" str(SUFFIX) " $0x%x,%s", imm, ModR_M_asm);
 		return len + 2;
-	}
+	} 
 }
 
 make_helper(concat(add_r2rm_, SUFFIX)) {
@@ -168,16 +168,16 @@ make_helper(concat(add_r2rm_, SUFFIX)) {
 		int i,num = 0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
-			if (sf && res == sf)num++;
+			if ((sf & res) == sf)num++;
 			sf <<= 1;
-		}
+	 	}
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
 
 		print_asm("add" str(SUFFIX) " %%%s,%%%s", REG_NAME(m.reg), REG_NAME        (m.R_M));
 		return 2;
-	} 
-	else {
+	}  
+	else { 
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
 		DATA_TYPE res = MEM_R(addr) + REG(m.reg);
@@ -193,8 +193,8 @@ make_helper(concat(add_r2rm_, SUFFIX)) {
 		else cpu.CF = 0;
 		int i,num=0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
-		{
-			if (sf && res == sf)num++;
+		{ 
+			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		} 
 		if (num % 2 == 1)cpu.PF = 1;
@@ -223,15 +223,15 @@ make_helper(concat(add_rm2r_, SUFFIX)) {
 		int i,num=0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
-			if (sf && res == sf)num++;
+			if ((sf & res) == sf)num++;
 			sf <<= 1;
-		}
+	 	}
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
 		print_asm("add" str(SUFFIX) " %%%s,%%%s", REG_NAME(m.R_M), REG_NAME(m.reg));
 		return 2;
-	} 
-	else {
+	}  
+	else { 
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
 		DATA_TYPE res = REG(m.reg) + MEM_R(addr);
@@ -248,9 +248,9 @@ make_helper(concat(add_rm2r_, SUFFIX)) {
 		int i,num=0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
-			if (sf && res == sf)num++;
+			if ((sf & res) == sf)num++;
 			sf <<= 1;
-		}
+		} 
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
 		print_asm("add" str(SUFFIX) " %%%s,%s", REG_NAME(m.reg), ModR_M_asm)        ;
