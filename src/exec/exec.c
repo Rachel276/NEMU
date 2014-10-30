@@ -8,8 +8,8 @@ typedef int (*helper_fun)(swaddr_t);
 /* TODO: Add more instructions!!! */
 
 helper_fun opcode_table [256] = {
-/* 0x00 */	inv, inv, inv, inv, 
-/* 0x04 */	inv, inv, inv, inv, 
+/* 0x00 */	add_r2rm_b, add_r2rm_v, add_rm2r_b, add_rm2r_v, 
+/* 0x04 */	add_i2a_b, add_i2a_v, inv, inv, 
 /* 0x08 */	inv, inv, inv, inv, 
 /* 0x0c */	inv, inv, inv, inv, 
 /* 0x10 */	inv, inv, inv, inv, 
@@ -40,7 +40,7 @@ helper_fun opcode_table [256] = {
 /* 0x74 */	je_rel_b, inv, inv, inv,
 /* 0x78 */	inv, inv, inv, inv, 
 /* 0x7c */	inv, inv, inv, inv, 
-/* 0x80 */	cmp_i2rm_b, cmp_i2rm_v, nemu_trap, cmp_ib2rm_v, 
+/* 0x80 */	bai_i2rm_b, bai_i2rm_v, nemu_trap, bai_ib2rm_v, 
 /* 0x84 */	test_r2rm_b, test_r2rm_v, xchg_rm2r_b, xchg_rm2r_v, 
 /* 0x88 */	mov_r2rm_b, mov_r2rm_v, mov_rm2r_b, mov_rm2r_v,
 /* 0x8c */	inv, inv, inv, inv, 
@@ -61,7 +61,7 @@ helper_fun opcode_table [256] = {
 /* 0xc8 */	inv, inv, inv, inv,
 /* 0xcc */	int3, inv, inv, inv,
 /* 0xd0 */	inv, inv, inv, inv,
-/* 0xd4 */	inv, opcode, inv, inv,
+/* 0xd4 */	inv, inv, inv, inv,
 /* 0xd8 */	inv, inv, inv, inv,
 /* 0xdc */	inv, inv, inv, inv,
 /* 0xe0 */	inv, inv, inv, inv,
@@ -145,6 +145,9 @@ make_helper(opcode) {
 	return opcode_table1[ instr_fetch(eip, 1) ](eip);
 }
 
+
+
 make_helper(exec) {
 	return opcode_table[ instr_fetch(eip, 1) ](eip);
+return opcode_table1[ instr_fetch(eip, 1) ](eip);
 }
