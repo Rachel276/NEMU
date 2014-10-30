@@ -142,12 +142,11 @@ helper_fun opcode_table1 [256] = {
 };
 
 make_helper(opcode) {
-	return opcode_table1[ instr_fetch(eip, 1) ](eip);
+	return opcode_table1[ instr_fetch(eip, 1) ](eip) + 1;
 }
 
 
 
 make_helper(exec) {
 	return opcode_table[ instr_fetch(eip, 1) ](eip);
-return opcode_table1[ instr_fetch(eip, 1) ](eip);
 }
