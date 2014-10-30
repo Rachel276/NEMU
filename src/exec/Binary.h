@@ -1,5 +1,5 @@
-//#ifndef __BINARY_H__
-//#define __BINARY_H__
+#ifndef __BINARY_H_
+#define __BINARY_H__
 
 #include "exec/helper.h"
 //#include "exec/template-start.h"
@@ -41,4 +41,4 @@ make_helper(bai_ib2rm_v)
 }
 
 //#include "exec/template-end.h"
-
+#endif
