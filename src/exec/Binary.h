@@ -36,7 +36,6 @@ make_helper(bai_ib2rm_v)
 {
 	ModR_M m;
 	m.val =instr_fetch(eip + 1, 1);
-	printf("%x\n",m.opcode);
 	switch (m.opcode) { 
 		case 0: return add_ib2rm_v(eip);
 		case 5: return sub_ib2rm_v(eip);
