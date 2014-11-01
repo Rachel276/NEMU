@@ -7,6 +7,7 @@
 #include "binary-add/add.h"
 #include "binary-cmp/cmp.h"
 #include "binary-sub/sub.h"
+#include "binary-idiv/idiv.h"
 
 make_helper(bai_i2rm_b)
 {
@@ -40,6 +41,16 @@ make_helper(bai_ib2rm_v)
 		case 0: return add_ib2rm_v(eip);
 		case 5: return sub_ib2rm_v(eip);
 		case 7: return cmp_ib2rm_v(eip);
+	 }
+	return 0;
+}
+
+make_helper(bai_rm_v)
+{
+	ModR_M m;
+	m.val =instr_fetch(eip + 1, 1);
+	switch (m.opcode) {
+		case 7: return idiv_rm_v(eip);
 	}
 	return 0;
 }
