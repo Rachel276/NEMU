@@ -49,28 +49,28 @@ make_helper(concat(je_rel_, SUFFIX)) {
 
 make_helper(concat(jg_rel_, SUFFIX)) {
 		DATA_TYPE rel = instr_fetch(eip + 1, DATA_BYTE);
-		print_asm("jg" str(SUFIIX) " %x", eip + rel + 2);
+		print_asm("jg" str(SUFFIX) " %x", eip + rel + 2);
 		if (cpu.ZF == 0 && cpu.SF == cpu.OF)return DATA_BYTE + 2;
 		else return rel + 2;
 }
 
 make_helper(concat(jge_rel_, SUFFIX)) {
 		DATA_TYPE rel = instr_fetch(eip + 1, DATA_BYTE);
-		print_asm("jge" str(SUFIIX) " %x", eip + rel + 2);
+		print_asm("jge" str(SUFFIX) " %x", eip + rel + 2);
 		if (cpu.SF == cpu.OF)return DATA_BYTE + 2;
 		else return rel + 2;
 }
 
 make_helper(concat(jl_rel_, SUFFIX)) {
 		DATA_TYPE rel = instr_fetch(eip + 1, DATA_BYTE);
-		print_asm("jl" str(SUFIIX) " %x", eip + rel + 2);
+		print_asm("jl" str(SUFFIX) " %x", eip + rel + 2);
 		if (cpu.SF != cpu.OF)return DATA_BYTE + 2;
 		else return rel + 2;
 }
 
 make_helper(concat(jle_rel_, SUFFIX)) {
 		DATA_TYPE rel = instr_fetch(eip + 1, DATA_BYTE);
-		print_asm("jle" str(SUFIIX) " %x", eip + rel + 2);
+		print_asm("jle" str(SUFFIX) " %x", eip + rel + 2);
 		if (cpu.ZF == 1 || cpu.SF != cpu.OF)return DATA_BYTE + 2;
 		else return rel + 2;
 }
