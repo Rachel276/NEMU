@@ -11,7 +11,9 @@
 #include "logical-test/test.h"
 
 #include "control-jcc/jcc.h"
+#include "control-jmp/jmp.h"
 
 #include "misc/misc.h"
 #include "opcode/opcode.h"
 #include "Binary.h"
+#include "Control.h"
