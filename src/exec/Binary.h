@@ -11,7 +11,7 @@
 make_helper(bai_i2rm_b)
 {
 	ModR_M m;
-	m.val = instr_fetch(eip, 1);
+	m.val = instr_fetch(eip + 1, 1);
  	switch (m.opcode) {
 		case 0: return add_i2rm_b(eip);
 		case 5: return sub_i2rm_b(eip);
@@ -23,7 +23,7 @@ make_helper(bai_i2rm_b)
 make_helper(bai_i2rm_v)
 {
 	ModR_M m;
-	m.val =instr_fetch(eip, 1);
+	m.val =instr_fetch(eip + 1, 1);
 	switch (m.opcode) { 
 		case 0: return add_i2rm_v(eip);
 		case 5: return sub_i2rm_v(eip);
@@ -35,7 +35,7 @@ make_helper(bai_i2rm_v)
 make_helper(bai_ib2rm_v)
 {
 	ModR_M m;
-	m.val =instr_fetch(eip, 1);
+	m.val =instr_fetch(eip + 1, 1);
 	printf("%x\n",m.opcode);
 	switch (m.opcode) { 
 		case 0: return add_ib2rm_v(eip);
