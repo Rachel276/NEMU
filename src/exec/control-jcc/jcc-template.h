@@ -72,8 +72,8 @@ make_helper(concat(jle_rel_, SUFFIX)) {
 		DATA_TYPE_S rel = instr_fetch(eip + 1, DATA_BYTE);
 		//printf("%\n",(int)(rel));
 		print_asm("jle" str(SUFFIX) " %x", eip + rel + 2);
-		if (cpu.ZF == 1 || cpu.SF != cpu.OF)return DATA_BYTE + 2;
-		else return rel + 2;
+		if (cpu.ZF == 1 || cpu.SF != cpu.OF)return DATA_BYTE + 1;
+		else return rel + 1;
 }
 
 make_helper(concat(jne_rel_, SUFFIX)) {
