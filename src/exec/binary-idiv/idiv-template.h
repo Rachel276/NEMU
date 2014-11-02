@@ -14,9 +14,9 @@ make_helper(concat(idiv_rm_, SUFFIX)) {
 		reg_w(R_EAX) = (rem & 0xff00) | (quo & 0x00ff);
 
 		print_asm("idiv" str(SUFFIX) " %%%s", REG_NAME(m.R_M));
-		return 1;
+		return 2;
 	}
-	else { 
+	else {  
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
 		quo = reg_w(R_EAX) / MEM_R(addr);
@@ -24,7 +24,7 @@ make_helper(concat(idiv_rm_, SUFFIX)) {
 		reg_w(R_EAX) = (rem & 0xff00) | (quo & 0x00ff);
 
 		print_asm("idiv" str(SUFFIX) " %s", ModR_M_asm);
-		return len;
+		return len + 1 ;
 	}  
 }
 
@@ -41,7 +41,7 @@ make_helper(concat(idiv_a2rm_, SUFFIX)) {
 		REG(R_EDX) = rem;
 
 		print_asm("idiv" str(SUFFIX) " %%%s", REG_NAME(m.R_M));
-		return 1;
+		return 2;
 	}
 	else { 
 		swaddr_t addr;
@@ -52,7 +52,7 @@ make_helper(concat(idiv_a2rm_, SUFFIX)) {
 		REG(R_EDX) = rem;
 
 		print_asm("idiv" str(SUFFIX) " %s", ModR_M_asm);
-		return len;
+		return len + 1;
 	} 
 }
 
