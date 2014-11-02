@@ -5,7 +5,7 @@
 
 make_helper(concat(sal_o2rm_, SUFFIX)) {
 	ModR_M m;
-	DATA_TYPE imm,sf;
+	DATA_TYPE_S imm,sf;
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
 		imm = REG(m.R_M) << 1;
@@ -52,7 +52,7 @@ make_helper(concat(sal_o2rm_, SUFFIX)) {
 
 make_helper(concat(sal_c2rm_, SUFFIX)) {
 	ModR_M m;
-	DATA_TYPE imm,sf,res;
+	DATA_TYPE_S imm,sf,res;
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){ 
 		imm = REG(R_ECX) & 0xff;
@@ -101,7 +101,7 @@ make_helper(concat(sal_c2rm_, SUFFIX)) {
 
 make_helper(concat(sal_ib2rm_, SUFFIX)) {
 	ModR_M m;
-	DATA_TYPE imm,sf,res;
+	DATA_TYPE_S imm,sf,res;
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
 		imm = instr_fetch(eip + 1 + 1, 1);
@@ -151,7 +151,7 @@ make_helper(concat(sal_ib2rm_, SUFFIX)) {
 
 make_helper(concat(sar_o2rm_, SUFFIX)) {
 	ModR_M m;
-	DATA_TYPE imm,sf;
+	DATA_TYPE_S imm,sf;
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
 		imm = REG(m.R_M) >> 1;
@@ -194,7 +194,7 @@ make_helper(concat(sar_o2rm_, SUFFIX)) {
 
 make_helper(concat(sar_c2rm_, SUFFIX)) {
 	ModR_M m;
-	DATA_TYPE imm,sf,res;
+	DATA_TYPE_S imm,sf,res;
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){ 
 		imm = REG(R_ECX) & 0xff;
@@ -239,7 +239,7 @@ make_helper(concat(sar_c2rm_, SUFFIX)) {
 
 make_helper(concat(sar_ib2rm_, SUFFIX)) {
 	ModR_M m;
-	DATA_TYPE imm,sf,res;
+	DATA_TYPE_S imm,sf,res;
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
 		imm = instr_fetch(eip + 1 + 1, 1);
@@ -253,7 +253,7 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 		{
 			if ((sf & res) == sf)num++;
 			sf <<= 1;
-		}
+		} 
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
 		
@@ -279,7 +279,7 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 
 		print_asm("sar" str(SUFFIX) " $0x%x,%s", imm, ModR_M_asm);
 		return len + 1 + 1;
-	}   
+	}    
 }
 
 #include "exec/template-end.h"
