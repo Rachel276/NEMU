@@ -34,9 +34,11 @@ make_helper(concat(idiv_a2rm_, SUFFIX)) {
 	unsigned long long imm ;
 	m.val = instr_fetch(eip + 1, 1);
 	imm = (REG(R_EDX) << ((DATA_BYTE - 1)* 8)) | (REG(R_EAX));
+	printf("%lld ",imm);
 	if (m.mod == 3 ){
 		quo = imm / REG(m.R_M);
 		rem = imm % REG(m.R_M);
+		printf("0x%x 0x%x\n",quo,rem);
 		REG(R_EAX) = quo;
 		REG(R_EDX) = rem;
 
@@ -48,6 +50,7 @@ make_helper(concat(idiv_a2rm_, SUFFIX)) {
 		int len = read_ModR_M(eip + 1, &addr);
 		quo = imm / MEM_R(addr);
 		rem = imm % MEM_R(addr);
+		printf("0x%x 0x%x\n",quo,rem);
 		REG(R_EAX) = quo;
 		REG(R_EDX) = rem;
 
