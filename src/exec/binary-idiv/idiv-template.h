@@ -14,7 +14,7 @@ make_helper(concat(idiv_rm_, SUFFIX)) {
 		reg_w(R_EAX) = (rem & 0xff00) | (quo & 0x00ff);
 
 		print_asm("idiv" str(SUFFIX) " %%%s", REG_NAME(m.R_M));
-		return DATA_BYTE + 1;
+		return 1;
 	}
 	else { 
 		swaddr_t addr;
@@ -24,8 +24,8 @@ make_helper(concat(idiv_rm_, SUFFIX)) {
 		reg_w(R_EAX) = (rem & 0xff00) | (quo & 0x00ff);
 
 		print_asm("idiv" str(SUFFIX) " %s", ModR_M_asm);
-		return len + DATA_BYTE;
-	}
+		return len;
+	}  
 }
 
 make_helper(concat(idiv_a2rm_, SUFFIX)) {
@@ -34,14 +34,14 @@ make_helper(concat(idiv_a2rm_, SUFFIX)) {
 	unsigned long long imm ;
 	m.val = instr_fetch(eip + 1, 1);
 	imm = (REG(R_EDX) << ((DATA_BYTE - 1)* 8)) | (REG(R_EAX));
-	if (m.mod == 3){
+	if (m.mod == 3 ){
 		quo = imm / REG(m.R_M);
 		rem = imm % REG(m.R_M);
 		REG(R_EAX) = quo;
 		REG(R_EDX) = rem;
 
 		print_asm("idiv" str(SUFFIX) " %%%s", REG_NAME(m.R_M));
-		return DATA_BYTE + 1;
+		return 1;
 	}
 	else { 
 		swaddr_t addr;
@@ -52,8 +52,8 @@ make_helper(concat(idiv_a2rm_, SUFFIX)) {
 		REG(R_EDX) = rem;
 
 		print_asm("idiv" str(SUFFIX) " %s", ModR_M_asm);
-		return len + DATA_BYTE;
-	}
+		return len;
+	} 
 }
 
 #include "exec/template-end.h"

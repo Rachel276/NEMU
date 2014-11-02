@@ -121,7 +121,7 @@ make_helper(concat(sal_ib2rm_, SUFFIX)) {
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
 		
-		print_asm("sal" str(SUFFIX) " %%%s", REG_NAME(m.R_M));
+		print_asm("sal" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(m.R_M));
 		return 1 + 1 + 1;
 	}
 	else {
@@ -143,9 +143,9 @@ make_helper(concat(sal_ib2rm_, SUFFIX)) {
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
 
-		print_asm("sal" str(SUFFIX) " %s", ModR_M_asm);
+		print_asm("sal" str(SUFFIX) " $0x%x,%s", imm, ModR_M_asm);
 		return len + 1 + 1;
-	} 
+	}  
 }
 
 
@@ -257,9 +257,9 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
 		
-		print_asm("sar" str(SUFFIX) " %%%s", REG_NAME(m.R_M));
+		print_asm("sar" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(m.R_M));
 		return 1 + 1 + 1;
-	}
+	} 
 	else {
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
@@ -277,9 +277,9 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
 
-		print_asm("sar" str(SUFFIX) " %s", ModR_M_asm);
+		print_asm("sar" str(SUFFIX) " $0x%x,%s", imm, ModR_M_asm);
 		return len + 1 + 1;
-	} 
+	}   
 }
 
 #include "exec/template-end.h"
