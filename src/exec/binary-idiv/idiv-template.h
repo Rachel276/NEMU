@@ -1,6 +1,7 @@
 #include "exec/helper.h"
 #include "exec/template-start.h"
 #include "cpu/modrm.h"
+#include "cpu/reg.h"
 #include "common.h"
 #include "memory.h"
 
@@ -34,7 +35,7 @@ make_helper(concat(idiv_a2rm_, SUFFIX)) {
 	unsigned long long imm ;
 	m.val = instr_fetch(eip + 1, 1);
 	imm = (REG(R_EDX) << ((DATA_BYTE - 1)* 8)) | (REG(R_EAX));
-	printf("%d %d %lld ",REG(R_EDX),REG(R_EAX),imm);
+	printf("%d %d %lld %d ",REG(R_EAX),REG(R_EDX),imm,cpu.eax);
 	if (m.mod == 3 ){
 		quo = imm / REG(m.R_M);
 		rem = imm % REG(m.R_M);
