@@ -3,6 +3,6 @@
 
 make_helper(idiv_rm_b);
 
-make_helper(idiv_rm_v);
+make_helper(idiv_a2rm_v);
 
 #endif

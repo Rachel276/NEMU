@@ -45,15 +45,26 @@ make_helper(bai_ib2rm_v)
 	return 0;
 }
 
+make_helper(bai_rm_b)
+{
+	ModR_M m;
+	m.val =instr_fetch(eip + 1, 1);
+	switch (m.opcode) {
+		case 0: return test_i2rm_b(eip);
+		case 7: return idiv_rm_b(eip);
+	} 
+	return 0;
+}
+
 make_helper(bai_rm_v)
 {
 	ModR_M m;
 	m.val =instr_fetch(eip + 1, 1);
 	switch (m.opcode) {
-		case 7: return idiv_rm_v(eip);
-	}
+		case 0: return test_i2rm_v(eip);
+		case 7: return idiv_a2rm_v(eip);
+	} 
 	return 0;
 }
-
 //#include "exec/template-end.h"
 #endif

@@ -14,6 +14,6 @@
 
 extern char suffix;
 
-make_helper(idiv_rm_v) {
-	return (suffix == 'l' ? idiv_rm_l(eip) : idiv_rm_w(eip));
+make_helper(idiv_a2rm_v) {
+	return (suffix == 'l' ? idiv_a2rm_l(eip) : idiv_a2rm_w(eip));
 }

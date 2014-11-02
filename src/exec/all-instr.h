@@ -18,3 +18,4 @@
 #include "opcode/opcode.h"
 #include "Binary.h"
 #include "Control.h"
+#include "Logical.h"

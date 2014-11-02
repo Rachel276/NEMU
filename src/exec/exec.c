@@ -56,11 +56,11 @@ helper_fun opcode_table [256] = {
 /* 0xb4 */	mov_i2r_b, mov_i2r_b, mov_i2r_b, mov_i2r_b,
 /* 0xb8 */	mov_i2r_v, mov_i2r_v, mov_i2r_v, mov_i2r_v, 
 /* 0xbc */	mov_i2r_v, mov_i2r_v, mov_i2r_v, mov_i2r_v, 
-/* 0xc0 */	inv, inv, inv, inv,
+/* 0xc0 */	li_ib2rm_b, li_ib2rm_v, inv, inv,
 /* 0xc4 */	inv, inv, mov_i2rm_b, mov_i2rm_v,
 /* 0xc8 */	inv, inv, inv, inv,
 /* 0xcc */	int3, inv, inv, inv,
-/* 0xd0 */	inv, inv, inv, inv,
+/* 0xd0 */	li_o2rm_b, li_o2rm_v, li_c2rm_b, li_c2rm_v,
 /* 0xd4 */	inv, inv, inv, inv,
 /* 0xd8 */	inv, inv, inv, inv,
 /* 0xdc */	inv, inv, inv, inv,
@@ -69,7 +69,7 @@ helper_fun opcode_table [256] = {
 /* 0xe8 */	inv, jmp_rel_v, inv, jmp_rel_b,
 /* 0xec */	inv, inv, inv, inv,
 /* 0xf0 */	inv, inv, inv, inv,
-/* 0xf4 */	inv, inv, test_i2rm_b, test_i2rm_v,
+/* 0xf4 */	inv, inv, bai_rm_b, bai_rm_v,
 /* 0xf8 */	inv, inv, inv, inv,
 /* 0xfc */	inv, inv, inv, cti_mpr_v
 };
