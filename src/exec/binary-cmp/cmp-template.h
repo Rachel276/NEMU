@@ -137,7 +137,7 @@ make_helper(concat(cmp_ib2rm_, SUFFIX)){
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
 
-		printf("0x%x\n",res);
+		printf("0x%x 0x%x 0x%x\n",res,MEM_R(addr),imm);
 		print_asm("cmp" str(SUFFIX) " $0x%x,%s", imm, ModR_M_asm);
 		return len + 2;
 	} 
