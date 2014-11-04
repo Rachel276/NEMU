@@ -244,6 +244,7 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 	if (m.mod == 3){
 		imm = instr_fetch(eip + 1 + 1, 1);
 		res = REG(m.R_M) >> imm;
+		printf("%d ",REG(R_EAX));
 		cpu.SF = MSB(res);cpu.CF = LSB(res);
 		printf("%d ",REG(R_EAX));
 		if (res == 0)cpu.ZF = 1;
