@@ -8,12 +8,13 @@
 #include "binary-cmp/cmp.h"
 #include "binary-sub/sub.h"
 #include "binary-idiv/idiv.h"
+#include "logical-test/test.h"
 
 make_helper(bai_i2rm_b)
 {
 	ModR_M m;
 	m.val = instr_fetch(eip + 1, 1);
- 	switch (m.opcode) {
+	switch (m.opcode) { 
 		case 0: return add_i2rm_b(eip);
 		case 5: return sub_i2rm_b(eip);
 		case 7: return cmp_i2rm_b(eip);
