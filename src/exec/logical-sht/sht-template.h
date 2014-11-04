@@ -247,7 +247,9 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 		cpu.SF = MSB(res);cpu.CF = LSB(res);
 		if (res == 0)cpu.ZF = 1;
 		else cpu.ZF = 0;
+		printf("%d ",REG(R_EAX));
 		REG(m.R_M) = res;
+		printf("%d ",REG(R_EAX));
 		int i,num = 0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{
@@ -256,7 +258,8 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 		} 
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
-		
+
+		printf("%d\n",REG(R_EAX));	
 		print_asm("sar" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(m.R_M));
 		return 1 + 1 + 1;
 	} 
