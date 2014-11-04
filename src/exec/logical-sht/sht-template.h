@@ -249,25 +249,25 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 	if (m.mod == 3){
 		imm = instr_fetch(eip + 1 + 1, 1);
 		res = REG(m.R_M) >> imm;
-		printf("%d ",REG(R_EAX));
+	//	printf("%d ",REG(R_EAX));
 		eflags.SF = MSB(res);eflags.CF = LSB(res);
-		printf("%d ",REG(R_EAX));
+	//	printf("%d ",REG(R_EAX));
 		if (res == 0)eflags.ZF = 1;
 		else eflags.ZF = 0;
-		printf("%d ",REG(R_EAX));
+	//	printf("%d ",REG(R_EAX));
 		REG(m.R_M) = res;
-		printf("%d ",REG(R_EAX));
+	//	printf("%d ",REG(R_EAX));
 		int i,num = 0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{
 			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		}
-	   printf("%d ",REG(R_EAX));	   
+	  // printf("%d ",REG(R_EAX));	   
 		if (num % 2 == 1)eflags.PF = 1;
 		else eflags.PF = 0;
 
-		printf("%d\n",REG(R_EAX));	
+		//printf("%d\n",REG(R_EAX));	
 		print_asm("sar" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(m.R_M));
 		return 1 + 1 + 1;
 	} 
@@ -291,7 +291,7 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 
 		print_asm("sar" str(SUFFIX) " $0x%x,%s", imm, ModR_M_asm);
 		return len + 1 + 1;
-	}    
+	}     
 }
 
 #include "exec/template-end.h"
