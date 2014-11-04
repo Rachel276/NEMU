@@ -26,24 +26,25 @@ typedef union {
     	uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
 	    swaddr_t eip;
 	};
-
-	struct{
-		uint8_t CF	:1;
-		uint8_t a1	:1;
-		uint8_t PF	:1;
-		uint8_t	a2	:1;
-		uint8_t AF	:1;
-		uint8_t	a3	:1;
-		uint8_t ZF	:1;
-		uint8_t SF	:1;
-		uint8_t TF	:1;
-		uint8_t IF	:1;
-		uint8_t DF	:1;
-		uint8_t OF	:1;
-	};
 } CPU_state;
 
+typedef struct{
+	uint8_t CF	:1;
+	uint8_t a1	:1;
+	uint8_t PF	:1;
+	uint8_t	a2	:1;
+	uint8_t AF	:1;
+	uint8_t	a3	:1;
+	uint8_t ZF	:1;
+	uint8_t SF	:1;
+	uint8_t TF	:1;
+	uint8_t IF	:1;
+	uint8_t DF	:1;
+	uint8_t OF	:1;
+} CPU_flags;
+
 extern CPU_state cpu;
+CPU_flags eflags;
 
 enum { R_EAX, R_ECX, R_EDX, R_EBX, R_ESP, R_EBP, R_ESI, R_EDI };
 enum { R_AX, R_CX, R_DX, R_BX, R_SP, R_BP, R_SI, R_DI };

@@ -8,21 +8,21 @@ make_helper(concat(sub_i2a_, SUFFIX)) {
 	DATA_TYPE res = REG(R_EAX) - imm;
 	REG(R_EAX) = res;
 	DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
-	if (MSB(REG(R_EAX)) != MSB(imm) && MSB(res) == MSB(imm))cpu.OF = 1;
-	else cpu.OF = 0;
-	cpu.SF = MSB(res);
-	if (res == 0)cpu.ZF = 1;
-	else cpu.ZF = 0;
-	if (REG(R_EAX) < imm)cpu.CF = 1;
-	else cpu.CF = 0;
+	if (MSB(REG(R_EAX)) != MSB(imm) && MSB(res) == MSB(imm))eflags.OF = 1;
+	else eflags.OF = 0;
+	eflags.SF = MSB(res);
+	if (res == 0)eflags.ZF = 1;
+	else eflags.ZF = 0;
+	if (REG(R_EAX) < imm)eflags.CF = 1;
+	else eflags.CF = 0;
 	int i,num=0;
 	for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 	{  
 		if ((sf & res) == sf)num++;
 		sf <<= 1;
  	}
-	if (num % 2 == 1)cpu.PF = 1;
-	else cpu.PF = 0;
+	if (num % 2 == 1)eflags.PF = 1;
+	else eflags.PF = 0;
 
 	print_asm("sub" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(R_EAX));
 	return DATA_BYTE + 1;
@@ -37,21 +37,21 @@ make_helper(concat(sub_i2rm_, SUFFIX)) {
 		DATA_TYPE res = REG(m.R_M) - imm;
 		REG(m.R_M) = res;
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
-		if (MSB(REG(m.R_M)) != MSB(imm) && MSB(res) == MSB(imm))cpu.OF = 1;
-		else cpu.OF = 0;
-		cpu.SF = MSB(res);
-		if (res == 0)cpu.ZF = 1;
-		else cpu.ZF = 0;
-		if (REG(m.R_M) < imm)cpu.CF = 1;
-		else cpu.CF = 0;
+		if (MSB(REG(m.R_M)) != MSB(imm) && MSB(res) == MSB(imm))eflags.OF = 1;
+		else eflags.OF = 0;
+		eflags.SF = MSB(res);
+		if (res == 0)eflags.ZF = 1;
+		else eflags.ZF = 0;
+		if (REG(m.R_M) < imm)eflags.CF = 1;
+		else eflags.CF = 0;
 		int i,num=0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
 			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		}
-		if (num % 2 == 1)cpu.PF = 1;
-		else cpu.PF = 0;
+		if (num % 2 == 1)eflags.PF = 1;
+		else eflags.PF = 0;
 
 		print_asm("sub" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(m.R_M));
 		return 1 + DATA_BYTE + 1;
@@ -64,21 +64,21 @@ make_helper(concat(sub_i2rm_, SUFFIX)) {
 	    MEM_W(addr,res);
 
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
-		if (MSB(MEM_R(addr)) != MSB(imm) && MSB(res) == MSB(imm))cpu.OF = 1;
-		else cpu.OF = 0;
-		cpu.SF = MSB(res);
-		if (res == 0)cpu.ZF = 1;
-		else cpu.ZF = 0;
-		if (MEM_R(addr) < imm)cpu.CF = 1;
-		else cpu.CF = 0;
+		if (MSB(MEM_R(addr)) != MSB(imm) && MSB(res) == MSB(imm))eflags.OF = 1;
+		else eflags.OF = 0;
+		eflags.SF = MSB(res);
+		if (res == 0)eflags.ZF = 1;
+		else eflags.ZF = 0;
+		if (MEM_R(addr) < imm)eflags.CF = 1;
+		else eflags.CF = 0;
 		int i,num=0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
 			if ((sf & res) == 1)num++;
 			sf <<= 1;
 		}
-		if (num % 2 == 1)cpu.PF = 1;
-		else cpu.PF = 0;
+		if (num % 2 == 1)eflags.PF = 1;
+		else eflags.PF = 0;
 
 		print_asm("sub" str(SUFFIX) " $0x%x,%s", imm, ModR_M_asm);
 		return len + DATA_BYTE + 1;
@@ -98,20 +98,20 @@ make_helper(concat(sub_ib2rm_, SUFFIX)){
 
 		DATA_TYPE res = REG(m.R_M) - imm;
 		REG(m.R_M) = res;
-		if (MSB(REG(m.R_M)) != MSB(imm) && MSB(res) == MSB(imm))cpu.OF = 1;
-		else cpu.OF = 0;
-		cpu.SF = MSB(res);
-		if (res == 0)cpu.ZF = 1;
-		else cpu.ZF = 0;
-		if (REG(m.R_M) < imm)cpu.CF = 1;
-		else cpu.CF = 0;
+		if (MSB(REG(m.R_M)) != MSB(imm) && MSB(res) == MSB(imm))eflags.OF = 1;
+		else eflags.OF = 0;
+		eflags.SF = MSB(res);
+		if (res == 0)eflags.ZF = 1;
+		else eflags.ZF = 0;
+		if (REG(m.R_M) < imm)eflags.CF = 1;
+		else eflags.CF = 0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{
 			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		}
-		if (num % 2 == 1)cpu.PF = 1;
-		else cpu.PF = 0;
+		if (num % 2 == 1)eflags.PF = 1;
+		else eflags.PF = 0;
 
 		print_asm("sub" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(m.R_M));
 		return 3;
@@ -127,20 +127,20 @@ make_helper(concat(sub_ib2rm_, SUFFIX)){
 
 		DATA_TYPE res = MEM_R(addr) - imm;
 		MEM_W(addr,res);
-		if (MSB(MEM_R(addr)) != MSB(imm) && MSB(res) == MSB(imm))cpu.OF = 1;
-		else cpu.OF = 0;
-		cpu.SF = MSB(res);
-		if (res == 0)cpu.ZF = 1;
-		else cpu.ZF = 0;
-		if (MEM_R(addr) < imm)cpu.CF = 1;
-		else cpu.CF = 0;
+		if (MSB(MEM_R(addr)) != MSB(imm) && MSB(res) == MSB(imm))eflags.OF = 1;
+		else eflags.OF = 0;
+		eflags.SF = MSB(res);
+		if (res == 0)eflags.ZF = 1;
+		else eflags.ZF = 0;
+		if (MEM_R(addr) < imm)eflags.CF = 1;
+		else eflags.CF = 0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
 			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		}
-		if (num % 2 == 1)cpu.PF = 1;
-		else cpu.PF = 0;
+		if (num % 2 == 1)eflags.PF = 1;
+		else eflags.PF = 0;
 
 		print_asm("sub" str(SUFFIX) " $0x%x,%s", imm, ModR_M_asm);
 		return len + 2;
@@ -155,21 +155,21 @@ make_helper(concat(sub_r2rm_, SUFFIX)) {
 		REG(m.R_M) = res;
 
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
-		if (MSB(REG(m.R_M)) != MSB(REG(m.reg)) && MSB(res) == MSB(REG(m.reg)))cpu.OF = 1;
-		else cpu.OF = 0;
-		cpu.SF = MSB(res);
-		if (res == 0)cpu.ZF = 1;
-		else cpu.ZF = 0;
-		if (REG(m.R_M) < REG(m.reg))cpu.CF = 1;
-		else cpu.CF = 0;
+		if (MSB(REG(m.R_M)) != MSB(REG(m.reg)) && MSB(res) == MSB(REG(m.reg)))eflags.OF = 1;
+		else eflags.OF = 0;
+		eflags.SF = MSB(res);
+		if (res == 0)eflags.ZF = 1;
+		else eflags.ZF = 0;
+		if (REG(m.R_M) < REG(m.reg))eflags.CF = 1;
+		else eflags.CF = 0;
 		int i,num=0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
 			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		}
-		if (num % 2 == 1)cpu.PF = 1;
-		else cpu.PF = 0;
+		if (num % 2 == 1)eflags.PF = 1;
+		else eflags.PF = 0;
 
 		print_asm("sub" str(SUFFIX) " %%%s,%%%s", REG_NAME(m.reg), REG_NAME    (m.R_M));
 		return 2;
@@ -181,21 +181,21 @@ make_helper(concat(sub_r2rm_, SUFFIX)) {
 		MEM_W(addr,res);
 
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
-		if (MSB(MEM_R(addr)) != MSB(REG(m.reg)) && MSB(res) == MSB(REG(m.reg)))cpu.OF = 1;
-		else cpu.OF = 0;
-		cpu.SF = MSB(res);
-		if (res == 0)cpu.ZF = 1;
-		else cpu.ZF = 0;
-		if (MEM_R(addr) < REG(m.reg))cpu.CF = 1;
-		else cpu.CF = 0;
+		if (MSB(MEM_R(addr)) != MSB(REG(m.reg)) && MSB(res) == MSB(REG(m.reg)))eflags.OF = 1;
+		else eflags.OF = 0;
+		eflags.SF = MSB(res);
+		if (res == 0)eflags.ZF = 1;
+		else eflags.ZF = 0;
+		if (MEM_R(addr) < REG(m.reg))eflags.CF = 1;
+		else eflags.CF = 0;
 		int i,num=0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
 			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		}
-		if (num % 2 == 1)cpu.PF = 1;
-		else cpu.PF = 0;
+		if (num % 2 == 1)eflags.PF = 1;
+		else eflags.PF = 0;
 
 		print_asm("sub" str(SUFFIX) " %%%s,%s",REG_NAME(m.reg), ModR_M_asm)    ;
 		return len + 1;
@@ -210,21 +210,21 @@ make_helper(concat(sub_rm2r_, SUFFIX)) {
 		REG(m.reg) = res;
 
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
-		if (MSB(REG(m.reg)) != MSB(REG(m.R_M)) && MSB(res) == MSB(REG(m.R_M)))cpu.OF = 1;
-		else cpu.OF = 0;
-		cpu.SF = MSB(res);
-		if (res == 0)cpu.ZF = 1;
-		else cpu.ZF = 0;
-		if (REG(m.reg) < REG(m.R_M))cpu.CF = 1;
-		else cpu.CF = 0;
+		if (MSB(REG(m.reg)) != MSB(REG(m.R_M)) && MSB(res) == MSB(REG(m.R_M)))eflags.OF = 1;
+		else eflags.OF = 0;
+		eflags.SF = MSB(res);
+		if (res == 0)eflags.ZF = 1;
+		else eflags.ZF = 0;
+		if (REG(m.reg) < REG(m.R_M))eflags.CF = 1;
+		else eflags.CF = 0;
 		int i,num=0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
 			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		}
-		if (num % 2 == 1)cpu.PF = 1;
-		else cpu.PF = 0;
+		if (num % 2 == 1)eflags.PF = 1;
+		else eflags.PF = 0;
 		print_asm("sub" str(SUFFIX) " %%%s,%%%s", REG_NAME(m.R_M), REG_NAME(    m.reg));
 		return 2;
 	} 
@@ -235,21 +235,21 @@ make_helper(concat(sub_rm2r_, SUFFIX)) {
 		REG(m.reg) = res;
 
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
-		if (MSB(MEM_R(addr)) != MSB(REG(m.reg)) && MSB(res) == MSB(MEM_R(addr)))cpu.OF = 1;
-		else cpu.OF = 0;
-		cpu.SF = MSB(res);
-		if (res == 0)cpu.ZF = 1;
-		else cpu.ZF = 0;
-		if (REG(m.reg) < MEM_R(addr))cpu.CF = 1;
-		else cpu.CF = 0;
+		if (MSB(MEM_R(addr)) != MSB(REG(m.reg)) && MSB(res) == MSB(MEM_R(addr)))eflags.OF = 1;
+		else eflags.OF = 0;
+		eflags.SF = MSB(res);
+		if (res == 0)eflags.ZF = 1;
+		else eflags.ZF = 0;
+		if (REG(m.reg) < MEM_R(addr))eflags.CF = 1;
+		else eflags.CF = 0;
 		int i,num=0;
 		for (i = 0,sf = 0x1,res = res & 0xff;i < 8; i++)
 		{ 
 			if ((sf & res) == sf)num++;
 			sf <<= 1;
 		}
-		if (num % 2 == 1)cpu.PF = 1;
-		else cpu.PF = 0;
+		if (num % 2 == 1)eflags.PF = 1;
+		else eflags.PF = 0;
 		print_asm("sub" str(SUFFIX) " %%%s,%s", REG_NAME(m.reg), ModR_M_asm)    ;
 		return len + 1;
 	} 

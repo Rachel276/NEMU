@@ -31,7 +31,7 @@ void restart() {
 	cpu.ebp = 0;
 	cpu.esp = 0x8000000;
 	init_dram();
-    cpu.a1=1;cpu.a2=0;cpu.a3=0;	
+    eflags.a1=1;eflags.a2=0;eflags.a3=0;	
 	load_breakpoint();
 	load_watchpoint();
 }
