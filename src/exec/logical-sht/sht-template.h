@@ -245,6 +245,7 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 		imm = instr_fetch(eip + 1 + 1, 1);
 		res = REG(m.R_M) >> imm;
 		cpu.SF = MSB(res);cpu.CF = LSB(res);
+		printf("%d ",REG(R_EAX));
 		if (res == 0)cpu.ZF = 1;
 		else cpu.ZF = 0;
 		printf("%d ",REG(R_EAX));
@@ -255,7 +256,8 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 		{
 			if ((sf & res) == sf)num++;
 			sf <<= 1;
-		} 
+		}
+	   printf("%d ",REG(R_EAX));	   
 		if (num % 2 == 1)cpu.PF = 1;
 		else cpu.PF = 0;
 
