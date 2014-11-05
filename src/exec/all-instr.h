@@ -10,6 +10,7 @@
 #include "binary-idiv/idiv.h"
 
 #include "logical-test/test.h"
+#include "logical-setcc/setcc.h"
 
 #include "control-jcc/jcc.h"
 #include "control-jmp/jmp.h"
