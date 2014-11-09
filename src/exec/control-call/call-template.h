@@ -11,6 +11,7 @@ make_helper(concat(call_rel_, SUFFIX)) {
 	if (DATA_BYTE == 2)
 		cpu.eip = (cpu.eip + rel) & 0x0000ffff;
 	else cpu.eip = cpu.eip + rel;
+	printf("%x\n",eip);
 	print_asm("call" str(SUFFIX) " %x",eip + rel + 2);
 	return rel + 2;
 }
