@@ -203,6 +203,7 @@ uint32_t eval(int p,int q,bool* success)
 		else if (tokens[p].type == VIA)
 		{
 			num = find_tokens(tokens[p].str);
+			printf("%d\n",num);
 			if (num  == -1){*success = false; return 0;}
 		}
 		else {*success=false;return 0;}
