@@ -2,11 +2,12 @@
 #include "exec/template-start.h"
 #include "cpu/modrm.h"
 #include "cpu/reg.h"
+#include "memory.h"
 
 make_helper(concat(call_rel_, SUFFIX)) {
 	DATA_TYPE_S rel = instr_fetch(eip + 1, DATA_BYTE);
-	REG(cpu.eip) = REG(cpu.eip) - DATA_BYTE;
-	MEM_W(REG(cpu.eip), rel);
+	cpu.eip = cpu.eip - DATA_BYTE;
+	MEM_W(cpu.eip, rel);
 	if (DATA_BYTE == 2)
 		cpu.eip = (cpu.eip + rel) & 0x0000ffff;
 	else cpu.eip = cpu.eip + rel;
@@ -19,20 +20,18 @@ make_helper(concat(call_rm_, SUFFIX)) {
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
 		DATA_TYPE_S res = REG(m.R_M);
-		REG(cpu.eip) = REG(cpu.eip) - DATA_BYTE;
-		MEM_W(REG(cpu.eip), res);
+		cpu.eip = cpu.eip - DATA_BYTE;
 		if (DATA_BYTE == 2)
 			cpu.eip = res & 0x0000ffff;
 		else cpu.eip = res;
 		print_asm("call" str(SUFFIX) " *%%%s",REG_NAME(m.R_M));
 		return res + 2;
-	}
+	} 
 	else {
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
 		DATA_TYPE_S res = MEM_R(addr);
-		REG(cpu.eip) = REG(cpu.eip) - DATA_BYTE;
-		MEM_W(REG(cpu.eip), res);
+		cpu.eip = cpu.eip - DATA_BYTE;
 		if (DATA_BYTE == 2)
 			cpu.eip = res & 0x0000ffff;
 		else cpu.eip = res;
