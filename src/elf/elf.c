@@ -107,11 +107,13 @@ swaddr_t find_tokens(char virable[])
 	bool flag = 0;
 	for (i = 0; i < nr_symtab_entry; i ++)
 	{
+		printf("%c\n",symtab[i].st_info);
 		if (symtab[i].st_info != STT_OBJECT)continue;
-		for (j = 0,flag = 1;j < strlen(virable); j++)
+		for (j = 0,flag = 1;j < strlen(virable); j++){
+			printf("%c",strtab[j + symtab[i].st_name]);
 			if (virable[j] != strtab[j + symtab[i].st_name]){
 				flag=0;break;
-			}
+			}}
 		if (flag)return symtab[i].st_value;
 	}
 	return -1;
