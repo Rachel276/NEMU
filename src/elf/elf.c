@@ -75,7 +75,7 @@ void load_table() {
 			fread(strtab, sh[i].sh_size, 1, fp);
 		}
 	}
-
+	printf("%d\n",strlen(strtab));
 	free(sh);
 	free(shstrtab);
 
