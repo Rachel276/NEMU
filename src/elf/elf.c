@@ -105,6 +105,7 @@ swaddr_t find_tokens(char virable[])
 {
 	int i,j;
 	bool flag = 0;
+	printf("%d\n",nr_symtab_entry);
 	for (i = 0; i < nr_symtab_entry; i ++)
 	{
 		printf("%c\n",symtab[i].st_info);
