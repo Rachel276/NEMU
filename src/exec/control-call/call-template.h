@@ -9,11 +9,11 @@ make_helper(concat(call_rel_, SUFFIX)) {
 	REG(R_ESP) = REG(R_ESP) - DATA_BYTE;
 	MEM_W(REG(R_ESP),eip);
 	if (DATA_BYTE == 2)
-		cpu.eip = (cpu.eip + rel + 2) & 0x0000ffff;
-	else cpu.eip = cpu.eip + rel + 2;
+		cpu.eip = (cpu.eip + rel + DATA_BYTE + 1) & 0x0000ffff;
+	else cpu.eip = cpu.eip + rel + DATA_BYTE + 1;
 	printf("%x %x %x\n",eip,cpu.eip,rel);
-	print_asm("call" str(SUFFIX) " %x",eip + rel + 2);
-	return rel + 2;
+	print_asm("call" str(SUFFIX) " %x",eip + rel + DATA_BYTE + 1);
+	return DATA_BYTE + 1;
 }
 
 make_helper(concat(call_rm_, SUFFIX)) {
