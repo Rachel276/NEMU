@@ -101,4 +101,18 @@ void load_prog() {
 	fread(hwa_to_va(0), st.st_size, 1, fp);
 	fclose(fp);
 }
-
+swaddr_t find_tokens(char virable[])
+{
+	int i,j;
+	bool flag = 0;
+	for (i = 0; i < nr_symtab_entry; i ++)
+	{
+		if (symtab[i].st_info != STT_OBJECT)continue;
+		for (j = 0,flag = 1;j < strlen(virable); j++)
+			if (virable[j] != strtab[j + symtab[i].st_name]){
+				flag=0;break;
+			}
+		if (flag)return symtab[i].st_value;
+	}
+	return -1;
+}

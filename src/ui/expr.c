@@ -9,13 +9,14 @@
 #include "cpu/reg.h"
 
 enum {
-	NOTYPE = 256, EQ, LQ, MQ, NQ, AND, OR, LS, RS, HEX, REG, NUM, DEREF, NEG
+	NOTYPE = 256, EQ, LQ, MQ, NQ, AND, OR, LS, RS, HEX, REG, NUM, DEREF, NEG, VIA
 
 	/* TODO: Add more token types */
 
 };
 
 uint32_t swaddr_read(swaddr_t, size_t);
+swaddr_t find_tokens(char virable[]);
 
 static struct rule {
 	char *regex;
@@ -51,7 +52,8 @@ static struct rule {
 	{">", '>'},                     // more than
 	{"0x([0-9]|[a-f]|[A-F])+", HEX},                    // heaxadecimal number
 	{"\\$([a-z]|[A-Z])+", REG},                   // reg name
-	{"[0-9]+", NUM}                    // decimal number
+	{"[0-9]+", NUM},                    // decimal number
+	{"{[a-z]|[A-Z]|_}+{[a-z]|[A-z]|[0-9]|_}*", VIA}     //viarable
 
 };
 
@@ -140,7 +142,7 @@ int  find_operator(int p,int q)
 	i=p;
 	while (i<=q)
 	{	
-		if (tokens[i].type == NUM || tokens[i].type == HEX || tokens[i].type==REG){i++;continue;}
+		if (tokens[i].type == NUM || tokens[i].type == HEX || tokens[i].type==REG || tokens[i].type==VIA){i++;continue;}
 		if (tokens[i].type == '(')
 		{
 			used=0;
@@ -165,10 +167,10 @@ bool check_parentheses(int p,int q,bool* success)
 	for (i=p;i<=q;i++)
 	{ 
 		if (t==0 && used)il=1;
-		if (tokens[i].type == '('){used=1;t++;}
+ 		if (tokens[i].type == '('){used=1;t++;}
 		if (tokens[i].type == ')')t--;
 		if (t<0){*success=0;return false;}
-	}
+  	}
 	if (t!=0){*success=0;return false;}
 	if (il==1 || tokens[p].type!='(' || tokens[q].type!=')')return false;
 	else return true;
@@ -197,6 +199,11 @@ uint32_t eval(int p,int q,bool* success)
 			else if (strcmp(tokens[p].str,"$edi")==0) num = cpu.edi;
 			else if (strcmp(tokens[p].str,"$eip")==0) num = cpu.eip;
 			else {*success=false;return 0;}
+		}
+		else if (tokens[p].type == VIA)
+		{
+			num = find_tokens(tokens[p].str);
+			if (num  == -1){*success = false; return 0;}
 		}
 		else {*success=false;return 0;}
 //		printf("<%d\n",num);
@@ -263,10 +270,10 @@ uint32_t expr(char *e, bool *success) {
 	/* TODO: Implement code to evaluate the expression. */
 	int i;
 	for (i = 1; i <= nr_token; i ++)
-	   if (tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != REG && tokens[i-1].type != HEX &&  tokens[i-1].type !=')')))
+	   if (tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != REG && tokens[i-1].type != HEX && tokens[i-1].type != VIA && tokens[i-1].type !=')')))
 		   tokens[i].type = DEREF;
 	for (i = 1; i <= nr_token; i ++)
-       if (tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != REG && tokens[i-1].type != HEX &&  tokens[i-1].type !=')')))
+       if (tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != REG && tokens[i-1].type != HEX && tokens[i-1].type != VIA && tokens[i-1].type !=')')))
      	   tokens[i].type = NEG;
 	for (i = 1; i <= nr_token; i ++){
 	    switch(tokens[i].type){
