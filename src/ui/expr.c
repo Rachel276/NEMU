@@ -53,7 +53,7 @@ static struct rule {
 	{"0x([0-9]|[a-f]|[A-F])+", HEX},                    // heaxadecimal number
 	{"\\$([a-z]|[A-Z])+", REG},                   // reg name
 	{"[0-9]+", NUM},                    // decimal number
-	{"{[a-z]|[A-Z]|_}+{[a-z]|[A-z]|[0-9]|_}*", VIA}     //viarable
+	{"([a-z]|[A-Z]|_)+([a-z]|[A-z]|[0-9]|_)*", VIA}     //viarable
 
 };
 
