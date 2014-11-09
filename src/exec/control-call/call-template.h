@@ -7,10 +7,10 @@
 make_helper(concat(call_rel_, SUFFIX)) {
 	DATA_TYPE_S rel = instr_fetch(eip + 1, DATA_BYTE);
 	REG(R_ESP) = REG(R_ESP) - DATA_BYTE;
-	MEM_W(REG(R_ESP),cpu.eip);
+	MEM_W(REG(R_ESP),eip);
 	if (DATA_BYTE == 2)
-		cpu.eip = (cpu.eip + rel) & 0x0000ffff;
-	else cpu.eip = cpu.eip + rel;
+		cpu.eip = (cpu.eip + rel + 2) & 0x0000ffff;
+	else cpu.eip = cpu.eip + rel + 2;
 	printf("%x %x %x\n",eip,cpu.eip,rel);
 	print_asm("call" str(SUFFIX) " %x",eip + rel + 2);
 	return rel + 2;
