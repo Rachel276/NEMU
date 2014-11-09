@@ -11,6 +11,7 @@ make_helper(cti_mpr_v) {
 	ModR_M m;
 	m.val =instr_fetch(eip + 1, 1);
 	switch (m.opcode) {
+		case 2: return call_rm_v(eip);
 		case 4: return jmp_rm_v(eip);
 		case 6: return push_m_v(eip);
 	}

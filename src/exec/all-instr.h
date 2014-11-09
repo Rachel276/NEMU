@@ -14,6 +14,7 @@
 
 #include "control-jcc/jcc.h"
 #include "control-jmp/jmp.h"
+#include "control-call/call.h"
 
 #include "misc/misc.h"
 #include "opcode/opcode.h"
