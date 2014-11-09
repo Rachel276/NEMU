@@ -3,6 +3,7 @@
 #include "data-mov/mov.h"
 #include "data-push/push.h"
 #include "data-xchg/xchg.h"
+#include "data-leave/leave.h"
 
 #include "binary-add/add.h"
 #include "binary-cmp/cmp.h"
@@ -15,6 +16,7 @@
 #include "control-jcc/jcc.h"
 #include "control-jmp/jmp.h"
 #include "control-call/call.h"
+#include "control-ret/ret.h"
 
 #include "misc/misc.h"
 #include "opcode/opcode.h"
