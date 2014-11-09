@@ -104,21 +104,16 @@ void load_prog() {
 }
 swaddr_t find_tokens(char virable[])
 {
-	int i,j;
-	bool flag = 0;
+	int i;
 	for (i=0;i<strlen(strtab);i++)printf("%c",strtab[i]);
 	printf("\n");
 	printf("%d\n",nr_symtab_entry);
 	for (i = 0; i < nr_symtab_entry; i ++)
 	{
 		printf("%c %d\n",symtab[i].st_info,symtab[i].st_name);
-		if (symtab[i].st_info != STT_OBJECT)continue;
-		for (j = 0,flag = 1;j < strlen(virable); j++){
-			printf("%c",*(strtab + j + symtab[i].st_name));
-			if (virable[j] != *(strtab + j + symtab[i].st_name)){
-				flag=0;break;
-			}}
-		if (flag)return symtab[i].st_value;
+		if (ELF32_ST_TYPE(symtab[i].st_info) != STT_OBJECT && ELF32_ST_TYPE(symtab[i].st_info) != STT_FUNC)continue;
+		if (strcmp(virable,strtab + symtab[i].st_name) == 0)
+			return symtab[i].st_value;
 	}
 	return -1;
 }
