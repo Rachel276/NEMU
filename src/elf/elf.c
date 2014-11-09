@@ -66,17 +66,17 @@ void load_table() {
 			fseek(fp, sh[i].sh_offset, SEEK_SET);
 			fread(symtab, sh[i].sh_size, 1, fp);
 			nr_symtab_entry = sh[i].sh_size / sizeof(symtab[0]);
-		}
+ 		}
 		else if(sh[i].sh_type == SHT_STRTAB && 
 				strcmp(shstrtab + sh[i].sh_name, ".strtab") == 0) {
 			/* Load string table from exec_file */
 			strtab = malloc(sh[i].sh_size);
 			fseek(fp, sh[i].sh_offset, SEEK_SET);
 			fread(strtab, sh[i].sh_size, 1, fp);
-			printf("%d %d %d\n",sh[i].sh_size,sh[i].sh_offset,strlen(strtab));
-		}
-	}
-	printf("%d\n",strlen(strtab));
+//			printf("%d %d %d\n",sh[i].sh_size,sh[i].sh_offset,strlen(strtab));
+ 		}
+ 	}
+//	printf("%d\n",strlen(strtab));
 	free(sh);
 	free(shstrtab);
 
