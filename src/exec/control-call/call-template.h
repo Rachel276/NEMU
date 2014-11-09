@@ -6,8 +6,8 @@
 
 make_helper(concat(call_rel_, SUFFIX)) {
 	DATA_TYPE_S rel = instr_fetch(eip + 1, DATA_BYTE);
-	cpu.eip = cpu.eip - DATA_BYTE;
-	MEM_W(cpu.eip, rel);
+	REG(R_ESP) = REG(R_ESP) - DATA_BYTE;
+	MEM_W(REG(R_ESP),cpu.eip);
 	if (DATA_BYTE == 2)
 		cpu.eip = (cpu.eip + rel) & 0x0000ffff;
 	else cpu.eip = cpu.eip + rel;
@@ -20,7 +20,8 @@ make_helper(concat(call_rm_, SUFFIX)) {
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
 		DATA_TYPE_S res = REG(m.R_M);
-		cpu.eip = cpu.eip - DATA_BYTE;
+		REG(R_ESP) = REG(R_ESP) - DATA_BYTE;
+	    MEM_W(REG(R_ESP),cpu.eip);	
 		if (DATA_BYTE == 2)
 			cpu.eip = res & 0x0000ffff;
 		else cpu.eip = res;
@@ -31,7 +32,8 @@ make_helper(concat(call_rm_, SUFFIX)) {
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
 		DATA_TYPE_S res = MEM_R(addr);
-		cpu.eip = cpu.eip - DATA_BYTE;
+		REG(R_ESP) = REG(R_ESP) - DATA_BYTE;
+		MEM_W(REG(R_ESP),cpu.eip);
 		if (DATA_BYTE == 2)
 			cpu.eip = res & 0x0000ffff;
 		else cpu.eip = res;
