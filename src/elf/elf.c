@@ -73,7 +73,7 @@ void load_table() {
 			strtab = malloc(sh[i].sh_size);
 			fseek(fp, sh[i].sh_offset, SEEK_SET);
 			fread(strtab, sh[i].sh_size, 1, fp);
-			printf("%d\n",sh[i].sh_size);
+			printf("%d %d\n",sh[i].sh_size,sh[i].sh_offset);
 		}
 	}
 	printf("%d\n",strlen(strtab));
