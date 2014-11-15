@@ -18,6 +18,8 @@
 #include "control-call/call.h"
 #include "control-ret/ret.h"
 
+#include "misc-lea/lea.h"
+
 #include "misc/misc.h"
 #include "opcode/opcode.h"
 #include "Binary.h"
