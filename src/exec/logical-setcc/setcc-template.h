@@ -176,6 +176,7 @@ make_helper(concat(setle_rm_, SUFFIX)) {
 
 make_helper(concat(setne_rm_, SUFFIX)) {
 		ModR_M m;
+		printf("%x\n",eip);
 		m.val = instr_fetch(eip + 1, 1);
 		if(m.mod == 3) { 
 			print_asm("setne" str(SUFFIX) " %%%s",REG_NAME(m.R_M));
