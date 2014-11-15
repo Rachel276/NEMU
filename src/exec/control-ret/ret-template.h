@@ -10,7 +10,7 @@ make_helper(concat(ret_, SUFFIX)) {
 	printf("%x\n",REG(R_ESP));
 	if (DATA_BYTE == 2) cpu.eip &= 0x0000ffff;
 	print_asm("ret\n");
-	return 1;
+	return 0;
 }
 
 #include "exec/template-end.h"
