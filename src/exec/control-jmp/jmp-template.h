@@ -18,6 +18,7 @@ make_helper(concat(jmp_rm_, SUFFIX)) {
 		DATA_TYPE_S res = REG(m.R_M);
 		print_asm("jmp" str(SUFFIX) " *%%%s",REG_NAME(m.R_M));
 		cpu.eip = res;
+		if (DATA_BYTE == 2)cpu.eip &= 0x0000ffff;
 		return 2;
 	}
 	else {
@@ -26,6 +27,7 @@ make_helper(concat(jmp_rm_, SUFFIX)) {
 		DATA_TYPE_S res = MEM_R(addr);
 		print_asm("jmp" str(SUFFIX) " *%s",ModR_M_asm);
 		cpu.eip = res;
+		if (DATA_BYTE == 2)cpu.eip &= 0x0000ffff;
 		return len + 1;
 	}
 }
