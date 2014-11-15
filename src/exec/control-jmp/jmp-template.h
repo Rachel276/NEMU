@@ -5,8 +5,10 @@
 
 make_helper(concat(jmp_rel_, SUFFIX)) {
 	DATA_TYPE_S rel = instr_fetch(eip + 1, DATA_BYTE);
-	print_asm("jmp" str(SUFFIX) " %x",eip + rel + 2);
-	return rel + 2;
+	print_asm("jmp" str(SUFFIX) " %x",eip + rel + 1 + DATA_BYTE);
+	cpu.eip += rel;
+	if (DATA_BYTE == 2)cpu.eip &= 0x0000ffff;
+	return 1 + DATA_BYTE;
 }
 
 make_helper(concat(jmp_rm_, SUFFIX)) {
