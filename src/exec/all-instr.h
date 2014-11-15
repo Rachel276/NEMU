@@ -15,6 +15,7 @@
 #include "logical-setcc/setcc.h"
 #include "logical-xor/xor.h"
 #include "logical-and/and.h"
+#include "logical-or/or.h"
 
 #include "control-jcc/jcc.h"
 #include "control-jmp/jmp.h"
