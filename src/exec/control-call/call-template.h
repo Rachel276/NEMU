@@ -8,9 +8,9 @@ make_helper(concat(call_rel_, SUFFIX)) {
 	DATA_TYPE_S rel = instr_fetch(eip + 1, DATA_BYTE);
 	REG(R_ESP) = REG(R_ESP) - DATA_BYTE;
 	MEM_W(REG(R_ESP),eip);
-	printf("%x %x %x\n",eip,cpu.eip,rel);
+//	printf("%x %x %x\n",eip,cpu.eip,rel);
 	print_asm("call" str(SUFFIX) " %x",eip + rel + DATA_BYTE + 1);
-	if (DATA_BYTE == 2){
+ 	if (DATA_BYTE == 2){
 		eip = (eip + rel + DATA_BYTE + 1) & 0x0000ffff;
 		return 0;
 	}
