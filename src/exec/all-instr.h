@@ -13,6 +13,7 @@
 
 #include "logical-test/test.h"
 #include "logical-setcc/setcc.h"
+#include "logical-xor/xor.h"
 
 #include "control-jcc/jcc.h"
 #include "control-jmp/jmp.h"
