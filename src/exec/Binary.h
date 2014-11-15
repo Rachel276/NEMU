@@ -16,6 +16,7 @@ make_helper(bai_i2rm_b)
 	m.val = instr_fetch(eip + 1, 1);
 	switch (m.opcode) { 
 		case 0: return add_i2rm_b(eip);
+	    case 3: return sbb_i2rm_b(eip);
 		case 5: return sub_i2rm_b(eip);
 		case 7: return cmp_i2rm_b(eip);
 	}
@@ -26,8 +27,9 @@ make_helper(bai_i2rm_v)
 {
 	ModR_M m;
 	m.val =instr_fetch(eip + 1, 1);
-	switch (m.opcode) { 
+	switch (m.opcode) {  
 		case 0: return add_i2rm_v(eip);
+		case 3: return sbb_i2rm_v(eip);
 		case 5: return sub_i2rm_v(eip);
 		case 7: return cmp_i2rm_v(eip);
 	} 
@@ -40,9 +42,10 @@ make_helper(bai_ib2rm_v)
 	m.val =instr_fetch(eip + 1, 1);
 	switch (m.opcode) { 
 		case 0: return add_ib2rm_v(eip);
+		case 3: return sbb_ib2rm_v(eip);
 		case 5: return sub_ib2rm_v(eip);
 		case 7: return cmp_ib2rm_v(eip);
-	 }
+	 } 
 	return 0;
 }
 

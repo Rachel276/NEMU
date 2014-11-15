@@ -8,6 +8,7 @@
 #include "binary-add/add.h"
 #include "binary-cmp/cmp.h"
 #include "binary-sub/sub.h"
+#include "binary-sbb/sbb.h"
 #include "binary-idiv/idiv.h"
 
 #include "logical-test/test.h"
