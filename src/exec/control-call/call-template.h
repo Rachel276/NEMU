@@ -10,8 +10,8 @@ make_helper(concat(call_rel_, SUFFIX)) {
 	MEM_W(REG(R_ESP),eip + 1 + DATA_BYTE);
 //	printf("%x %x %x\n",eip,cpu.eip,rel);
 	print_asm("call" str(SUFFIX) " %x",eip + rel + DATA_BYTE + 1);
-	eip += rel;
- 	if (DATA_BYTE == 2)eip &= 0x0000ffff;
+	cpu.eip += rel;
+ 	if (DATA_BYTE == 2)cpu.eip &= 0x0000ffff;
 	return 1 + DATA_BYTE;
 }
 
@@ -21,10 +21,10 @@ make_helper(concat(call_rm_, SUFFIX)) {
 	if (m.mod == 3){
 		DATA_TYPE_S res = REG(m.R_M);
 		REG(R_ESP) = REG(R_ESP) - DATA_BYTE;
-	    MEM_W(REG(R_ESP),cpu.eip + 1 + 1);	
+	    MEM_W(REG(R_ESP),eip + 1 + 1);	
 		print_asm("call" str(SUFFIX) " *%%%s",REG_NAME(m.R_M));
-		eip += res;
-		if (DATA_BYTE == 2)eip &= 0x0000ffff;
+		cpu.eip += res;
+		if (DATA_BYTE == 2)cpu.eip &= 0x0000ffff;
 		return 2;
 	} 
 	else {
@@ -32,10 +32,10 @@ make_helper(concat(call_rm_, SUFFIX)) {
 		int len = read_ModR_M(eip + 1, &addr);
 		DATA_TYPE_S res = MEM_R(addr);
 		REG(R_ESP) = REG(R_ESP) - DATA_BYTE;
-		MEM_W(REG(R_ESP),cpu.eip + 1 + len);
+		MEM_W(REG(R_ESP),eip + 1 + len);
 		print_asm("call" str(SUFFIX) " *%s",ModR_M_asm);
-		eip += res;
-		if (DATA_BYTE == 2)eip &= 0x0000ffff;
+		cpu.eip += res;
+		if (DATA_BYTE == 2)cpu.eip &= 0x0000ffff;
 		return len + 1;
 	}
 }
