@@ -7,6 +7,10 @@ typedef int (*helper_fun)(swaddr_t);
 
 /* TODO: Add more instructions!!! */
 
+make_helper(nop){
+	return 1;
+}
+
 helper_fun opcode_table [256] = {
 /* 0x00 */	add_r2rm_b, add_r2rm_v, add_rm2r_b, add_rm2r_v, 
 /* 0x04 */	add_i2a_b, add_i2a_v, inv, inv, 
@@ -44,8 +48,8 @@ helper_fun opcode_table [256] = {
 /* 0x84 */	test_r2rm_b, test_r2rm_v, xchg_rm2r_b, xchg_rm2r_v, 
 /* 0x88 */	mov_r2rm_b, mov_r2rm_v, mov_rm2r_b, mov_rm2r_v,
 /* 0x8c */	inv, lea_m2r_v, inv, dmi_m_v, 
-/* 0x90 */	xchg_r2a_v, inv, inv, inv,
-/* 0x94 */	inv, inv, inv, inv,
+/* 0x90 */	nop, xchg_r2a_v, xchg_r2a_v, xchg_r2a_v,
+/* 0x94 */	xchg_r2a_v, xchg_r2a_v, xchg_r2a_v, xchg_r2a_v,
 /* 0x98 */	inv, inv, inv, inv, 
 /* 0x9c */	inv, inv, inv, inv, 
 /* 0xa0 */	mov_moffs2a_b, mov_moffs2a_v, mov_a2moffs_b, mov_a2moffs_v,
@@ -146,8 +150,6 @@ make_helper(opcode) {
 	printf("%x\n",eip);
 	return opcode_table1[ instr_fetch(eip + 1, 1) ](eip + 1) + 1;
 }
-
-
 
 make_helper(exec) {
 	return opcode_table[ instr_fetch(eip, 1) ](eip);
