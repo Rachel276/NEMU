@@ -17,14 +17,16 @@ make_helper(concat(jmp_rm_, SUFFIX)) {
 	if (m.mod == 3){
 		DATA_TYPE_S res = REG(m.R_M);
 		print_asm("jmp" str(SUFFIX) " *%%%s",REG_NAME(m.R_M));
-		return res + 2;
+		cpu.eip = res;
+		return 2;
 	}
 	else {
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
 		DATA_TYPE_S res = MEM_R(addr);
 		print_asm("jmp" str(SUFFIX) " *%s",ModR_M_asm);
-		return res + len + 1;
+		cpu.eip = res;
+		return len + 1;
 	}
 }
 
