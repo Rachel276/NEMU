@@ -28,6 +28,7 @@ make_helper(concat(imul_rm_, SUFFIX)) {
 			eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
 		} 
 		eflags.OF = eflags.CF;
+		printf("%d %d\n",REG(R_EAX),REG(R_EDX));
 		print_asm("imul" str(SUFFIX) " %%%s", REG_NAME(m.R_M));
 		return 2;
 	}
