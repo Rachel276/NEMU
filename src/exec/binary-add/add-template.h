@@ -24,7 +24,7 @@ make_helper(concat(add_i2a_, SUFFIX)) {
 	}
 	if (num % 2 == 1)eflags.PF = 1;
 	else eflags.PF = 0;
-
+	printf("%d\n",REG(R_EAX));
 	print_asm("add" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(R_EAX));
 	return DATA_BYTE + 1;
 }
