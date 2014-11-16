@@ -1,6 +1,7 @@
 #include "prefix/prefix.h"
 
 #include "data-mov/mov.h"
+#include "data-movsx/movsx.h"
 #include "data-push/push.h"
 #include "data-xchg/xchg.h"
 #include "data-leave/leave.h"
