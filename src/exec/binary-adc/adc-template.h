@@ -5,8 +5,8 @@
 
 make_helper(concat(adc_i2a_, SUFFIX)) {
 	DATA_TYPE imm = instr_fetch(eip + 1, DATA_BYTE);
-	DATA_TYPE res = REG(R_EAX) + imm;
-	REG(R_EAX) = res + eflags.CF;
+	DATA_TYPE res = REG(R_EAX) + imm + eflags.CF;
+	REG(R_EAX) = res;
 	
 	DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
 	if (MSB(REG(R_EAX)) == MSB(imm) && MSB(res) != MSB(imm))eflags.OF = 1;

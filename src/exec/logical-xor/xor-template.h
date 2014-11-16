@@ -135,7 +135,7 @@ make_helper(concat(xor_r2rm_, SUFFIX)) {
 	ModR_M m;
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
-		DATA_TYPE res = REG(m.R_M) ^ REG(m.reg);
+		DATA_TYPE res = REG(m.reg) ^ REG(m.R_M);// ^ REG(m.reg);
 		REG(m.R_M) = res;
 
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
@@ -158,7 +158,7 @@ make_helper(concat(xor_r2rm_, SUFFIX)) {
 	else {
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
-		DATA_TYPE res = MEM_R(addr) ^ REG(m.reg);
+		DATA_TYPE res = REG(m.reg) ^ MEM_R(addr);// ^ REG(m.reg);
 		MEM_W(addr,res);
 
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
@@ -184,7 +184,7 @@ make_helper(concat(xor_rm2r_, SUFFIX)) {
 	ModR_M m;
 	m.val = instr_fetch(eip + 1, 1);
 	if(m.mod == 3) {
-		DATA_TYPE res = REG(m.reg) ^ REG(m.R_M);
+		DATA_TYPE res = REG(m.R_M) ^ REG(m.reg);// ^ REG(m.R_M);
 		REG(m.reg) = res;
 
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
@@ -206,7 +206,7 @@ make_helper(concat(xor_rm2r_, SUFFIX)) {
 	else {
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
-		DATA_TYPE res = REG(m.reg) ^ MEM_R(addr);
+		DATA_TYPE res = MEM_R(addr) ^ REG(m.reg);// ^ MEM_R(addr);
 		REG(m.reg) = res;
 
 		DATA_TYPE sf = 1 << (8 * DATA_BYTE - 1);
