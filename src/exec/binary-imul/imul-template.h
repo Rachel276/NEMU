@@ -9,7 +9,7 @@ make_helper(concat(imul_rm_, SUFFIX)) {
 	ModR_M m;
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
-		printf("%d %d ",REG(R_EAX),REG(m.R_M));
+	//	printf("%d %d ",REG(R_EAX),REG(m.R_M));
 		if (DATA_BYTE == 1) {
 			int16_t res = (int16_t)(DATA_TYPE_S)REG(R_AL) * (int16_t)(DATA_TYPE_S)REG(m.R_M);
 			REG(R_AX) = res;
@@ -28,7 +28,7 @@ make_helper(concat(imul_rm_, SUFFIX)) {
 			eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
 		} 
 		eflags.OF = eflags.CF;
-		printf("%d %d\n",REG(R_EAX),REG(R_EDX));
+	//	printf("%d %d\n",REG(R_EAX),REG(R_EDX));
 		print_asm("imul" str(SUFFIX) " %%%s", REG_NAME(m.R_M));
 		return 2;
 	}
