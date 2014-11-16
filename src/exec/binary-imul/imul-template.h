@@ -9,19 +9,24 @@ make_helper(concat(imul_rm_, SUFFIX)) {
 	ModR_M m;
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
-		int64_t res = (int64_t)(DATA_TYPE_S)REG(R_EAX) * (int64_t)(DATA_TYPE_S)REG(m.R_M);
 		printf("%d %d ",REG(R_EAX),REG(m.R_M));
-		if (DATA_BYTE == 1)reg_w(R_EAX) = (int16_t)(res & 0xffff);
+		if (DATA_BYTE == 1) {
+			int16_t res = (int8_t)(DATA_TYPE_S)REG(R_AL) * (int8_t)(DATA_TYPE_S)REG(m.R_M);
+			REG(R_AX) = res;
+			eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
+		}
 		else if (DATA_BYTE == 2){
-			REG(R_EAX) = (int16_t)(res & 0x0000ffff);
-			REG(R_EDX) = (int16_t)(res & 0xffff0000);
+			int32_t res = (int16_t)(DATA_TYPE_S)REG(R_AX) * (int16_t)(DATA_TYPE_S)REG(m.R_M);
+			REG(R_AX) = (int16_t)(res & 0x0000ffff);
+			REG(R_DX) = (int16_t)((res & 0xffff0000) >> 16);
+			eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
 		}
 		else {
+			int64_t res = (int32_t)(DATA_TYPE_S)REG(R_EAX) * (int32_t)(DATA_TYPE_S)REG(m.R_M);
 			REG(R_EAX) = (int32_t)(res & 0x00000000ffffffff);
-			REG(R_EDX) = (int32_t)(res & 0xffffffff00000000);
+			REG(R_EDX) = (int32_t)((res & 0xffffffff00000000) >> 32);
+			eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
 		} 
-		printf("%lld\n",res);
-		eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
 		eflags.OF = eflags.CF;
 		print_asm("imul" str(SUFFIX) " %%%s", REG_NAME(m.R_M));
 		return 2;
@@ -29,17 +34,23 @@ make_helper(concat(imul_rm_, SUFFIX)) {
 	else {
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
-		int64_t res = (int64_t)(DATA_TYPE_S)REG(R_EAX) * (int64_t)(DATA_TYPE_S)MEM_R(addr);
-		if (DATA_BYTE == 1)reg_w(R_EAX) = (int16_t)(res & 0xffff);
+		if (DATA_BYTE == 1){
+			int16_t res = (int8_t)(DATA_TYPE_S)REG(R_AL) * (int8_t)(DATA_TYPE_S)MEM_R(addr);
+			REG(R_AX) = res;
+			eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
+		}
 		else if (DATA_BYTE == 2){ 
-			REG(R_EAX) = (int16_t)(res & 0x0000ffff);
-			REG(R_EDX) = (int16_t)(res & 0xffff0000);
+			int32_t res = (int16_t)(DATA_TYPE_S)REG(R_AX) * (int16_t)(DATA_TYPE_S)MEM_R(addr);
+			REG(R_AX) = (int16_t)(res & 0x0000ffff);
+			REG(R_DX) = (int16_t)((res & 0xffff0000) >> 16);
+			eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
 		}
 		else { 
+			int64_t res = (int32_t)(DATA_TYPE_S)REG(R_EAX) * (int32_t)(DATA_TYPE_S)MEM_R(addr);
 			REG(R_EAX) = (int32_t)(res & 0x00000000ffffffff);
-			REG(R_EDX) = (int32_t)(res & 0xffffffff00000000);
+			REG(R_EDX) = (int32_t)((res & 0xffffffff00000000) >> 32);
+			eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
 		}
-		eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
 		eflags.OF = eflags.CF;
 		print_asm("imul" str(SUFFIX) " %s", ModR_M_asm);
 		return 1 + len;
@@ -126,13 +137,3 @@ make_helper(concat(imul_ib_rm_r_, SUFFIX)) {
 }
 
 #include "exec/template-end.h"
-
-
-
-
-
-
-
-
-
-
