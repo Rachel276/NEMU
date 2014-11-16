@@ -38,4 +38,14 @@ make_helper(sar_ib2rm_v) {
 	return (suffix == 'l' ? sar_ib2rm_l(eip) : sar_ib2rm_w(eip));
 }
 
+make_helper(shr_o2rm_v) {
+	return (suffix == 'l' ? shr_o2rm_l(eip) : shr_o2rm_w(eip));
+}
 
+make_helper(shr_c2rm_v) {
+	return (suffix == 'l' ? shr_c2rm_l(eip) : shr_c2rm_w(eip));
+}
+
+make_helper(shr_ib2rm_v) {
+	return (suffix == 'l' ? shr_ib2rm_l(eip) : shr_ib2rm_w(eip));
+}

@@ -10,6 +10,7 @@ make_helper(li_o2rm_b) {
 	m.val = instr_fetch(eip + 1, 1);
 	switch (m.opcode) {
 		case 4: return sal_o2rm_b(eip);
+		case 5: return shr_o2rm_b(eip);
 		case 7: return sar_o2rm_b(eip);
 	}
 	return 0;
@@ -20,6 +21,7 @@ make_helper(li_o2rm_v) {
 	m.val = instr_fetch(eip + 1, 1);
 	switch (m.opcode) {
 		case 4: return sal_o2rm_v(eip);
+		case 5: return shr_o2rm_v(eip);
 		case 7: return sar_o2rm_v(eip);
 	}
 	return 0;
@@ -30,6 +32,7 @@ make_helper(li_c2rm_b) {
 	m.val = instr_fetch(eip + 1, 1);
 	switch (m.opcode) {
 		case 4: return sal_c2rm_b(eip);
+		case 5: return shr_c2rm_b(eip);
 		case 7: return sar_c2rm_b(eip);
 	}
 	return 0;
@@ -40,6 +43,7 @@ make_helper(li_c2rm_v) {
 	m.val = instr_fetch(eip + 1, 1);
 	switch (m.opcode) {
 		case 4: return sal_c2rm_v(eip);
+		case 5: return shr_c2rm_v(eip);
 		case 7: return sar_c2rm_v(eip);
 	}
 	return 0;
@@ -50,6 +54,7 @@ make_helper(li_ib2rm_b) {
 	m.val = instr_fetch(eip + 1, 1);
 	switch (m.opcode) {
 		case 4: return sal_ib2rm_b(eip);
+		case 5: return shr_ib2rm_b(eip);
 		case 7: return sar_ib2rm_b(eip);
 	}
 	return 0;
@@ -60,6 +65,7 @@ make_helper(li_ib2rm_v) {
 	m.val = instr_fetch(eip + 1, 1);
 	switch (m.opcode) {
 		case 4: return sal_ib2rm_v(eip);
+		case 5: return shr_ib2rm_v(eip);
 		case 7: return sar_ib2rm_v(eip);
 	}
 	return 0;
