@@ -10,6 +10,7 @@
 #include "binary-sub/sub.h"
 #include "binary-sbb/sbb.h"
 #include "binary-idiv/idiv.h"
+#include "binary-imul/imul.h"
 
 #include "logical-test/test.h"
 #include "logical-setcc/setcc.h"
