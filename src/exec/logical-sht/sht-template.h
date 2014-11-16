@@ -248,7 +248,7 @@ make_helper(concat(sar_ib2rm_, SUFFIX)) {
 		REG(m.R_M) = res;
 		
 		logical_flags(res);
-
+		printf("%d\n",REG(m.R_M));
 		print_asm("sar" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(m.R_M));
 		return 1 + 1 + 1;
 	}
