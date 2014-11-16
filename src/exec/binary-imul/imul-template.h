@@ -11,18 +11,18 @@ make_helper(concat(imul_rm_, SUFFIX)) {
 	if (m.mod == 3){
 		printf("%d %d ",REG(R_EAX),REG(m.R_M));
 		if (DATA_BYTE == 1) {
-			int16_t res = (int8_t)(DATA_TYPE_S)REG(R_AL) * (int8_t)(DATA_TYPE_S)REG(m.R_M);
+			int16_t res = (int16_t)(DATA_TYPE_S)REG(R_AL) * (int16_t)(DATA_TYPE_S)REG(m.R_M);
 			REG(R_AX) = res;
 			eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
 		}
 		else if (DATA_BYTE == 2){
-			int32_t res = (int16_t)(DATA_TYPE_S)REG(R_AX) * (int16_t)(DATA_TYPE_S)REG(m.R_M);
+			int32_t res = (int32_t)(DATA_TYPE_S)REG(R_AX) * (int32_t)(DATA_TYPE_S)REG(m.R_M);
 			REG(R_AX) = (int16_t)(res & 0x0000ffff);
 			REG(R_DX) = (int16_t)((res & 0xffff0000) >> 16);
 			eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
 		}
 		else {
-			int64_t res = (int32_t)(DATA_TYPE_S)REG(R_EAX) * (int32_t)(DATA_TYPE_S)REG(m.R_M);
+			int64_t res = (int64_t)(DATA_TYPE_S)REG(R_EAX) * (int64_t)(DATA_TYPE_S)REG(m.R_M);
 			REG(R_EAX) = (int32_t)(res & 0x00000000ffffffff);
 			REG(R_EDX) = (int32_t)((res & 0xffffffff00000000) >> 32);
 			eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
