@@ -215,6 +215,7 @@ make_helper(concat(cmp_rm2r_, SUFFIX)) {
 		}
 		if (num % 2 == 1)eflags.PF = 1;
 		else eflags.PF = 0;
+		printf("%d %d\n",REG(m.R_M) ,REG(m.reg));
 		print_asm("cmp" str(SUFFIX) " %%%s,%%%s", REG_NAME(m.R_M), REG_NAME(    m.reg));
 		return 2;
 	} 
