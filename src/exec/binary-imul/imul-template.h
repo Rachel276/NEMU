@@ -10,6 +10,7 @@ make_helper(concat(imul_rm_, SUFFIX)) {
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
 		int64_t res = (int64_t)(DATA_TYPE_S)REG(R_EAX) * (int64_t)(DATA_TYPE_S)REG(m.R_M);
+		printf("%d %d ",REG(R_EAX),REG(m.R_M));
 		if (DATA_BYTE == 1)reg_w(R_EAX) = (int16_t)(res & 0xffff);
 		else if (DATA_BYTE == 2){
 			REG(R_EAX) = (int16_t)(res & 0x0000ffff);
@@ -19,6 +20,7 @@ make_helper(concat(imul_rm_, SUFFIX)) {
 			REG(R_EAX) = (int32_t)(res & 0x00000000ffffffff);
 			REG(R_EDX) = (int32_t)(res & 0xffffffff00000000);
 		} 
+		printf("%lld\n",res);
 		eflags.CF = !(res >> ((DATA_BYTE << 3) - 1)) || (res >> ((DATA_BYTE << 3) - 1) != 1);
 		eflags.OF = eflags.CF;
 		print_asm("imul" str(SUFFIX) " %%%s", REG_NAME(m.R_M));
