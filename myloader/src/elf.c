@@ -13,7 +13,7 @@ void loader() {
 					int8_t *v = (void*)elf + ph->p_offset;
 					for (j = 0;j < ph->p_filesz;j ++, u ++, v ++)
 						*u = *v;
-					for (j = ph[i].p_filesz; j < ph[i].p_memsz; j ++, u ++)
+					for (j = ph->p_filesz; j < ph->p_memsz; j ++, u ++)
 						*u = 0;
 			}
 	}
