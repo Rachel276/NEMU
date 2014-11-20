@@ -9,7 +9,7 @@ void loader() {
 	for (i = 0; i < elf->e_phnum; i ++,ph++){
 			/* Scan the program header table, load each segment into memory */
 			if(ph->p_type == PT_LOAD) {
-					for (j = 0;j < ph[i].p_filesz;j ++)
+					for (j = 0;j < ph->p_filesz;j ++)
 						*((uint8_t*)ph->p_vaddr + j) = *((uint8_t*)elf + ph->p_offset + j);	
 					for (j = ph[i].p_filesz; j < ph[i].p_memsz; j ++)
 						*((uint8_t*)ph->p_vaddr + j) = 0;
