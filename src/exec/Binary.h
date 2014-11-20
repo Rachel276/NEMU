@@ -14,6 +14,7 @@
 #include "logical-xor/xor.h"
 #include "logical-and/and.h"
 #include "logical-or/or.h"
+#include "logical-neg/neg.h"
 
 make_helper(bai_i2rm_b)
 {
@@ -72,6 +73,7 @@ make_helper(bai_rm_b)
 	m.val =instr_fetch(eip + 1, 1);
 	switch (m.opcode) {
 		case 0: return test_i2rm_b(eip);
+		case 3: return neg_rm_b(eip);
 		case 5: return imul_rm_b(eip);
 		case 7: return idiv_rm_b(eip);
 	}   
@@ -84,9 +86,10 @@ make_helper(bai_rm_v)
 	m.val =instr_fetch(eip + 1, 1);
 	switch (m.opcode) {
 		case 0: return test_i2rm_v(eip);
+		case 3: return neg_rm_v(eip);
 		case 5: return imul_rm_v(eip);
 		case 7: return idiv_a2rm_v(eip);
-	}  
+	}   
 	return 0;
 }
 //#include "exec/template-end.h"
