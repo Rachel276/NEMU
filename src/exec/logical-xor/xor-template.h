@@ -4,7 +4,9 @@
 #include "cpu/reg.h"
 
 #define logical_flags(res);\
-	eflags.SF = ((DATA_TYPE_S)(res) < 0);\
+	eflags.OF = 0;\
+	eflags.CF = 0;
+/*	eflags.SF = ((DATA_TYPE_S)(res) < 0);\
 	eflags.ZF = (res == 0);\
 	eflags.CF = 0;\
 	eflags.OF = 0;\
@@ -13,7 +15,7 @@
 		eflags.PF = !eflags.PF;\
 		res = res & (res - 1);\
 	}
-
+*/
 make_helper(concat(xor_i2a_, SUFFIX)) {
 	DATA_TYPE imm = instr_fetch(eip + 1, DATA_BYTE);
 	DATA_TYPE res = REG(R_EAX) ^ imm;
