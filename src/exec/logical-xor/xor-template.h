@@ -6,6 +6,8 @@
 #define logical_flags(res);\
 	eflags.SF = ((DATA_TYPE_S)(res) < 0);\
 	eflags.ZF = (res == 0);\
+	eflags.CF = 0;\
+	eflags.OF = 0;\
 	eflags.PF = 0;\
 	while (res){\
 		eflags.PF = !eflags.PF;\
