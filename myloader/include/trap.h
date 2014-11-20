@@ -21,11 +21,11 @@
 
 #define HIT_GOOD_TRAP \
 	movl $0, %eax; \
-	.byte 0x82
+	 byte 0x82
 
 #define HIT_BAD_TRAP \
 	movl $1, %eax; \
-	.byte 0x82
+	 byte 0x82
 
 #define nemu_assert(reg, val) \
 	cmp $val, %reg; \
