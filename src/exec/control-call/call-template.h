@@ -5,7 +5,7 @@
 #include "memory.h"
 
 make_helper(concat(call_rel_, SUFFIX)) {
-	DATA_TYPE_S rel = instr_fetch(eip + 1, DATA_BYTE);
+	DATA_TYPE rel = instr_fetch(eip + 1, DATA_BYTE);
 	reg_l(R_ESP) -= 4;
 	MEM_W(reg_l(R_ESP),eip + 1 + DATA_BYTE);
 //	printf("%x %x %x\n",eip,cpu.eip,rel);
@@ -19,7 +19,7 @@ make_helper(concat(call_rm_, SUFFIX)) {
 	ModR_M m;
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){
-		DATA_TYPE_S res = REG(m.R_M);
+		DATA_TYPE res = REG(m.R_M);
 		reg_l(R_ESP) -= 4;
 	    MEM_W(reg_l(R_ESP),eip + 1 + 1);	
 		print_asm("call" str(SUFFIX) " *%%%s",REG_NAME(m.R_M));
@@ -30,7 +30,7 @@ make_helper(concat(call_rm_, SUFFIX)) {
 	else {
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
-		DATA_TYPE_S res = MEM_R(addr);
+		DATA_TYPE res = MEM_R(addr);
 		reg_l(R_ESP) -= 4;
 		MEM_W(reg_l(R_ESP),eip + 1 + len);
 		print_asm("call" str(SUFFIX) " *%s",ModR_M_asm);
