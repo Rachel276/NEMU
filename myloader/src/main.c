@@ -1,6 +1,6 @@
 #include "trap.h"
 
-extern void loader();
+void loader();
 
 void init() {
 	/* Perform remaining initializations */
