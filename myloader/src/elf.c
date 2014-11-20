@@ -10,7 +10,7 @@ void loader() {
 			/* Scan the program header table, load each segment into memory */
 			if(ph->p_type == PT_LOAD) {
 					for (j = 0;j < ph->p_filesz;j ++)
-						*((uint8_t*)ph->p_vaddr + j) = *((uint8_t*)ph->p_offset + j);	
+						*((int8_t*)ph->p_vaddr + j) = *((int8_t*)ph->p_offset + j);	
 					for (j = ph[i].p_filesz; j < ph[i].p_memsz; j ++)
 						*((int8_t*)ph->p_vaddr + j) = 0;
 //					memset((void *)(ph[i].p_vaddr + ph[i].p_filesz), 0, sizeof(ph[i].p_memsz - ph[i].p_filesz);			
