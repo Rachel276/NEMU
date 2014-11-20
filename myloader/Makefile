@@ -2,12 +2,11 @@ CC      = gcc
 CFLAGS  = -m32 -O2 -Wall -Werror -fno-builtin -I./include
 ASFLAGS = -m32
   
-CFILES = $(shell find src/ -name "*.c") 
-SFILES = $(shell find src/ -name "*.S")
-OBJS   = $(CFILES:.c=.o) 
+CSRS = $(shell find src/ -name "*.c") 
+OBJS   = $(CSRS:.c=.o) 
 					  
 loader: $(OBJS) src/start.o 
-	  	ld -o loader -e start -Ttext 0x100000 -m elf_i386 src/start.o $(OBJS)
+	ld -o loader -e start -Ttext 0x100000 -m elf_i386 src/start.o $(OBJS)
 
 clean:
-	-rm -f loader src/start.o $(OBJS) 2> /dev/null   
+	-rm -f loader $(OBJS) src/start.o 2> /dev/null   

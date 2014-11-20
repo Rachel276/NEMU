@@ -9,13 +9,12 @@ void loader() {
 	for (i = 0; i < elf->e_phnum; i ++,ph++){
 			/* Scan the program header table, load each segment into memory */
 			if(ph->p_type == PT_LOAD) {
-				    int8_t *u = (int8_t*)ph->p_vaddr;
-					int8_t *v = (int8_t*)ph->p_offset;
-					int8_t *w = (int8_t*)(ph->p_vaddr + ph[i].p_filesz);
+				    int8_t *u = (void*)ph->p_vaddr;
+					int8_t *v = (void*)elf + ph->p_offset;
 					for (j = 0;j < ph->p_filesz;j ++, u ++, v ++)
 						*u = *v;
-					for (j = ph[i].p_filesz; j < ph[i].p_memsz; j ++, w ++)
-						*w = 0;
+					for (j = ph[i].p_filesz; j < ph[i].p_memsz; j ++, u ++)
+						*u = 0;
 			}
 	}
 
