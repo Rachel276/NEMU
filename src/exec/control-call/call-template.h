@@ -23,9 +23,9 @@ make_helper(concat(call_rm_, SUFFIX)) {
 		reg_l(R_ESP) -= 4;
 	    MEM_W(reg_l(R_ESP),eip + 1 + 1);	
 		print_asm("call" str(SUFFIX) " *%%%s",REG_NAME(m.R_M));
-		cpu.eip += res;
+		cpu.eip = res - 2;
 //		if (DATA_BYTE == 2)cpu.eip &= 0x0000ffff;
-		return 0;
+		return 2;
 	} 
 	else {
 		swaddr_t addr;
@@ -34,9 +34,9 @@ make_helper(concat(call_rm_, SUFFIX)) {
 		reg_l(R_ESP) -= 4;
 		MEM_W(reg_l(R_ESP),eip + 1 + len);
 		print_asm("call" str(SUFFIX) " *%s",ModR_M_asm);
-		cpu.eip += res;
+		cpu.eip = res - (len + 1);
 //		if (DATA_BYTE == 2)cpu.eip &= 0x0000ffff;
-		return 0;
+		return 1 + len;
  	}
 }
 
