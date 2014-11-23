@@ -147,7 +147,7 @@ helper_fun opcode_table1 [256] = {
 
 make_helper(opcode) {
 //	eip = eip + 1;
-	printf("%x\n",eip);
+//	printf("%x\n",eip);
 	return opcode_table1[ instr_fetch(eip + 1, 1) ](eip + 1) + 1;
 }
 
