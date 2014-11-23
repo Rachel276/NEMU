@@ -63,7 +63,7 @@ make_helper(concat(sub_ib2rm_, SUFFIX)){
 		DATA_TYPE lhs = REG(m.R_M);
 		mflags(rst,lhs,(DATA_TYPE_S)(imm));
 		REG(m.R_M) = rst;
-
+		printf("%d\n",rst);
 		print_asm("sub" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(m.R_M));
 		return 3;
 	} 
@@ -75,7 +75,6 @@ make_helper(concat(sub_ib2rm_, SUFFIX)){
 		DATA_TYPE lhs = MEM_R(addr);
 		mflags(rst,lhs,(DATA_TYPE_S)(imm));
 		MEM_W(addr,rst);
-		printf("%d\n",rst);
 
 		print_asm("sub" str(SUFFIX) " $0x%x,%s", imm, ModR_M_asm);
 		return len + 2;
