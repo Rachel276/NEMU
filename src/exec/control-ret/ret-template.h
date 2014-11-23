@@ -8,7 +8,8 @@ make_helper(concat(ret_, SUFFIX)) {
 	REG(R_ESP) = REG(R_ESP) + DATA_BYTE;
 	if (DATA_BYTE == 2) cpu.eip &= 0x0000ffff;
 	print_asm("ret");
-	return 0;
+	cpu.eip -= 1;
+	return 1;
 }
 
 #include "exec/template-end.h"
