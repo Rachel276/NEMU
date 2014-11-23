@@ -72,7 +72,7 @@ helper_fun opcode_table [256] = {
 /* 0xe4 */	inv, inv, inv, inv,
 /* 0xe8 */	call_rel_v, jmp_rel_v, inv, jmp_rel_b,
 /* 0xec */	inv, inv, inv, inv,
-/* 0xf0 */	inv, inv, inv, inv,
+/* 0xf0 */	inv, inv, opcode, inv,
 /* 0xf4 */	inv, inv, bai_rm_b, bai_rm_v,
 /* 0xf8 */	inv, inv, inv, inv,
 /* 0xfc */	inv, inv, inv, cti_mpr_v
@@ -120,7 +120,7 @@ helper_fun opcode_table1 [256] = {
 /* 0x98 */	sets_rm_b, setns_rm_b, setp_rm_b, setnp_rm_b, 
 /* 0x9c */	setl_rm_b, setge_rm_b, setle_rm_b, setg_rm_b, 
 /* 0xa0 */	inv, inv, inv, inv,
-/* 0xa4 */	inv, inv, inv, inv,
+/* 0xa4 */	rep_movs_m_b, rep_movs_m_v, inv, inv,
 /* 0xa8 */	inv, inv, inv, inv,
 /* 0xac */	inv, inv, inv, imul_rm2r_v,
 /* 0xb0 */	inv, inv, inv, inv,
