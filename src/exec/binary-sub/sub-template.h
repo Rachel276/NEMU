@@ -55,14 +55,13 @@ make_helper(concat(sub_i2rm_, SUFFIX)) {
 
 make_helper(concat(sub_ib2rm_, SUFFIX)){
 	ModR_M m;
-	DATA_TYPE_S imm;
+	int8_t imm;
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){ 
-		imm = (DATA_TYPE_S)(instr_fetch(eip + 1 + 1, 1));
-		printf("%d\n",imm);
-		DATA_TYPE rst = REG(m.R_M) - imm;
+		imm = instr_fetch(eip + 1 + 1, 1);
+		DATA_TYPE rst = REG(m.R_M) - (DATA_TYPE_S)(imm);
 		DATA_TYPE lhs = REG(m.R_M);
-		mflags(rst,lhs,imm);
+		mflags(rst,lhs,(DATA_TYPE_S)(imm));
 		REG(m.R_M) = rst;
 
 		print_asm("sub" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(m.R_M));
@@ -71,10 +70,10 @@ make_helper(concat(sub_ib2rm_, SUFFIX)){
 	else {  
 		swaddr_t addr;
 		int len = read_ModR_M(eip + 1, &addr);
-		imm = (DATA_TYPE_S)(instr_fetch(eip + 1 + len, 1));
-		DATA_TYPE rst = MEM_R(addr) - imm;
+		imm = instr_fetch(eip + 1 + len, 1);
+		DATA_TYPE rst = MEM_R(addr) - (DATA_TYPE_S)(imm);
 		DATA_TYPE lhs = MEM_R(addr);
-		mflags(rst,lhs,imm);
+		mflags(rst,lhs,(DATA_TYPE_S)(imm));
 		MEM_W(addr,rst);
 
 		print_asm("sub" str(SUFFIX) " $0x%x,%s", imm, ModR_M_asm);
