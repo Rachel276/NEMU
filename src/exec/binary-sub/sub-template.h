@@ -61,6 +61,7 @@ make_helper(concat(sub_ib2rm_, SUFFIX)){
 		imm = instr_fetch(eip + 1 + 1, 1);
 		printf("%d %d\n",REG(m.R_M),  (DATA_TYPE_S)(imm));
 		DATA_TYPE rst = REG(m.R_M) - (DATA_TYPE_S)(imm);
+		printf("%d\n",rst);
 		DATA_TYPE lhs = REG(m.R_M);
 		mflags(rst,lhs,(DATA_TYPE_S)(imm));
 		REG(m.R_M) = rst;
