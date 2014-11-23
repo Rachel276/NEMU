@@ -12,4 +12,21 @@ make_helper(concat(ret_, SUFFIX)) {
 	return 1;
 }
 
+make_helper(concat(ret_i_, SUFFIX)) {
+	uint16_t imm = instr_fetch(eip + 1, 1 + 1);
+	if (DATA_BYTE == 4) {
+		cpu.eip = swaddr_read(reg_l(R_ESP), 4) - 1;
+		reg_l(R_ESP) += 4;
+	}
+	else { 
+		cpu.eip = swaddr_read(reg_l(R_ESP), 2)&0xffff;
+		cpu.eip -= 1;
+		reg_l(R_ESP) += 2;
+	}
+	reg_l(R_ESP) += imm;
+
+	print_asm("ret" str(SUFFIX) " $0x%x", imm);
+	return 1;
+}
+
 #include "exec/template-end.h"

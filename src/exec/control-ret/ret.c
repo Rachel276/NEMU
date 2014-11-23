@@ -13,3 +13,7 @@ extern char suffix;
 make_helper(ret_v) {
 	return (suffix == 'l' ? ret_l(eip) : ret_w(eip));
 }
+
+make_helper(ret_i_v) {
+	return (suffix == 'l' ? ret_i_l(eip) : ret_i_w(eip));
+}
