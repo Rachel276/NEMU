@@ -98,6 +98,7 @@ make_helper(concat(cmp_r2rm_, SUFFIX)) {
 		DATA_TYPE lhs = MEM_R(addr);
 		mflags(rst,lhs,imm);
 	//	MEM_W(addr,rst);
+		printf("%d %d\n",lhs,imm);
 		print_asm("cmp" str(SUFFIX) " %%%s,%s",REG_NAME(m.reg), ModR_M_asm)    ;
 		return len + 1;
 	}
@@ -122,6 +123,7 @@ make_helper(concat(cmp_rm2r_, SUFFIX)) {
 		DATA_TYPE rst = lhs - imm;
 		mflags(rst,lhs,imm);
 	//	REG(m.reg) = rst;
+		printf("%d %d\n",lhs,imm);
 		print_asm("cmp" str(SUFFIX) " %%%s,%s", REG_NAME(m.reg), ModR_M_asm)    ;
 		return len + 1;
 	}
