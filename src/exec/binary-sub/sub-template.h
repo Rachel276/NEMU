@@ -59,14 +59,14 @@ make_helper(concat(sub_ib2rm_, SUFFIX)){
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){ 
 		imm = instr_fetch(eip + 1 + 1, 1);
-		printf("%d %d\n",REG(m.R_M),  (DATA_TYPE_S)(imm));
+	//	printf("%d %d\n",REG(m.R_M),  (DATA_TYPE_S)(imm));
 		DATA_TYPE rst = REG(m.R_M) - (DATA_TYPE_S)(imm);
-		printf("%d\n",rst);
+	//	printf("%d\n",rst);
 		DATA_TYPE lhs = REG(m.R_M);
-		printf("%d\n",rst);
+	//	printf("%d\n",rst);
 		REG(m.R_M) = rst;
 		mflags(rst,lhs,(DATA_TYPE_S)(imm));
-		printf("%d\n",rst);
+	//	printf("%d\n",rst);
 		print_asm("sub" str(SUFFIX) " $0x%x,%%%s", imm, REG_NAME(m.R_M));
 		return 3;
 	} 
