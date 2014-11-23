@@ -59,6 +59,7 @@ make_helper(concat(sub_ib2rm_, SUFFIX)){
 	m.val = instr_fetch(eip + 1, 1);
 	if (m.mod == 3){ 
 		imm = (DATA_TYPE_S)(instr_fetch(eip + 1 + 1, 1));
+		printf("%d\n",imm);
 		DATA_TYPE rst = REG(m.R_M) - imm;
 		DATA_TYPE lhs = REG(m.R_M);
 		mflags(rst,lhs,imm);
