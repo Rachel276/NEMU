@@ -29,12 +29,6 @@ nemu: $(OBJS)
 $(TEST_FILE_LIST):
 	cd `dirname $@` && make
 
-loader: src/elf/loader.c
-
-src/elf/loader.c: $(TESTFILE)
-	objcopy -S -O binary $(TESTFILE) loader
-	xxd -i loader > $@
-
 LOADER_DIR = myloader
 loader: 
 	cd $(LOADER_DIR) && make
@@ -57,6 +51,7 @@ STU_ID=131220009
 SHARED_FOLDER=/mnt
 
 submit: clean
+	cd testcase && make clean
 	cd testcase && make clean
 	cd .. && tar cvj $(shell pwd | grep -o '[^/]*$$') > $(STU_ID).tar.bz2
 	mv ../$(STU_ID).tar.bz2 $(SHARED_FOLDER) || rm ../$(STU_ID).tar.bz2
