@@ -3,19 +3,17 @@
 #include "cpu/modrm.h"
 #include "cpu/reg.h"
 
+int exec(swaddr_t);
 make_helper(concat(rep_movs_m_, SUFFIX)) {
-	MEM_W(reg_l(R_EDI), MEM_R(reg_l(R_ESI)));
-	if (eflags.DF) {
-		reg_l(R_EDI) -= DATA_BYTE;
-		reg_l(R_ESI) -= DATA_BYTE;
+	int len = 0;
+	char rep_out[40];
+	while (reg_l(R_ECX)) {
+		len = exec(eip + 1);
+		reg_l(R_ECX)--;
 	}
-	else {
-			reg_l(R_EDI) += DATA_BYTE;
-			reg_l(R_ESI) += DATA_BYTE;
-	}
-
-	print_asm("rep mov" str(SUFFIX) "  %%ds:(%%esi),%%es:(%%edi)");
-	return 1;
+	strcpy(rep_out,assembly);
+	print_asm("rep" str(SUFFIX) " %s",rep_out);
+	return 1 + len;
 }
 
 #include "exec/template-end.h"

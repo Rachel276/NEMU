@@ -28,6 +28,7 @@
 #include "misc-lea/lea.h"
 
 #include "string-rep/rep.h"
+#include "string-movs/movs.h"
 
 #include "misc/misc.h"
 #include "opcode/opcode.h"
