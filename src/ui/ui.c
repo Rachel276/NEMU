@@ -23,6 +23,9 @@ BP* findw_NO(int);
 void print_b();
 void delete_all();
 uint32_t expr(char*, bool* ); 
+int find_func_name(swaddr_t);
+char* print_func(int);
+
 /* We use the readline library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -71,6 +74,20 @@ static void cmd_c() {
 	if(nemu_state != END && nemu_state != BREAK0 && nemu_state != BREAK1) { nemu_state = STOP; }
 }
 
+static void cmd_bt() {
+	swaddr_t addr,ebp;
+	addr = cpu.eip;
+	ebp = cpu.ebp;
+	int NO = 0;
+	while (ebp) {
+		int fun_name = find_func_name(addr);
+		if (fun_name < 0)break;
+		if (addr == cpu.eip) printf("#%d in %s\n", NO, print_func(fun_name));
+		else printf("#%d 0x%08x in %s\n", NO, addr,print_func(fun_name));
+		if (swaddr_read(ebp, 4))addr = swaddr_read(ebp + 4, 4);
+		ebp = swaddr_read(ebp, 4);
+	}
+}
 static void cmd_r() {
 	if(nemu_state != END) { 
 		char c;
@@ -84,8 +101,8 @@ static void cmd_r() {
 				case 'n': return;
 				default: puts("Please answer y or n.");
  	 		}
- 	   	}
- 	}  
+ 	    	}
+ 	 }  
 
 restart_:
 	restart();
@@ -166,6 +183,7 @@ void main_loop() {
 				N--;
 		 	} 
 		} 
+		else if (strcmp(p, "bt") == 0){ cmd_bt(); }
 		else if (strcmp(p, "b") == 0)
 		{ 
 			p = strtok(NULL,"*");success=true;

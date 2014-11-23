@@ -110,6 +110,18 @@ swaddr_t find_tokens(char virable[])
 		if (ELF32_ST_TYPE(symtab[i].st_info) != STT_OBJECT && ELF32_ST_TYPE(symtab[i].st_info) != STT_FUNC)continue;
 		if (strcmp(virable,strtab + symtab[i].st_name) == 0)
 			return symtab[i].st_value;
-	}
+	} 
 	return -1;
+}
+
+int find_func_name(swaddr_t addr) {
+	int i;
+	for (i = 0; i < nr_symtab_entry; i++)
+		if (ELF32_ST_TYPE(symtab[i].st_info) != STT_FUNC)
+			if (symtab[i].st_value <= addr && symtab[i].st_value + symtab[i].st_size > addr) return i;
+	return -1;
+}
+
+char* print_func(int x) {
+	return strtab + symtab[x].st_name;
 }
