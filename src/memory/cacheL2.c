@@ -13,7 +13,7 @@
 #define way_size 16
 
 uint32_t dram_read(hwaddr_t, size_t);
-void dram_write(hwaddr_t addr, size_t ,uint32_t);
+void dram_write(hwaddr_t, size_t ,uint32_t);
 
 void init_cacheL2() {
 	int i, j;
@@ -67,7 +67,7 @@ void cacheL2_write(hwaddr_t addr, size_t len, uint32_t data) {
 	int i, way;
 	bool hit = false;
 	for (i = 0;i < set_size; i ++)
-		if (cacheL2[set][i].valid && cacheL2[set][i].tag == GET_TAG(addr)){
+		if (cacheL2[set][i].valid && cacheL2[set][i].tag == GET_TAG(addr)) {
 			way = i;
 			hit = true;
 			break;
