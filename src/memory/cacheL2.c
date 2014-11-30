@@ -38,7 +38,7 @@ uint32_t visit_dram(hwaddr_t addr){
 				dram_write(GET_MEMORY(addr) + i, 1 , cacheL2[set][way].data[i]);
 	}
 	for (i = 0; i < block_size; i ++)
-		cacheL2[set][way].data[i] = dram_read(addr, 1);
+		cacheL2[set][way].data[i] = dram_read(GET_MEMORY(addr) + i, 1);
 	cacheL2[set][way].valid = true;
 	cacheL2[set][way].dirty = false;
 	cacheL2[set][way].tag = GET_TAG(addr);
@@ -81,9 +81,9 @@ void cacheL2_write(hwaddr_t addr, size_t len, uint32_t data) {
 		cacheL2[set][way].dirty = true;
 	}
 	else {
+		cacheL2[set][way].dirty = true;
 		cacheL2_write(addr, block_size - len, data);
 		cacheL2_write(addr + block_size - offset, len - (block_size - offset), data >> (8 * (block_size - offset)));
-		cacheL2[set][way].dirty = true;
 	}
 }
 

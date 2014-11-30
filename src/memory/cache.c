@@ -33,7 +33,7 @@ uint32_t visit_cacheL2(hwaddr_t addr) {
 	if (hit) way = i;
 	else way = rand() % 8;
 
-	memcpy(cacheL1[set][way].data, cacheL2_read(addr), block_size);
+	memcpy((uint32_t *)cacheL1[set][way].data, (uint32_t *)cacheL2_read(addr), block_size);
 	cacheL1[set][way].valid = true;
 	cacheL1[set][way].tag = GET_TAG(addr);
 	return way;
@@ -82,7 +82,7 @@ void cacheL1_write(hwaddr_t addr, size_t len, uint32_t data) {
 	else {
 		cacheL1_write(addr, block_size - len, data);
 		cacheL1_write(addr + block_size - offset, len - (block_size - offset), data >> (8 * (block_size - offset)));
-		cacheL2_write(addr, len, data);
+//		cacheL2_write(addr, len, data);
 	}
 }
 
