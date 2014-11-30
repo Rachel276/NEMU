@@ -76,7 +76,7 @@ void cacheL1_write(hwaddr_t addr, size_t len, uint32_t data) {
 
 	uint32_t offset = GET_ADDR(addr);
 	if  (offset + len <= block_size){
-		memcpy(&cacheL1[set][way].data[offset], &data, len);
+		memcpy(cacheL1[set][way].data + offset, &data, len);
 		cacheL2_write(addr, len, data);
 	}
 	else {
