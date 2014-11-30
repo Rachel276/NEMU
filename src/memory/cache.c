@@ -12,7 +12,7 @@
 #define way_size 8
 
 uint8_t* cacheL2_read(hwaddr_t);
-void cacheL2_write(hwaddr_t addr, size_t len, uint32_t data);
+void cacheL2_write(hwaddr_t, size_t, uint32_t);
 
 void init_cacheL1(){
 	int i, j;
@@ -33,7 +33,7 @@ uint32_t visit_cacheL2(hwaddr_t addr) {
 	if (hit) way = i;
 	else way = rand() % 8;
 
-	memcpy((uint32_t *)cacheL1[set][way].data, (uint32_t *)cacheL2_read(addr), block_size);
+	memcpy(cacheL1[set][way].data, cacheL2_read(addr), block_size);
 	cacheL1[set][way].valid = true;
 	cacheL1[set][way].tag = GET_TAG(addr);
 	return way;
