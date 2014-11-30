@@ -77,7 +77,7 @@ void cacheL2_write(hwaddr_t addr, size_t len, uint32_t data) {
 	
 	uint32_t offset = GET_ADDR(addr);
 	if  (offset + len <= block_size){
-		memcpy(cacheL2[set][way].data + offset, &data, len);
+		memcpy(&cacheL2[set][way].data[offset], &data, len);
 		cacheL2[set][way].dirty = true;
 	}
 	else {
