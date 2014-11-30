@@ -12,6 +12,8 @@ void init_dram();
 BP* find_addr();
 void load_breakpoint();
 void load_watchpoint();
+void init_cacheL1();
+void init_cacheL2();
 int check_w();
 
 char assembly[40];
@@ -34,6 +36,8 @@ void restart() {
     eflags.a1=1;eflags.a2=0;eflags.a3=0;	
 	load_breakpoint();
 	load_watchpoint();
+	init_cacheL1();
+	init_cacheL2();
 }
 
 static void print_bin_instr(swaddr_t eip, int len) {
