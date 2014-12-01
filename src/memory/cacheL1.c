@@ -54,7 +54,7 @@ uint32_t cacheL11_read(hwaddr_t addr, size_t len){
 	else way = visit_dram1(addr);
 
 	uint32_t offset = GET_ADDR(addr);
-	if  (offset + len <= block_size) 
+	if  (offset + len < block_size)
 		return *(uint32_t *)(cacheL1[set][way].data + offset) & (~0u >> ((4  - len) << 3));
 	else {
 		uint32_t low = cacheL11_read(addr, block_size - offset);
@@ -80,7 +80,8 @@ void cacheL11_write(hwaddr_t addr, size_t len, uint32_t data) {
 	if  (offset + len <= block_size){
 		memcpy(cacheL1[set][way].data + offset, &data, len);
 		for (i = 0; i < len; i ++)
-			dram_write(GET_MEMORY(addr) + i, 1 , cacheL1[set][way].data[i]);	}
+			dram_write(GET_MEMORY(addr) + i, 1 , cacheL1[set][way].data[i]);	
+	}
 	else {
 		cacheL11_write(addr, block_size - len, data);
 		cacheL11_write(addr + block_size - offset, len - (block_size - offset), data >> (8 * (block_size - offset)));
