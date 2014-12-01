@@ -31,12 +31,12 @@ uint32_t visit_dram(hwaddr_t addr){
 			hit = true;way = i;
 			break;
 		}
-	if (!hit) 
+	if (!hit) {
 		way = rand() % 16;
 		if (cacheL2[set][way].dirty)
 			for (i = 0; i < block_size; i ++)
 				dram_write(GET_MEMORY(addr) + i, 1 , cacheL2[set][way].data[i]);
-	
+	}
 	for (i = 0; i < block_size; i ++)
 		cacheL2[set][way].data[i] = dram_read(GET_MEMORY(addr) + i, 1);
 	cacheL2[set][way].valid = true;
