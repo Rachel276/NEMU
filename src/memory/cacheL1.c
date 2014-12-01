@@ -80,7 +80,7 @@ void cacheL11_write(hwaddr_t addr, size_t len, uint32_t data) {
 	if  (offset + len <= block_size){
 		memcpy(cacheL1[set][way].data + offset, &data, len);
 		for (i = 0; i < len; i ++)
-			dram_write(GET_MEMORY(addr) + i, 1 , cacheL1[set][way].data[i]);	
+			dram_write(GET_MEMORY(addr) + i, 1 , cacheL1[set][way].data[i + offset]);	
 	}
 	else {
 		cacheL11_write(addr, block_size - len, data);
