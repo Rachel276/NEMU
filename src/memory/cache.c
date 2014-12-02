@@ -29,7 +29,7 @@ uint32_t visit_cacheL2(hwaddr_t addr) {
 		if (!cacheL1[set][i].valid) {
 			hit = true;
 			break;
-		}  
+ 		}  
 	if (hit) way = i;
 	else way = rand() % 8;
 
