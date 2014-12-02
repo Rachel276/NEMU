@@ -54,7 +54,7 @@ uint32_t cacheL11_read(hwaddr_t addr, size_t len){
 	else way = visit_dram1(addr);
 
 	uint32_t offset = GET_ADDR(addr);
-	if  (offset + len < block_size)
+	if  (offset + len <= block_size)
 		return *(uint32_t *)(cacheL1[set][way].data + offset) & (~0u >> ((4  - len) << 3));
 	else {
 		uint32_t low = cacheL11_read(addr, block_size - offset);
