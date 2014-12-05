@@ -3,17 +3,36 @@
 
 #include "common.h"
 
-typedef struct{
+typedef struct { 
 	bool valid;
 	uint32_t tag;// 16 bits
 	uint8_t data[64];
 } CPU_cacheL1;
 
-typedef struct{
+typedef struct {
 	bool valid,dirty;
 	uint32_t tag;
 	uint8_t data[64];
 } CPU_cacheL2;
+
+typedef union {
+	struct {
+		uint32_t offset : 6;
+		uint32_t set    : 7;
+		uint32_t tag    : 14;
+	};
+	uint32_t addr;
+} CacheL1_addr;
+
+typedef union {
+	struct {
+		uint32_t offset : 6;
+		uint32_t set    : 9;
+		uint32_t tag    : 12;
+	};
+	uint32_t addr;
+} CacheL2_addr;
+
 
 CPU_cacheL1 cacheL1[128][8];
 CPU_cacheL2 cacheL2[4096][16];
