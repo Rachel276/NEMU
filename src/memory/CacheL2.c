@@ -18,6 +18,7 @@
 #define BURST_MASK (BURST_LEN - 1)
 
 CacheL2_addr temp;
+CPU_cacheL2 cacheL2[NR_SET][NR_WAY];
 
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
@@ -57,11 +58,15 @@ static void _cacheL2_read(hwaddr_t addr, void *data) {
 		if (hit) way = i;
 		else {
 			way = rand() % 16;
-			if (cacheL2[set][way].dirty == true)
+			if (cacheL2[set][way].dirty == true) {
+				temp.tag = tag = cacheL2[set][way].tag;
 				for (i = 0;i < NR_BLOCK; i ++)
 					dram_write(temp.addr + i, 1, cacheL2[set][way].block[i]);
+			}
 		}
 
+		for (i = 0;i < NR_BLOCK; i ++)
+			cacheL2[set][way].block[i] = dram_read(temp.addr + i, 1);
 		memcpy(data, cacheL2[set][way].block + offset, BURST_LEN);
 		cacheL2[set][way].tag = tag;
 		cacheL2[set][way].valid = true;
@@ -100,9 +105,11 @@ static void _cacheL2_write(hwaddr_t addr, void *data, uint8_t *mask) {
 		if (hit) way = i;
 		else {
 			way = rand() % 16;
-			if (cacheL2[set][way].dirty == true) 
+			if (cacheL2[set][way].dirty == true) {
+			    temp.tag = tag = cacheL2[set][way].tag;	
 				for (i = 0; i < NR_BLOCK; i ++)
 					dram_write(temp.addr + i, 1, cacheL2[set][way].block[i]);
+			}
 		}
 		for (i = 0;i < NR_BLOCK; i ++)
 			cacheL2[set][way].block[i] = dram_read(temp.addr + i, 1);
