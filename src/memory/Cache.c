@@ -69,7 +69,7 @@ static void _cacheL1_read(hwaddr_t addr, void *data) {
 static void _cacheL1_write(hwaddr_t addr, void *data,uint8_t *mask) {
 	test(addr < HW_MEM_SIZE, "addr = %x\n", addr);
 
-	temp.addr = addr & ~BURST_MASK;
+	temp.addr = addr & (~ BURST_MASK);
 	uint32_t set = set;
 	uint32_t tag = tag;
 	uint32_t offset = offset;
@@ -88,30 +88,30 @@ static void _cacheL1_write(hwaddr_t addr, void *data,uint8_t *mask) {
 uint32_t cacheL1_read(hwaddr_t addr, size_t len) {
 	assert(len == 1 || len == 2 || len == 4);
 	uint32_t offset = addr & BURST_MASK;
-	uint8_t temp[2 * BURST_LEN];
+	uint8_t tmp[2 * BURST_LEN];
 
-	_cacheL1_read(addr, temp);
+	_cacheL1_read(addr, tmp);
 
 	if( (addr ^ (addr + len - 1)) & ~(BURST_MASK)  ) 
-		_cacheL1_read(addr + BURST_LEN, temp + BURST_LEN);
+		_cacheL1_read(addr + BURST_LEN, tmp + BURST_LEN);
 
-	return *(uint32_t *)(temp + offset) & (~0u >> ((4 - len) << 3));
+	return *(uint32_t *)(tmp + offset) & (~0u >> ((4 - len) << 3));
 }
 
 void cacheL1_write(hwaddr_t addr, size_t len, uint32_t data) {
 	assert(len == 1 || len == 2 || len == 4);
 	uint32_t offset = addr & BURST_MASK;
-	uint8_t temp[2 * BURST_LEN];
+	uint8_t tmp[2 * BURST_LEN];
 	uint8_t mask[2 * BURST_LEN];
 	memset(mask, 0, 2 * BURST_MASK);
 
-	*(uint32_t *)(temp + offset) = data;
+	*(uint32_t *)(tmp + offset) = data;
 	memset(mask + offset, 1, len);
 
-	_cacheL1_write(addr, temp, mask);
+	_cacheL1_write(addr, tmp, mask);
 
 	if( (addr ^ (addr + len - 1)) & ~(BURST_MASK)  ) 
-		_cacheL1_write(addr + BURST_LEN, temp + BURST_LEN, mask + BURST_LEN);
+		_cacheL1_write(addr + BURST_LEN, tmp + BURST_LEN, mask + BURST_LEN);
 	cacheL2_write(addr, len, data);
 }
 
