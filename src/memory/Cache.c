@@ -18,6 +18,7 @@
 #define BURST_MASK (BURST_LEN - 1)
 
 CacheL1_addr temp;
+CPU_cacheL1 cacheL1[NR_SET][NR_WAY];
 
 uint32_t cacheL2_read(hwaddr_t, size_t);
 void cacheL2_write(hwaddr_t, size_t, uint32_t);

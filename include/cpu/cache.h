@@ -34,6 +34,4 @@ typedef union {
 } CacheL2_addr;
 
 
-CPU_cacheL1 cacheL1[128][8];
-CPU_cacheL2 cacheL2[4096][16];
 #endif
