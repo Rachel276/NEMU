@@ -27,8 +27,8 @@ typedef union {
 typedef union {
 	struct {
 		uint32_t offset : 6;
-		uint32_t set    : 9;
-		uint32_t tag    : 12;
+		uint32_t set    : 12;
+		uint32_t tag    : 9;
 	};
 	uint32_t addr;
 } CacheL2_addr;
