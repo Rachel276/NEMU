@@ -15,7 +15,7 @@
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t ,uint32_t);
 
-void init_cacheL2() {
+/*void init_cacheL2() {
 	int i, j;
 	for (i = 0;i < set_size; i ++)
 		for (j = 0;j < way_size; j ++)
@@ -35,10 +35,10 @@ uint32_t visit_dram(hwaddr_t addr){
 		way = rand() % 16;
 		if (cacheL2[set][way].dirty)
 			for (i = 0; i < block_size; i ++)
-				dram_write(GET_MEMORY(addr) + i, 1 , cacheL2[set][way].data[i]);
+				dram_write(GET_MEMORY(addr) + i, 1 , cacheL2[set][way].block[i]);
 	}
 	for (i = 0; i < block_size; i ++)
-		cacheL2[set][way].data[i] = dram_read(GET_MEMORY(addr) + i, 1);
+		cacheL2[set][way].block[i] = dram_read(GET_MEMORY(addr) + i, 1);
 	cacheL2[set][way].valid = true;
 	cacheL2[set][way].dirty = false;
 	cacheL2[set][way].tag = GET_TAG(addr);
@@ -59,7 +59,7 @@ uint8_t* cacheL2_read(hwaddr_t addr) {
 	if (!hit)
 		way = visit_dram(addr);
 
-	return cacheL2[set][way].data;
+	return cacheL2[set][way].block;
 }
 
 void cacheL2_write(hwaddr_t addr, size_t len, uint32_t data) {
@@ -77,7 +77,7 @@ void cacheL2_write(hwaddr_t addr, size_t len, uint32_t data) {
 	
 	uint32_t offset = GET_ADDR(addr);
 	if  (offset + len <= block_size){
-		memcpy(cacheL2[set][way].data + offset, &data, len);
+		memcpy(cacheL2[set][way].block + offset, &data, len);
 		cacheL2[set][way].dirty = true;
 	}
 	else {
@@ -85,7 +85,7 @@ void cacheL2_write(hwaddr_t addr, size_t len, uint32_t data) {
 		cacheL2_write(addr, block_size - len, data);
 		cacheL2_write(addr + block_size - offset, len - (block_size - offset), data >> (8 * (block_size - offset)));
 	}
-}
+}*/
 
 #undef GET_SET
 #undef GET_TAG

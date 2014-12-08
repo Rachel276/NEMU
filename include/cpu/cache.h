@@ -6,13 +6,13 @@
 typedef struct { 
 	bool valid;
 	uint32_t tag;// 16 bits
-	uint8_t data[64];
+	uint8_t block[64];
 } CPU_cacheL1;
 
 typedef struct {
 	bool valid,dirty;
 	uint32_t tag;
-	uint8_t data[64];
+	uint8_t block[64];
 } CPU_cacheL2;
 
 typedef union {

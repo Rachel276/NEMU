@@ -13,7 +13,7 @@ void dram_write(hwaddr_t, size_t ,uint32_t);
 
 CacheL1_addr temp;
 
-void init_cacheL11(){
+/*void init_cacheL11(){
 	int i, j;
 	for (i = 0;i < set_size; i ++)
 		for (j = 0;j < way_size; j ++)
@@ -35,7 +35,7 @@ uint32_t visit_dram1(hwaddr_t addr){
 	else way = rand() % 8;
 
 	for (i = 0; i < block_size; i ++)
-		cacheL1[set][way].data[i] = dram_read(temp.addr + i, 1);
+		cacheL1[set][way].block[i] = dram_read(temp.addr + i, 1);
 	cacheL1[set][way].valid = true;
 	cacheL1[set][way].tag = tag;
 	return way;
@@ -57,7 +57,7 @@ uint32_t cacheL11_read(hwaddr_t addr, size_t len){
 	else way = visit_dram1(addr);
 
 	if  (offset + len <= block_size)
-		return *(uint32_t *)(cacheL1[set][way].data + offset) & (~0u >> ((4  - len) << 3));
+		return *(uint32_t *)(cacheL1[set][way].block + offset) & (~0u >> ((4  - len) << 3));
 	else {
 		uint32_t low = cacheL11_read(addr, block_size - offset);
 		uint32_t high = cacheL11_read(addr + block_size - offset, len - (block_size - offset));
@@ -82,15 +82,15 @@ void cacheL11_write(hwaddr_t addr, size_t len, uint32_t data) {
 	else way = visit_dram1(addr);
 
 	if  (offset + len <= block_size){
-		memcpy(cacheL1[set][way].data + offset, &data, len);
+		memcpy(cacheL1[set][way].block + offset, &data, len);
 		for (i = 0; i < len; i ++)
-			dram_write(temp.addr + i, 1 , cacheL1[set][way].data[i + offset]);	
+			dram_write(temp.addr + i, 1 , cacheL1[set][way].block[i + offset]);	
 	}
 	else {
 		cacheL11_write(addr, block_size - len, data);
 		cacheL11_write(addr + block_size - offset, len - (block_size - offset), data >> (8 * (block_size - offset)));
 	} 
-}
+}*/
 
 #undef GET_SET
 #undef GET_TAG
