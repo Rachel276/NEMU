@@ -59,7 +59,10 @@ static void _cacheL2_read(hwaddr_t addr, void *data) {
 		else {
 			way = rand() % 16;
 			if (cacheL2[set][way].dirty == true) {
-				temp.tag = tag = cacheL2[set][way].tag;
+				temp.addr = 0;
+				temp.set = set;
+				temp.tag = cacheL2[set][way].tag;
+				tag = temp.tag;
 				for (i = 0;i < NR_BLOCK; i ++)
 					dram_write(temp.addr + i, 1, cacheL2[set][way].block[i]);
 			}
@@ -106,7 +109,10 @@ static void _cacheL2_write(hwaddr_t addr, void *data, uint8_t *mask) {
 		else {
 			way = rand() % 16;
 			if (cacheL2[set][way].dirty == true) {
-			    temp.tag = tag = cacheL2[set][way].tag;	
+			    temp.addr = 0;
+				temp.set = set;
+				temp.tag = cacheL2[set][way].tag;	
+				tag = temp.tag;
 				for (i = 0; i < NR_BLOCK; i ++)
 					dram_write(temp.addr + i, 1, cacheL2[set][way].block[i]);
 			}
@@ -138,6 +144,7 @@ void cacheL2_write(hwaddr_t addr, size_t len, uint32_t data) {
 	uint32_t offset = addr & BURST_MASK;
 	uint8_t tmp[2 * BURST_LEN];
 	uint8_t mask[2 * BURST_LEN];
+    memset(mask, 0, 2 * BURST_LEN);
 
 	*(uint32_t *)(tmp + offset) = data;
 	memset(mask + offset, 1, len);
