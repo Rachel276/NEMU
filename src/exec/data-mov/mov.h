@@ -15,4 +15,9 @@ make_helper(mov_rm2r_v);
 make_helper(mov_a2moffs_v);
 make_helper(mov_moffs2a_v);
 
+make_helper(mov_s2rm);
+make_helper(mov_rm2s);
+make_helper(mov_cr2r);
+make_helper(mov_r2cr);
+
 #endif

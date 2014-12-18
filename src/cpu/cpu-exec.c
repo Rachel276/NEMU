@@ -32,13 +32,18 @@ void restart() {
 	cpu.eip = LOADER_START;
 	cpu.ebp = 0;
 	cpu.esp = 0x8000000;
+
 	init_dram();
+	init_cacheL1();
+	init_cacheL2();
+
     eflags.a1=1;eflags.a2=0;eflags.a3=0;	
 	load_breakpoint();
 	load_watchpoint();
-	init_cacheL1();
-	init_cacheL2();
+
+	cpu.cr0.val = 0;
 }
+
 
 static void print_bin_instr(swaddr_t eip, int len) {
 	int i;

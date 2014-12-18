@@ -29,9 +29,11 @@
 
 #include "string-rep/rep.h"
 #include "string-movs/movs.h"
+#include "string-stos/stos.h"
 
 #include "misc/misc.h"
 #include "opcode/opcode.h"
 #include "Binary.h"
 #include "Control.h"
 #include "Logical.h"
+#include "System.h"
